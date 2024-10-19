@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:vegan/src/features/player/view/full_screen_player.dart';
 
 import '../../domain/entity/entity.dart';
 
@@ -121,7 +122,13 @@ class VideosForYouWidget extends StatelessWidget {
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => FullScreenPlayer(
+                                            videoUrl: video.videoUrl),
+                                      ));
+                                    },
                                     child: const Text('watch'),
                                   ),
                                 ],

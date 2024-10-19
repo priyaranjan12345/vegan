@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:vegan/src/core/error/exception/custom_exception.dart';
@@ -19,7 +18,6 @@ class IVideoHubRepository implements VideoHubRepository {
     if (response.statusCode == 200) {
       try {
         final body = json.decode(response.body) as List;
-        log(body.toString());
         final videoModels = body.map((e) => VideoModel.fromMap(e)).toList();
         return Right(videoModels);
       } catch (_) {

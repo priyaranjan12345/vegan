@@ -15,12 +15,14 @@ class VideoHubPage extends StatelessWidget {
         title: const Text('Vegan'),
         centerTitle: true,
       ),
-      body: BlocProvider<VideoHubBloc>(
-        create: (_) => injector<VideoHubBloc>()
-          ..add(
-            const GetVideoHubEvent(),
-          ),
-        child: const VideoHubView(),
+      body: SafeArea(
+        child: BlocProvider<VideoHubBloc>(
+          create: (_) => injector<VideoHubBloc>()
+            ..add(
+              const GetVideoHubEvent(),
+            ),
+          child: const VideoHubView(),
+        ),
       ),
     );
   }
