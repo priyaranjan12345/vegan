@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegan/src/features/video_hub/presentation/page/page.dart';
 
 class VeganApp extends StatelessWidget {
   const VeganApp({super.key});
@@ -13,7 +14,7 @@ class VeganApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: Container(),
+      home: const VideoHubPage(),
     );
   }
 }
