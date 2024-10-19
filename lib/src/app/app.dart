@@ -1,0 +1,1 @@
+export 'vegan_app.dart';
