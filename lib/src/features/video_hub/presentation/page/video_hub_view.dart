@@ -33,7 +33,7 @@ class VideoHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        LatestVideosWidget(videos: videos.take(2).toList()),
+        LatestVideosWidget(videos: videos.take(6).toList()),
         const SizedBox(height: 20),
         const Divider(),
         VideosForYouWidget(videos: videos.take(2).toList()),

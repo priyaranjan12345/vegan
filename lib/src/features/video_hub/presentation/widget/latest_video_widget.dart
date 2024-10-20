@@ -53,7 +53,8 @@ class LatestVideosWidget extends StatelessWidget {
                     width: itemWidth,
                     constraints: const BoxConstraints(minHeight: 350),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
                       child: Container(
                         clipBehavior: Clip.hardEdge,
                         decoration: const BoxDecoration(
@@ -90,7 +91,11 @@ class LatestVideosWidget extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   final offset = controller.offset;
-                  final scrollTo = offset - itemWidth;
+                  final terminalOffset = controller.position.maxScrollExtent;
+
+                  final scrollTo = offset == terminalOffset
+                      ? offset - (itemWidth * .7)
+                      : offset - itemWidth;
 
                   controller.animateTo(
                     scrollTo,
@@ -108,7 +113,11 @@ class LatestVideosWidget extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   final offset = controller.offset;
-                  final scrollTo = offset + itemWidth;
+                  final initialOffset = controller.position.minScrollExtent;
+
+                  final scrollTo = offset == initialOffset
+                      ? offset + (itemWidth * .7)
+                      : offset + itemWidth;
 
                   controller.animateTo(
                     scrollTo,
