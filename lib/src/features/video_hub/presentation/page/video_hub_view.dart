@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.dart';
+import 'package:vegan/src/features/video_hub/presentation/widget/top_movies.dart';
 
 import '../../domain/entity/entity.dart';
 import '../widget/widget.dart';
@@ -33,10 +35,10 @@ class VideoHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        LatestVideosWidget(videos: videos.take(6).toList()),
+        VideosForYouWidget(videos: videos),
         const SizedBox(height: 20),
-        const Divider(),
-        VideosForYouWidget(videos: videos.take(2).toList()),
+        const TopMovies(),
+        LatestVideosWidget(videos: videos.take(6).toList()),
         const SizedBox(height: 20),
       ],
     );

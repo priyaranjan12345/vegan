@@ -13,7 +13,7 @@ class LatestVideosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const landscapeFraction = 0.6;
+    const landscapeFraction = 0.8;
     const portraitFraction = 0.6;
     final controller = PageController(
         viewportFraction:
@@ -25,6 +25,7 @@ class LatestVideosWidget extends StatelessWidget {
     const physics = CustomScrollPhysics(
       landscapeFraction: landscapeFraction,
       portraitFraction: portraitFraction,
+      parent: ClampingScrollPhysics(),
     );
 
     return Column(
@@ -34,9 +35,10 @@ class LatestVideosWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Latest Videos',
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600,
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -88,14 +90,16 @@ class LatestVideosWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
               child: IconButton(
                 onPressed: () {
-                  final offset = controller.offset;
+                  final currentOffset = controller.offset;
                   final terminalOffset = controller.position.maxScrollExtent;
 
-                  final scrollTo = offset == terminalOffset
-                      ? offset - (itemWidth * .7)
-                      : offset - itemWidth;
+                  final scrollTo = currentOffset == terminalOffset
+                      ? currentOffset - (itemWidth * .7)
+                      : currentOffset - itemWidth;
 
                   controller.animateTo(
                     scrollTo,
@@ -110,14 +114,16 @@ class LatestVideosWidget extends StatelessWidget {
               width: 10,
             ),
             CircleAvatar(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
               child: IconButton(
                 onPressed: () {
-                  final offset = controller.offset;
+                  final currentOffset = controller.offset;
                   final initialOffset = controller.position.minScrollExtent;
 
-                  final scrollTo = offset == initialOffset
-                      ? offset + (itemWidth * .7)
-                      : offset + itemWidth;
+                  final scrollTo = currentOffset == initialOffset
+                      ? currentOffset + (itemWidth * .7)
+                      : currentOffset + itemWidth;
 
                   controller.animateTo(
                     scrollTo,
