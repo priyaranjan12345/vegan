@@ -37,8 +37,8 @@ class LatestVideosWidget extends StatelessWidget {
             'Latest Videos',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

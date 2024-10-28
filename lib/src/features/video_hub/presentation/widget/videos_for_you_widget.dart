@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vegan/src/features/player/view/full_screen_player.dart';
 
 import '../../domain/entity/entity.dart';
 
@@ -10,7 +9,7 @@ class VideosForYouWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = PageController(viewportFraction: 0.9);
+    final controller = PageController(viewportFraction: 0.7);
 
     return Column(
       children: [
@@ -22,8 +21,8 @@ class VideosForYouWidget extends StatelessWidget {
                 child: Text(
                   'Videos For You',
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -35,6 +34,7 @@ class VideosForYouWidget extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
+                      radius: 20,
                       child: IconButton(
                         onPressed: () {
                           controller.previousPage(
@@ -42,7 +42,10 @@ class VideosForYouWidget extends StatelessWidget {
                             curve: Curves.ease,
                           );
                         },
-                        icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 16,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -51,6 +54,7 @@ class VideosForYouWidget extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
+                      radius: 20,
                       child: IconButton(
                         onPressed: () {
                           controller.nextPage(
@@ -58,7 +62,10 @@ class VideosForYouWidget extends StatelessWidget {
                             curve: Curves.ease,
                           );
                         },
-                        icon: const Icon(Icons.arrow_forward_ios_rounded),
+                        icon: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -68,11 +75,15 @@ class VideosForYouWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 300,
+          height: MediaQuery.orientationOf(context) == Orientation.portrait
+              ? 200
+              : 400,
           child: CustomScrollView(
             controller: controller,
             scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(),
+            physics: const PageScrollPhysics(
+              parent: ClampingScrollPhysics(),
+            ),
             slivers: [
               ...videos.map(
                 (video) => SliverLayoutBuilder(
@@ -95,7 +106,10 @@ class VideosForYouWidget extends StatelessWidget {
                                   ),
                                   child: Image.network(
                                     fit: BoxFit.cover,
-                                    height: 200,
+                                    height: MediaQuery.orientationOf(context) ==
+                                            Orientation.portrait
+                                        ? 120
+                                        : 320,
                                     width: double.infinity,
                                     video.thubmnail,
                                     loadingBuilder:
@@ -108,35 +122,40 @@ class VideosForYouWidget extends StatelessWidget {
                                                 : child,
                                     errorBuilder:
                                         (context, error, stackTrace) =>
-                                            const SizedBox.shrink(),
-                                  ),
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        video.title,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                            const SizedBox(
+                                      height: 120,
+                                      child: Icon(
+                                        Icons.image_not_supported_outlined,
                                       ),
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              FullScreenPlayer(
-                                                  videoUrl: video.videoUrl),
-                                        ));
-                                      },
-                                      child: const Text('watch'),
-                                    ),
-                                  ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          video.title,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        child: const Text('watch'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class VeganAppBar extends StatelessWidget {
+class VeganAppBar extends StatelessWidget implements PreferredSize {
   const VeganAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return  Container(
       color: Colors.black,
-      child: const SizedBox(
-        height: kToolbarHeight,
-        child: IntrinsicHeight(
-          child: SafeArea(
+      child: const SafeArea(
+        child: SizedBox(
+          height: kToolbarHeight,
+          child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -33,4 +33,10 @@ class VeganAppBar extends StatelessWidget {
       ),
     );
   }
+  
+  @override
+  Widget get child => const VeganAppBar();
+  
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

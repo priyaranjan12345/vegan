@@ -12,21 +12,13 @@ class VideoHubPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(
-          double.infinity,
-          kToolbarHeight + 56.0,
-        ),
-        child: VeganAppBar(),
-      ),
-      body: SafeArea(
-        child: BlocProvider<VideoHubBloc>(
-          create: (_) => injector<VideoHubBloc>()
-            ..add(
-              const GetVideoHubEvent(),
-            ),
-          child: const VideoHubView(),
-        ),
+      appBar: const VeganAppBar(),
+      body: BlocProvider<VideoHubBloc>(
+        create: (_) => injector<VideoHubBloc>()
+          ..add(
+            const GetVideoHubEvent(),
+          ),
+        child: const VideoHubView(),
       ),
     );
   }
