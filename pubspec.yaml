@@ -45,6 +45,7 @@ dependencies:
   flex_color_scheme: ^8.1.1
   auto_route: ^10.0.0
   flutter_svg: ^2.0.17
+  talker: ^4.6.14
 
 dev_dependencies:
   flutter_test:
