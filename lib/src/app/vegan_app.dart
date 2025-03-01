@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vegan/src/features/video_hub/presentation/page/page.dart';
 
+import '../core/theme/theme.dart';
+
 class VeganApp extends StatelessWidget {
   const VeganApp({super.key});
 
@@ -8,12 +10,9 @@ class VeganApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vegan',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-        useMaterial3: true,
-      ),
+      themeMode: ThemeMode.dark,
+      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       home: const VideoHubPage(),
     );
   }

@@ -32,8 +32,6 @@ class VideosForYouWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
                       radius: 20,
                       child: IconButton(
                         onPressed: () {
@@ -52,8 +50,6 @@ class VideosForYouWidget extends StatelessWidget {
                       width: 10,
                     ),
                     CircleAvatar(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
                       radius: 20,
                       child: IconButton(
                         onPressed: () {
