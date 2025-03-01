@@ -6,11 +6,16 @@ import 'package:vegan/src/features/video_hub/domain/repository/repository.dart';
 import 'package:vegan/src/features/video_hub/domain/usecase/usecase.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.dart';
 
+import '../core/router/router.dart';
+
 /// app injector for the get_it
 final injector = GetIt.instance;
 
 Future<void> init() async {
-  await Future.delayed(const Duration(seconds: 4));
+  /// register auto router instance
+  injector.registerSingleton(AppRouter());
+  await Future.delayed(const Duration(seconds: 2));
+
   /// resister video hub bloc
   injector.registerFactory(
     () => VideoHubBloc(videoHubUsecase: injector()),

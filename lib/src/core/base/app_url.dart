@@ -1,6 +1,8 @@
 class AppUrl {
-  static const _url = 'https://gist.githubusercontent.com/poudyalanil/ca84582cbeb4fc123a13290a586da925/raw/14a27bd0bcd0cd323b35ad79cf3b493dddf6216b/videos.json';
+  static const _videoUrl = "https://www.apirequest.in/video/api";
   //String.fromEnvironment('api');
+  // https://www.apirequest.in/movie/api
+  // https://www.apirequest.in/movie/api/Avatar // by title
 
-  static Uri get getUri => Uri.parse(_url);
+  static Uri get getUri => Uri.parse(_videoUrl);
 }

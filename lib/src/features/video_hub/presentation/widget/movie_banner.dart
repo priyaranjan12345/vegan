@@ -39,7 +39,7 @@ class MovieBanner extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 4,
+          bottom: 0,
           left: 0,
           right: 0,
           child: AppCarouselIndicator(),
