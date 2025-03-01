@@ -9,7 +9,8 @@ import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.da
 /// app injector for the get_it
 final injector = GetIt.instance;
 
-void init() {
+Future<void> init() async {
+  await Future.delayed(const Duration(seconds: 4));
   /// resister video hub bloc
   injector.registerFactory(
     () => VideoHubBloc(videoHubUsecase: injector()),

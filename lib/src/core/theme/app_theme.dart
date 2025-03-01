@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppTheme {
+abstract final class AppTheme {
   // Theme setup for FlexColorScheme package v8.
 // Use same major flex_color_scheme package version. If you use a
 // lower minor version, some properties may not be supported.
@@ -41,5 +41,6 @@ class AppTheme {
     ),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
+    
   );
 }

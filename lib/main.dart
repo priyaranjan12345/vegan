@@ -4,7 +4,7 @@ import 'src/app/app.dart';
 
 Future<void> main() async {
   runApp(const SplashApp());
-  await Future.delayed(const Duration(seconds: 4));
-  init();
+  // added delay for splash
+  await init();
   runApp(const VeganApp());
 }

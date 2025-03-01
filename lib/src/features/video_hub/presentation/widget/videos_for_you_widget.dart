@@ -32,7 +32,7 @@ class VideosForYouWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      radius: 20,
+                      radius: 16,
                       child: IconButton(
                         onPressed: () {
                           controller.previousPage(
@@ -50,7 +50,7 @@ class VideosForYouWidget extends StatelessWidget {
                       width: 10,
                     ),
                     CircleAvatar(
-                      radius: 20,
+                      radius: 16,
                       child: IconButton(
                         onPressed: () {
                           controller.nextPage(
@@ -91,6 +91,7 @@ class VideosForYouWidget extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
+                            elevation: 1,
                             margin: EdgeInsets.zero,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
