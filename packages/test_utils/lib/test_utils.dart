@@ -1,0 +1,1 @@
+export 'test_assets_path.dart';

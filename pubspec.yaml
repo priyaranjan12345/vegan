@@ -61,6 +61,8 @@ dev_dependencies:
   mocktail: ^1.0.4
   auto_route_generator: ^10.0.1
   build_runner: ^2.4.15
+  test_utils:
+    path: ./packages/test_utils
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
