@@ -8,8 +8,18 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset('assets/logo/logos_netflix.png'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 16.0,
+        children: [
+          Center(
+            child: Image.asset('assets/logo/logos_netflix.png'),
+          ),
+          const RepaintBoundary(
+            child: CircularProgressIndicator(),
+          )
+        ],
       ),
     );
   }

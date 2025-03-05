@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegan/src/shared/extension/build_context_x.dart';
 
 import '../../domain/entity/entity.dart';
 
@@ -9,7 +10,9 @@ class VideosForYouWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = PageController(viewportFraction: 0.7);
+    final controller = PageController(
+      viewportFraction: context.isPortrait ? 0.7 : 0.4,
+    );
 
     return Column(
       children: [
@@ -71,9 +74,7 @@ class VideosForYouWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: MediaQuery.orientationOf(context) == Orientation.portrait
-              ? 200
-              : 400,
+          height: 200,
           child: CustomScrollView(
             controller: controller,
             scrollDirection: Axis.horizontal,
@@ -102,11 +103,9 @@ class VideosForYouWidget extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Image.network(
+                                    alignment: const Alignment(0, -0.8),
                                     fit: BoxFit.cover,
-                                    height: MediaQuery.orientationOf(context) ==
-                                            Orientation.portrait
-                                        ? 120
-                                        : 320,
+                                    height: 120,
                                     width: double.infinity,
                                     video.thubmnail,
                                     loadingBuilder:
@@ -170,4 +169,3 @@ class VideosForYouWidget extends StatelessWidget {
     );
   }
 }
-

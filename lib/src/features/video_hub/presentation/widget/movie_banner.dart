@@ -32,6 +32,7 @@ class MovieBanner extends StatelessWidget {
                 ),
               ),
               child: Image.asset(
+                alignment: const Alignment(0, -0.8),
                 fit: BoxFit.cover,
                 'assets/logo/banner.png',
               ),
