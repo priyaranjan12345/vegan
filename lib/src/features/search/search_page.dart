@@ -33,25 +33,24 @@ class SearchPage extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8.0,
-              ),
-              child: Text(
+        body: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              title: Text(
                 'TOP SEARCH RESULTS',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              floating: true,
+              snap: true,
             ),
-            ...List.generate(
-              6,
-              (index) => const SearchResultCard(),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (_, __) => const SearchResultCard(),
+                childCount: 20,
+              ),
             ),
           ],
         ),
