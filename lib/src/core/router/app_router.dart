@@ -40,7 +40,18 @@ class AppRouter extends RootStackRouter {
                   initial: true,
                 ),
               ],
-            )
+            ),
+            AutoRoute(
+              path: 'coming_soon_tab',
+              page: ComingSoonTab.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: ComingSoonRoute.page,
+                  initial: true,
+                ),
+              ],
+            ),
           ],
         ),
       ];
