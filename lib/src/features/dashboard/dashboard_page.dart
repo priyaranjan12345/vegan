@@ -13,13 +13,15 @@ class DashboardPage extends StatelessWidget {
       routes: const [
         HomeTab(),
         SearchTab(),
-        // SettingsRoute(),
+        ComingSoonTab(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return BottomNavigationBar(
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,
           type: BottomNavigationBarType.fixed,
+          selectedFontSize: 8.0,
+          unselectedFontSize: 8.0,
           items: const [
             BottomNavigationBarItem(
               label: 'Home',
