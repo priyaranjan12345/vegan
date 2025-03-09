@@ -13,6 +13,7 @@ class SplashApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
+      debugShowCheckedModeBanner: false,
       home: const SplashPage(),
     );
   }

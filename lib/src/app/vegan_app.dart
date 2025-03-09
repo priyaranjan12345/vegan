@@ -14,8 +14,11 @@ class VeganApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
+      debugShowCheckedModeBanner: false,
       routerConfig: injector<AppRouter>().config(
-        navigatorObservers: () => [AppRouterObserver()],
+        navigatorObservers: () => [
+          AppRouterObserver(),
+        ],
       ),
     );
   }
