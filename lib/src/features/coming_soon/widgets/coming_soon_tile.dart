@@ -17,7 +17,7 @@ class ComingSoonTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 16.0,
+      spacing: 8.0,
       children: [
         // image
         Image.network(

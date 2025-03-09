@@ -2,6 +2,8 @@ class AppSpacer {
   
 }
 
-class AppVerticalSpacer {}
+class AppVerticalSpacer {
+  
+}
 
 class AppHorizontalSpacer {}

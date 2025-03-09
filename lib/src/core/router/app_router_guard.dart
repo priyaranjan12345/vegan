@@ -5,6 +5,7 @@ class SpalshRouteGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
     resolver.next(true);
+    // any loading operations
     // await Future.delayed(const Duration(seconds: 4));
     router.replaceAll([const DashboardRoute()]);
   }
