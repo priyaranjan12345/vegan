@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i9;
-import 'package:vegan/src/features/coming_soon/coming_soon_page.dart' as _i1;
+import 'package:vegan/src/features/coming_soon/presentation/page/coming_soon_page.dart' as _i1;
 import 'package:vegan/src/features/dashboard/coming_soon_tab.dart' as _i2;
 import 'package:vegan/src/features/dashboard/dashboard_page.dart' as _i3;
 import 'package:vegan/src/features/dashboard/home_tab.dart' as _i4;

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 
 import 'package:vegan/src/core/error/failure/failure.dart';
 import 'package:vegan/src/core/usecase/usecase.dart';
@@ -8,6 +7,7 @@ import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/video_entity.dart';
 
 import '../../../../core/function_mapper/function_mapper.dart';
+import '../../../../core/usecase/no_params.dart';
 import '../repository/video_hub_repository.dart';
 
 class VideoHubUsecase implements UseCase<List<VideoEntity>, NoParams> {
@@ -51,7 +51,3 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
   }
 }
 
-class NoParams extends Equatable {
-  @override
-  List<Object> get props => [];
-}

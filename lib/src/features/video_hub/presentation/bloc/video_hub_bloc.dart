@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:vegan/src/core/usecase/no_params.dart';
 
 import '../../domain/entity/video_entity.dart';
 import '../../domain/usecase/usecase.dart';
