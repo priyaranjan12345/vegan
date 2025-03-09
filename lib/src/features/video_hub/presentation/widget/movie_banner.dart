@@ -14,7 +14,7 @@ class MovieBanner extends StatelessWidget {
         ClipRRect(
           child: ColorFiltered(
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.2),
+              Colors.black.withValues(alpha: 0.2),
               BlendMode.darken,
             ),
             child: Container(
@@ -25,8 +25,8 @@ class MovieBanner extends StatelessWidget {
                   begin: Alignment.center,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.white.withOpacity(0.1),
-                    Colors.black.withOpacity(0.4),
+                    Colors.white.withValues(alpha: 0.1),
+                    Colors.black.withValues(alpha: 0.4),
                     Colors.black,
                   ],
                 ),
