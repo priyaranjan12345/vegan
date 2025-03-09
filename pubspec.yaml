@@ -46,6 +46,7 @@ dependencies:
   auto_route: ^10.0.0
   flutter_svg: ^2.0.17
   talker: ^4.6.14
+  flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,21 @@ flutter:
     - assets/logo/
     - assets/jsons/
     - assets/svg/
+    - assets/images/
+
+flutter_native_splash:
+  color: "#000000"
+  color_dark: "#000000"
+  image: assets/logo/logos_netflix.png
+
+  android_12:
+    color: "#000000"
+    color_dark: "#000000"
+    image: assets/images/netflix-logo.png
+
+  android: true
+  ios: true
+  #web: false
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
