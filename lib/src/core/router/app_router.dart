@@ -55,6 +55,28 @@ class AppRouter extends RootStackRouter {
                 ),
               ],
             ),
+            AutoRoute(
+              path: 'downloads_tab',
+              page: DownloadsTab.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: DownloadsRoute.page,
+                  initial: true,
+                ),
+              ],
+            ),
+            AutoRoute(
+              path: 'more_tab',
+              page: MoreTab.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: MoreRoute.page,
+                  initial: true,
+                ),
+              ],
+            ),
           ],
         ),
       ];

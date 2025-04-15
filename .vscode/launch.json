@@ -4,11 +4,20 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
         {
-            "name": "vegan",
+            "name": "vegan(no debug mode)",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "noDebug": true,
+            // "args": [
+            //     "--route",
+            //     "/dashboard_page/coming_soon_tab/"
+            // ],
+        },
+        {
+            "name": "vegan(debug mode)",
+            "request": "launch",
+            "type": "dart",
         },
         {
             "name": "vegan (profile mode)",
