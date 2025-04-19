@@ -15,7 +15,7 @@ final injector = GetIt.instance;
 Future<void> init() async {
   /// register auto router instance
   injector.registerSingleton(AppRouter());
-  await Future.delayed(const Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 4));
 
   comingSoonInjector();
 

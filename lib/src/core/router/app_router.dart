@@ -10,17 +10,21 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(
-          path: '/splash_page',
-          page: SplashRoute.page,
-          initial: true,
-          guards: [
-            SpalshRouteGuard(),
-          ],
-        ),
+        // AutoRoute(
+        //   path: '/splash_page',
+        //   page: SplashRoute.page,
+        //   // initial: true,
+        //   guards: [
+        //     SpalshRouteGuard(),
+        //   ],
+        // ),
         AutoRoute(
           path: '/dashboard_page',
           page: DashboardRoute.page,
+          initial: true,
+          guards: [
+            DashboardRouteGuard(),
+          ],
           children: [
             AutoRoute(
               path: 'home_tab',

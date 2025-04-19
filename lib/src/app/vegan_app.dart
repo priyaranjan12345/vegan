@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vegan/src/features/splash/splash_page.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
-import 'app.dart';
 
 class VeganApp extends StatelessWidget {
   const VeganApp({super.key});
@@ -15,7 +15,10 @@ class VeganApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      routerConfig: injector<AppRouter>().config(
+      routerConfig: AppRouter().config(
+        placeholder: (context) => SplashPage(
+          onShown: () {},
+        ),
         navigatorObservers: () => [
           AppRouterObserver(),
         ],

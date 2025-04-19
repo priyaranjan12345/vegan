@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
 import 'package:vegan/src/features/coming_soon/presentation/page/coming_soon_page.dart'
     as _i1;
 import 'package:vegan/src/features/dashboard/coming_soon_tab.dart' as _i2;
@@ -187,18 +188,39 @@ class SearchTab extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.SplashPage]
-class SplashRoute extends _i13.PageRouteInfo<void> {
-  const SplashRoute({List<_i13.PageRouteInfo>? children})
-    : super(SplashRoute.name, initialChildren: children);
+class SplashRoute extends _i13.PageRouteInfo<SplashRouteArgs> {
+  SplashRoute({
+    _i14.Key? key,
+    required _i14.VoidCallback onShown,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+         SplashRoute.name,
+         args: SplashRouteArgs(key: key, onShown: onShown),
+         initialChildren: children,
+       );
 
   static const String name = 'SplashRoute';
 
   static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      return const _i11.SplashPage();
+      final args = data.argsAs<SplashRouteArgs>();
+      return _i11.SplashPage(key: args.key, onShown: args.onShown);
     },
   );
+}
+
+class SplashRouteArgs {
+  const SplashRouteArgs({this.key, required this.onShown});
+
+  final _i14.Key? key;
+
+  final _i14.VoidCallback onShown;
+
+  @override
+  String toString() {
+    return 'SplashRouteArgs{key: $key, onShown: $onShown}';
+  }
 }
 
 /// generated route for
