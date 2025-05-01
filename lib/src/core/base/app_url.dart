@@ -1,10 +1,21 @@
 class AppUrl {
-  static const _videoUrl = "https://www.apirequest.in/video/api";
   static const _comingSoonUrl = "https://www.apirequest.in/movie/api";
   //String.fromEnvironment('api');
   //
   // https://www.apirequest.in/movie/api/Avatar // by title
 
-  static Uri get getUri => Uri.parse(_videoUrl);
+  static const _key = 'AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30';
+  static const _apiVersion = 'v1';
+  static const ytmusicUrl = 'https://music.youtube.com/youtubei/$_apiVersion';
+
+  static String ytVideoUrl(String videoId) =>
+      'https://youtube.com/watch?v=$videoId';
+
+  static Uri get getUri => Uri.parse(ytmusicUrl);
   static Uri get getComingSoonUri => Uri.parse(_comingSoonUrl);
+
+  static const String search = '/search?key=$_key';
+  static const String browse = '/browse?key=$_key';
+  static const String library = '/library?key=$_key';
+  static const String music = '/music?key=$_key';
 }
