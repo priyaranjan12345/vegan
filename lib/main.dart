@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart';
 
 import 'src/app/app.dart';
 
 Future<void> main() async {
-  // runApp(const SplashApp());
-  // added delay for splash
-  // await init();
+  runApp(const SplashApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
+  await init();
   runApp(const VeganApp());
 }
+
+// flutter://com.vegan.app/dashboard_page/search_tab/
+// https://com.vegan.app/dashboard_page/search_tab/
