@@ -1,19 +1,24 @@
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:vegan/src/core/base/app_url.dart';
 
+import '../../../../core/base/api_header.dart';
+
 abstract class VideoHubRemoteDatasource {
-  Future<http.Response> getVideosResponse();
+  Future<Response> getVideosResponse();
 }
 
 class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
-  final http.Client httpClient;
+  final Dio dio;
 
   IVideoHubRemoteDatasource({
-    required this.httpClient,
+    required this.dio,
   });
 
   @override
-  Future<http.Response> getVideosResponse() async {
-    return await httpClient.get(AppUrl.getUri);
+  Future<Response> getVideosResponse() async {
+    return await dio.post(
+      AppUrl.browse,
+      data: YtApiBody.home,
+    );
   }
 }

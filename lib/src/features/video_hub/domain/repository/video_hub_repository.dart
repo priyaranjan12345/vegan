@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../data/model/video_model.dart';
+import '../../data/model/yt_model/yt_model.dart';
 
 abstract interface class VideoHubRepository {
-  Future<Either<Exception, List<VideoModel>>> fetchVideos();
+  Future<Either<Exception, YtModel>> fetchVideos();
 }

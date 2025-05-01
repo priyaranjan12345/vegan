@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:vegan/src/core/base/app_url.dart';
 
 import 'package:vegan/src/core/error/failure/failure.dart';
 import 'package:vegan/src/core/usecase/usecase.dart';
@@ -22,13 +23,22 @@ class VideoHubUsecase implements UseCase<List<VideoEntity>, NoParams> {
     final result = await videoHubRepository.fetchVideos();
     return result.fold(
       (ex) => Left(ServerFailure()),
-      (videoModels) {
-        final videoEntities = videoModels.map(
-          (videoModel) {
-            const mapper = VideoEntityMapper();
-            return mapper(videoModel);
-          },
-        ).toList();
+      (ytModel) {
+        final videoEntities = ytModel.sectionContents
+            .expand(
+              (sectionContent) => sectionContent.innerContents.map(
+                (innerContent) => VideoEntity(
+                  id: innerContent.videoId,
+                  title: innerContent.title,
+                  description: '',
+                  videoUrl: AppUrl.ytVideoUrl(innerContent.videoId),
+                  thubmnail: innerContent.thumbnail,
+                  publishDate: '',
+                ),
+              ),
+            )
+            .toList();
+
         return Right(videoEntities);
       },
     );
@@ -50,4 +60,3 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
     );
   }
 }
-

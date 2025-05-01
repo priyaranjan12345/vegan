@@ -7,7 +7,12 @@ import 'package:vegan/src/features/video_hub/presentation/widget/movie_banner.da
 
 import '../../../../core/components/components.dart';
 import '../../domain/entity/entity.dart';
-import '../widget/widget.dart';
+import '../widget/suggestions.dart';
+
+/// top carousels
+///
+/// suggestions
+///   category and tile
 
 class VideoHubView extends StatelessWidget {
   const VideoHubView({super.key});
@@ -100,7 +105,10 @@ class VideoHub extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        VideosForYouWidget(videos: videos),
+        Suggestions(
+          suggestions: videos,
+          heading: 'Suggestions',
+        ),
         const SizedBox(height: 20),
       ],
     );

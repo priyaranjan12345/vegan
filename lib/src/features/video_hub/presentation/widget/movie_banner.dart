@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:vegan/src/core/theme/app_colors.dart';
 import 'package:vegan/src/shared/extension/extensions.dart';
 
 class MovieBanner extends StatelessWidget {
@@ -39,7 +38,7 @@ class MovieBanner extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
+        const Positioned(
           bottom: 0,
           left: 0,
           right: 0,
@@ -50,10 +49,32 @@ class MovieBanner extends StatelessWidget {
   }
 }
 
-class AppCarouselIndicator extends StatelessWidget {
-  AppCarouselIndicator({super.key});
+class AppCarouselIndicator extends StatefulWidget {
+  const AppCarouselIndicator({super.key});
 
-  final controller = PageController(viewportFraction: 0.1);
+  @override
+  State<AppCarouselIndicator> createState() => _AppCarouselIndicatorState();
+}
+
+class _AppCarouselIndicatorState extends State<AppCarouselIndicator> {
+  late final PageController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = PageController(
+      initialPage: 3,
+      viewportFraction: 0.25,
+    );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,23 +82,27 @@ class AppCarouselIndicator extends StatelessWidget {
       height: 100,
       child: PageView.builder(
         controller: controller,
-        itemCount: 10,
+        itemCount: 6,
         itemBuilder: (context, index) => AnimatedBuilder(
           animation: controller,
           builder: (context, child) => Opacity(
             opacity: max(
               0,
-              1 - (index - (controller.page ?? 0)).abs() * 0.2,
+              1 - (index - (controller.page ?? 0)).abs() * 0.4,
             ),
-            child: Text(
-              (index + 1).toString(),
-              style: const TextStyle(
-                color: AppColors.white,
-                fontSize: 16,
+            /// TODO: change it to animated container
+            child: Center(
+              child: Text(
+                (index + 1).toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 48 - (index - (controller.page ?? 0)).abs() * 8,
+                ),
               ),
             ),
           ),
         ),
+        onPageChanged: (value) {},
       ),
     );
   }
