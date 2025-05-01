@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:vegan/src/features/player/view/yt_player.dart';
 import 'package:vegan/src/shared/extension/build_context_x.dart';
 
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entity/entity.dart';
 
 class VideosForYouWidget extends StatelessWidget {
@@ -83,84 +86,94 @@ class VideosForYouWidget extends StatelessWidget {
             ),
             slivers: [
               ...videos.map(
-                (video) => SliverLayoutBuilder(
-                  builder: (context, constraints) {
-                    return SliverToBoxAdapter(
-                      child: SizedBox(
-                        width: (constraints.viewportMainAxisExtent) *
-                            controller.viewportFraction,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            elevation: 1,
-                            margin: EdgeInsets.zero,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Image.network(
-                                    alignment: const Alignment(0, -0.8),
-                                    fit: BoxFit.cover,
-                                    height: 120,
-                                    width: double.infinity,
-                                    video.thubmnail,
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) =>
-                                            loadingProgress != null
-                                                ? const Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  )
-                                                : child,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const SizedBox(
-                                      height: 120,
-                                      child: Icon(
-                                        Icons.image_not_supported_outlined,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                (video) => video.thubmnail.isNotEmpty
+                    ? SliverLayoutBuilder(
+                        builder: (context, constraints) {
+                          return SliverToBoxAdapter(
+                            child: SizedBox(
+                              width: (constraints.viewportMainAxisExtent) *
+                                  controller.viewportFraction,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  color: AppColors.dark,
+                                  elevation: 1,
+                                  margin: EdgeInsets.zero,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          video.title,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: const TextStyle(
-                                            fontSize: 16,
+                                      Container(
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.fitWidth,
+                                          height: 120,
+                                          width: double.infinity,
+                                          imageUrl: video.thubmnail,
+                                          placeholder: (_, __) => const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                          errorWidget:
+                                              (context, error, stackTrace) =>
+                                                  const SizedBox(
+                                            height: 120,
+                                            child: Icon(
+                                              Icons
+                                                  .image_not_supported_outlined,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          foregroundColor: Colors.white,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                video.title,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        YtPlayer(
+                                                      videoId: video.id,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red,
+                                                foregroundColor: Colors.white,
+                                              ),
+                                              child: const Text('watch'),
+                                            ),
+                                          ],
                                         ),
-                                        child: const Text('watch'),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
+                      )
+                    : const SliverToBoxAdapter(
+                        child: SizedBox.shrink(),
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           ),
