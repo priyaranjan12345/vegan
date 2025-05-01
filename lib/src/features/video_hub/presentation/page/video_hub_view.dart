@@ -7,6 +7,7 @@ import 'package:vegan/src/features/video_hub/presentation/widget/movie_banner.da
 
 import '../../../../core/components/components.dart';
 import '../../domain/entity/entity.dart';
+import '../widget/moods_chips.dart';
 import '../widget/suggestions.dart';
 
 /// top carousels
@@ -24,7 +25,7 @@ class VideoHubView extends StatelessWidget {
         VideoHubInitial() || VideoHubLoading() => const Center(
             child: CircularProgressIndicator.adaptive(),
           ),
-        VideoHubLoaded() => VideoHub(videos: state.videos),
+        VideoHubLoaded() => VideoHub(homeEntity: state.homeEntity),
         VideoHubError() => const Center(
             child: Text('Oops something went wrong...'),
           ),
@@ -34,80 +35,87 @@ class VideoHubView extends StatelessWidget {
 }
 
 class VideoHub extends StatelessWidget {
-  const VideoHub({super.key, required this.videos});
+  const VideoHub({super.key, required this.homeEntity});
 
-  final List<VideoEntity> videos;
+  final HomeEntity homeEntity;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        const MovieBanner(),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/svg/top10.svg',
-                  semanticsLabel: 'Top 10',
-                  height: 24,
-                  width: 24,
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  '#2 in Nigeria Today',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const AppIconButton(
-                  icon: Icons.add,
-                  label: 'My List',
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.midGray,
-                    foregroundColor: AppColors.black,
-                    shape: const ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16),
-                      ),
-                    ),
-                  ),
-                  icon: const Icon(
-                    Icons.play_arrow_rounded,
-                    size: 28,
-                    color: AppColors.black,
-                  ),
-                  label: const Text(
-                    'PLAY',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const AppIconButton(
-                  icon: Icons.info_outline_rounded,
-                  label: 'Info',
-                ),
-              ],
-            ),
-          ],
+        // const MovieBanner(),
+        // Column(
+        //   children: [
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         SvgPicture.asset(
+        //           'assets/svg/top10.svg',
+        //           semanticsLabel: 'Top 10',
+        //           height: 24,
+        //           width: 24,
+        //         ),
+        //         const SizedBox(width: 8),
+        //         const Text(
+        //           '#2 in Nigeria Today',
+        //           style: TextStyle(
+        //             fontSize: 20,
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //     const SizedBox(height: 16),
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //       children: [
+        //         const AppIconButton(
+        //           icon: Icons.add,
+        //           label: 'My List',
+        //         ),
+        //         ElevatedButton.icon(
+        //           onPressed: () {},
+        //           style: ElevatedButton.styleFrom(
+        //             backgroundColor: AppColors.midGray,
+        //             foregroundColor: AppColors.black,
+        //             shape: const ContinuousRectangleBorder(
+        //               borderRadius: BorderRadius.all(
+        //                 Radius.circular(16),
+        //               ),
+        //             ),
+        //           ),
+        //           icon: const Icon(
+        //             Icons.play_arrow_rounded,
+        //             size: 28,
+        //             color: AppColors.black,
+        //           ),
+        //           label: const Text(
+        //             'PLAY',
+        //             style: TextStyle(
+        //               fontSize: 16,
+        //               fontWeight: FontWeight.w600,
+        //             ),
+        //           ),
+        //         ),
+        //         const AppIconButton(
+        //           icon: Icons.info_outline_rounded,
+        //           label: 'Info',
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+        const MoodsChips(
+          moods: ['Relax', 'feels good'],
         ),
         const SizedBox(height: 12),
-        Suggestions(
-          suggestions: videos,
-          heading: 'Suggestions',
+        ...homeEntity.suggestions.map(
+          (suggestion) {
+            return Suggestions(
+              suggestions: suggestion.videos,
+              heading: suggestion.heading,
+            );
+          },
         ),
         const SizedBox(height: 20),
       ],

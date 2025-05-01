@@ -13,9 +13,11 @@ class VideoHubPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider<VideoHubBloc>(
-        create: (_) => injector<VideoHubBloc>()..add(const GetVideoHubEvent()),
-        child: const VideoHubView(),
+      body: SafeArea(
+        child: BlocProvider<VideoHubBloc>(
+          create: (_) => injector<VideoHubBloc>()..add(const GetVideoHubEvent()),
+          child: const VideoHubView(),
+        ),
       ),
     );
   }

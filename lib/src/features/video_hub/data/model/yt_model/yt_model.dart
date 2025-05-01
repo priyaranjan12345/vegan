@@ -62,12 +62,18 @@ class SectionContentModel {
 class InnerContent {
   final String title;
   final String videoId;
+  final String playlistId;
   final String thumbnail;
+  final String browseId;
+  final String subTitle;
 
   InnerContent({
     required this.title,
     required this.videoId,
+    required this.playlistId,
     required this.thumbnail,
+    this.browseId = '',
+    this.subTitle = '',
   });
 
   factory InnerContent.fromMap(Map<String, dynamic> map) {
@@ -75,10 +81,33 @@ class InnerContent {
 
     /// handle null object
     if (innerContent == null) {
+      final musicTwoRowItemRenderer = map['musicTwoRowItemRenderer'];
+      final thumbnailRenderer = musicTwoRowItemRenderer['thumbnailRenderer']
+          ['musicThumbnailRenderer'];
+      final thumbnails = thumbnailRenderer['thumbnail']?['thumbnails'];
+      final title =
+          musicTwoRowItemRenderer['title']['runs'][0]['text'] as String;
+
+      final browseId = musicTwoRowItemRenderer['navigationEndpoint']
+          ?['browseEndpoint']?['browseId'] as String?;
+
+      final items =
+          musicTwoRowItemRenderer['menu']['menuRenderer']['items'] as List;
+
+      final playlistId = items[0]['menuNavigationItemRenderer']
+              ?['navigationEndpoint']?['watchPlaylistEndpoint']?['playlistId']
+          as String?;
+
+      final subTitle =
+          musicTwoRowItemRenderer['subtitle']?['runs']?[0]['text'] as String?;
+
       return InnerContent(
-        title: '',
+        title: title,
         videoId: '',
-        thumbnail: '',
+        playlistId: playlistId ?? '',
+        thumbnail: thumbnails?[0]?['url'] as String? ?? '',
+        browseId: browseId ?? '',
+        subTitle: subTitle ?? '',
       );
     }
 
@@ -95,10 +124,12 @@ class InnerContent {
     final run = runs.first;
     final title = run['text'] as String;
     final videoId = run['navigationEndpoint']['watchEndpoint']['videoId'];
+    final playlistId = run['navigationEndpoint']['watchEndpoint']['playlistId'];
 
     return InnerContent(
       title: title,
       videoId: videoId,
+      playlistId: playlistId,
       thumbnail: thumbnail,
     );
   }
@@ -134,3 +165,7 @@ class HeaderModel {
     );
   }
 }
+
+// extension Mapx on Map {
+//   T drillMap(){}
+// }

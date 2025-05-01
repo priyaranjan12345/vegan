@@ -20,10 +20,10 @@ final class VideoHubLoading extends VideoHubState {
 
 final class VideoHubLoaded extends VideoHubState {
   const VideoHubLoaded({
-    required this.videos,
+    required this.homeEntity,
   }) : super();
 
-  final List<VideoEntity> videos;
+  final HomeEntity homeEntity;
 
   @override
   List<Object> get props => [];

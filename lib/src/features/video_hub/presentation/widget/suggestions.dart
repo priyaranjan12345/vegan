@@ -4,6 +4,8 @@ import 'package:vegan/src/features/player/view/yt_player.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:vegan/src/shared/extension/extensions.dart';
 
+import 'carousel_header.dart';
+
 class Suggestions extends StatelessWidget {
   const Suggestions({
     super.key,
@@ -16,7 +18,6 @@ class Suggestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    suggestions.removeWhere((e) => e.id == '');
     final chunkedSuggestions = suggestions.chunk(4);
     final controller = PageController(
       viewportFraction: context.isPortrait ? 0.8 : 0.4,
@@ -26,7 +27,21 @@ class Suggestions extends StatelessWidget {
         ? const SizedBox.shrink()
         : Column(
             children: [
-              const Text(''),
+              CarouselHeader(
+                title: heading,
+                onBackword: () {
+                  controller.previousPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.ease,
+                  );
+                },
+                onForward: () {
+                  controller.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.ease,
+                  );
+                },
+              ),
               SizedBox(
                 height: 400,
                 child: CustomScrollView(

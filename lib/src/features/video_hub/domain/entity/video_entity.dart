@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class VideoEntity extends Equatable {
-  final String publishDate;
-
   const VideoEntity({
     required this.id,
     required this.title,
@@ -10,6 +8,7 @@ class VideoEntity extends Equatable {
     required this.videoUrl,
     required this.thubmnail,
     required this.publishDate,
+    this.playlistId = '',
   });
 
   final String id;
@@ -17,6 +16,8 @@ class VideoEntity extends Equatable {
   final String description;
   final String videoUrl;
   final String thubmnail;
+  final String publishDate;
+  final String playlistId;
 
   @override
   List<Object?> get props => [
@@ -26,5 +27,6 @@ class VideoEntity extends Equatable {
         videoUrl,
         thubmnail,
         publishDate,
+        playlistId,
       ];
 }
