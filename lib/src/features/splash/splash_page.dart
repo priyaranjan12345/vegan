@@ -7,6 +7,11 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   // delay
+    //   onShown?.call();
+    // });
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
