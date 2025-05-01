@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:talker/talker.dart';
+import 'package:vegan/src/app/bloc_observer.dart';
 import 'package:vegan/src/core/base/app_url.dart';
 import 'package:vegan/src/core/base/dio_config/dio_config.dart';
 import 'package:vegan/src/features/coming_soon/presentation/injector/coming_soon_injector.dart';
@@ -48,6 +50,9 @@ Future<void> init() async {
   injector.registerLazySingleton(
     () => http.Client(),
   );
+
+  // bloc oberver
+  Bloc.observer = AppBlocObserver();
 
   /// feature wise injector
   CommingSoonInjector.inject();
