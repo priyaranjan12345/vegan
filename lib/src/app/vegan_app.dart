@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:vegan/src/features/splash/splash_page.dart';
+import 'package:vegan/src/app/app.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
@@ -15,14 +17,15 @@ class VeganApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter().config(
-        placeholder: (context) => SplashPage(
-          onShown: () {},
-        ),
-        navigatorObservers: () => [
-          AppRouterObserver(),
-        ],
-      ),
+      routerConfig: injector.get<AppRouter>().config(
+            deepLinkBuilder: (deepLink) {
+              log(name: 'vagan-Deeplink:', deepLink.uri.toString());
+              return deepLink;
+            },
+            navigatorObservers: () => [
+              AppRouterObserver(),
+            ],
+          ),
     );
   }
 }
