@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entity/moods_entity.dart';
+
 class MoodsChips extends StatelessWidget {
   const MoodsChips({super.key, required this.moods});
 
-  final List<String> moods;
+  final List<MoodsEntity> moods;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 70,
       child: ListView.builder(
         itemCount: moods.length,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => Chip(
-          label: Text(moods[index]),
-        ),
+        padding: const EdgeInsets.all(12.0),
+        itemBuilder: (context, index) {
+          final mood = moods[index];
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Chip(
+              label: Text(mood.label),
+            ),
+          );
+        },
       ),
     );
   }
