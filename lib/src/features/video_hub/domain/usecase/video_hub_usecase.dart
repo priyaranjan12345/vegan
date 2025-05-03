@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:vegan/src/core/base/app_url.dart';
 
 import 'package:vegan/src/core/error/failure/failure.dart';
 import 'package:vegan/src/core/usecase/usecase.dart';
@@ -8,6 +7,7 @@ import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 
 import '../../../../core/function_mapper/function_mapper.dart';
 import '../../../../core/usecase/no_params.dart';
+import '../entity/playlist_entity.dart';
 import '../repository/video_hub_repository.dart';
 
 class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
@@ -22,48 +22,122 @@ class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
     final result = await videoHubRepository.fetchVideos();
     return result.fold(
       (ex) => Left(ServerFailure()),
-      (ytModel) {
-        final suggestions = ytModel.sectionContents.map(
-          (content) {
-            final header = content.headerModel;
-            final videos = content.innerContents
-                .map(
-                  (innerContent) => VideoEntity(
-                    id: innerContent.videoId,
-                    title: innerContent.title,
-                    description: '',
-                    videoUrl: AppUrl.ytVideoUrl(innerContent.videoId),
-                    thubmnail: innerContent.thumbnail,
-                    publishDate: '',
-                    playlistId: innerContent.playlistId,
-                  ),
-                )
-                .toList();
+      (ytBrowseModel) {
+        final videos = <VideoEntity>[];
+        final playlists = <PlaylistEntity>[];
+        final videoSuggestions = <VideoSuggestionEntity>[];
+        final playlistSuggestions = <PlaylistSuggestionEntity>[];
 
-            return SuggestionEntity(
-              heading: header.heading,
-              videos: videos,
-            );
-          },
-        ).toList();
+        final tabs =
+            ytBrowseModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
+                [];
 
-        // final videoEntities = ytModel.sectionContents
-        //     .expand(
-        //       (sectionContent) => sectionContent.innerContents.map(
-        //         (innerContent) => VideoEntity(
-        //           id: innerContent.videoId,
-        //           title: innerContent.title,
-        //           description: '',
-        //           videoUrl: AppUrl.ytVideoUrl(innerContent.videoId),
-        //           thubmnail: innerContent.thumbnail,
-        //           publishDate: '',
-        //         ),
-        //       ),
-        //     )
-        //     .toList();
+        if (tabs.isNotEmpty) {
+          final contents =
+              tabs.first.tabRenderer?.content?.sectionListRenderer?.contents ??
+                  [];
+
+          if (contents.isNotEmpty) {
+            for (final content in contents) {
+              final heading = content
+                      .musicCarouselShelfRenderer
+                      ?.header
+                      ?.musicCarouselShelfBasicHeaderRenderer
+                      ?.title
+                      ?.runs
+                      .first
+                      .text ??
+                  '';
+
+              final innerContents =
+                  content.musicCarouselShelfRenderer?.contents ?? [];
+
+              // videos
+              for (final innerContent in innerContents) {
+                final videoContent =
+                    innerContent.musicResponsiveListItemRenderer;
+                final playlistContent = innerContent.musicTwoRowItemRenderer;
+
+                // musics
+                if (videoContent != null) {
+                  final musicRenderer = videoContent.flexColumns.first
+                      .musicResponsiveListItemFlexColumnRenderer;
+                  final thumbnail = videoContent
+                          .thumbnail
+                          ?.musicThumbnailRenderer
+                          ?.thumbnail
+                          ?.thumbnails
+                          .first
+                          .url ??
+                      '';
+                  final flexColumnRuns = musicRenderer?.text?.runs.first;
+                  final title = flexColumnRuns?.text ?? '';
+                  final id = flexColumnRuns
+                          ?.navigationEndpoint?.watchEndpoint?.videoId ??
+                      '';
+
+                  videos.add(
+                    VideoEntity(
+                      id: id,
+                      title: title,
+                      description: '',
+                      videoUrl: '',
+                      thubmnail: thumbnail,
+                      publishDate: '',
+                    ),
+                  );
+                }
+
+                // add header and videos
+
+                // playlist
+                if (playlistContent != null) {
+                  final thumbnails = playlistContent.thumbnailRenderer
+                      ?.musicThumbnailRenderer?.thumbnail?.thumbnails;
+                  final thumbnail = thumbnails?.first.url ?? '';
+                  final title = playlistContent.title?.runs.first.text ?? '';
+                  final description =
+                      playlistContent.subtitle?.runs.first.text ?? '';
+                  final id = playlistContent
+                          .navigationEndpoint?.browseEndpoint?.browseId ??
+                      '';
+
+                  playlists.add(
+                    PlaylistEntity(
+                      id: id,
+                      title: title,
+                      description: description,
+                      thumbnail: thumbnail,
+                    ),
+                  );
+                }
+              }
+
+              // add
+              final moreContentButton = content
+                  .musicCarouselShelfRenderer
+                  ?.header
+                  ?.musicCarouselShelfBasicHeaderRenderer
+                  ?.moreContentButton;
+              if (moreContentButton != null) {
+                videoSuggestions.add(
+                  VideoSuggestionEntity(heading: heading, videos: videos),
+                );
+              } else {
+                playlistSuggestions.add(
+                  PlaylistSuggestionEntity(
+                      heading: heading, playlists: playlists),
+                );
+              }
+            }
+          }
+        }
 
         return Right(
-          HomeEntity(suggestions: suggestions),
+          HomeEntity(
+            videoSuggestions: videoSuggestions,
+            playlistSuggestions: playlistSuggestions,
+          ),
         );
       },
     );

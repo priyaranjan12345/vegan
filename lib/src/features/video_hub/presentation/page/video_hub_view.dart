@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vegan/src/core/theme/app_colors.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.dart';
 import 'package:vegan/src/features/video_hub/presentation/state_ui/moods_state_ui/moods_state_ui.dart';
-import 'package:vegan/src/features/video_hub/presentation/widget/movie_banner.dart';
 
-import '../../../../core/components/components.dart';
 import '../../domain/entity/entity.dart';
-import '../widget/moods_chips.dart';
 import '../widget/suggestions.dart';
 
 /// top carousels
@@ -108,7 +103,7 @@ class VideoHub extends StatelessWidget {
         // ),
         const MoodsStateUi(),
         const SizedBox(height: 12),
-        ...homeEntity.suggestions.map(
+        ...homeEntity.videoSuggestions.map(
           (suggestion) {
             return Suggestions(
               suggestions: suggestion.videos,
