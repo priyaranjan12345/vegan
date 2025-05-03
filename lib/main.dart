@@ -10,6 +10,3 @@ Future<void> main() async {
   await init();
   runApp(const VeganApp());
 }
-
-// flutter://com.vegan.app/dashboard_page/search_tab/
-// https://com.vegan.app/dashboard_page/search_tab/
