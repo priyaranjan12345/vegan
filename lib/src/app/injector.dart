@@ -10,6 +10,7 @@ import 'package:vegan/src/core/base/app_url.dart';
 import 'package:vegan/src/core/base/dio_config/dio_config.dart';
 import 'package:vegan/src/features/coming_soon/presentation/injector/coming_soon_injector.dart';
 import 'package:vegan/src/features/video_hub/injector/video_hub_injector.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../core/router/router.dart';
 
@@ -21,6 +22,8 @@ Future<void> init() async {
   /// Global
   /// register auto router instance
   injector.registerSingleton(AppRouter());
+
+  await Future.delayed(const Duration(seconds: 2));
 
   /// logger
   injector.registerSingleton(
@@ -49,6 +52,10 @@ Future<void> init() async {
   /// register external
   injector.registerLazySingleton(
     () => http.Client(),
+  );
+
+  injector.registerLazySingleton(
+    () => YoutubeExplode(),
   );
 
   // bloc oberver
