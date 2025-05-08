@@ -10,3 +10,7 @@ Future<void> main() async {
   await init();
   runApp(const VeganApp());
 }
+
+// playlist
+// global player route(with mini player and Default Ui)
+// netx up
