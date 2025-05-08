@@ -23,28 +23,47 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(),
       child: SizedBox(
         height: height,
         width: width,
         child: Column(
-          spacing: 8,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppImage(
-              width: 60,
-              height: 60,
-              fit: BoxFit.cover,
-              imageUrl: imageUrl,
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              child: AspectRatio(
+                aspectRatio: 1.1,
+                child: AppImage(
+                  fit: BoxFit.fill,
+                  imageUrl: imageUrl,
+                ),
+              ),
             ),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  height: 1,
+                ),
+              ),
             ),
-            Text(
-              subTitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                subTitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
