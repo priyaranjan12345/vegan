@@ -18,11 +18,16 @@ class SplashPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 16.0,
         children: [
-          Center(
-            child: Image.asset('assets/logo/logos_netflix.png'),
+          Image.asset(
+            height: 240,
+            width: 240,
+            'assets/logo/ymify-splash.png',
           ),
-          const RepaintBoundary(
-            child: CircularProgressIndicator(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 52),
+            child: RepaintBoundary(
+              child: LinearProgressIndicator(),
+            ),
           )
         ],
       ),
