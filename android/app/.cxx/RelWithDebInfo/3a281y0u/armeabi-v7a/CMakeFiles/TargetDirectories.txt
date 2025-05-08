@@ -1,0 +1,2 @@
+/home/priyaranjan/Documents/projects/vegan/android/app/.cxx/RelWithDebInfo/3a281y0u/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/priyaranjan/Documents/projects/vegan/android/app/.cxx/RelWithDebInfo/3a281y0u/armeabi-v7a/CMakeFiles/rebuild_cache.dir
