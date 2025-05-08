@@ -43,7 +43,7 @@ class Suggestions extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: 400,
+                height: 320,
                 child: CustomScrollView(
                   controller: controller,
                   scrollDirection: Axis.horizontal,

@@ -33,7 +33,7 @@ class CarouselHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  radius: 16,
+                  radius: 20,
                   child: IconButton(
                     onPressed: onBackword,
                     icon: const Icon(
@@ -46,7 +46,7 @@ class CarouselHeader extends StatelessWidget {
                   width: 10,
                 ),
                 CircleAvatar(
-                  radius: 16,
+                  radius: 20,
                   child: IconButton(
                     onPressed: onForward,
                     icon: const Icon(
