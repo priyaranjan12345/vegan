@@ -10,13 +10,14 @@ abstract class YtApiBody {
         "browserVersion": "91.0.4472.124",
         "osName": "Android",
         "osVersion": "13.0",
-        "platform": "MOBILE"
+        "platform": "MOBILE",
+        "originalUrl": "https://music.youtube.com/",
       }
     }
   };
 
   static const home = {
-    "browseId": "FEmusic_home",
+    // "browseId": "FEmusic_home",
     ...context,
   };
 
@@ -31,8 +32,8 @@ abstract class YtApiBody {
         ...context,
       };
 
-  Map<String, Object> playlistContent(String browseId) => {
-        "browseId": browseId,
+  static Map<String, Object> playlistContent(String? browseId) => {
+        if (browseId != null) "browseId": browseId,
         ...context,
       };
 
