@@ -4,6 +4,7 @@ import 'package:vegan/src/features/video_hub/data/repository/i_video_hub_reposit
 import 'package:vegan/src/features/video_hub/domain/repository/repository.dart';
 import 'package:vegan/src/features/video_hub/domain/usecase/usecase.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/moods_cubit/moods_cubit.dart';
+import 'package:vegan/src/features/video_hub/presentation/bloc/playlist_cubit/playlist_cubit.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.dart';
 
 class VideoHubInjector {
@@ -29,12 +30,20 @@ class VideoHubInjector {
     );
 
     /// moods injector
-    injector.registerLazySingleton<MoodsUsecase>(
+    injector.registerFactory<MoodsUsecase>(
       () => MoodsUsecase(videoHubRepository: injector()),
     );
 
-    injector.registerLazySingleton(
+    injector.registerFactory<MoodsCubit>(
       () => MoodsCubit(moodsUsecase: injector()),
+    );
+
+    injector.registerFactory<PlaylistUsecase>(
+      () => PlaylistUsecase(videoHubRepository: injector()),
+    );
+
+    injector.registerFactory<PlaylistCubit>(
+      () => PlaylistCubit(playlistUsecase: injector()),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class PlaylistEntity extends Equatable {
   final String id;
+  final String browseId;
   final String title;
   final String description;
   final String thumbnail;
@@ -12,6 +13,7 @@ class PlaylistEntity extends Equatable {
 
   const PlaylistEntity({
     required this.id,
+    required this.browseId,
     required this.title,
     required this.description,
     required this.thumbnail,
@@ -24,6 +26,7 @@ class PlaylistEntity extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        browseId,
         title,
         description,
         thumbnail,

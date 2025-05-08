@@ -7,7 +7,7 @@ class VideoEntity extends Equatable {
     required this.description,
     required this.videoUrl,
     required this.thubmnail,
-    required this.publishDate,
+    this.publishDate = '',
     this.playlistId = '',
   });
 

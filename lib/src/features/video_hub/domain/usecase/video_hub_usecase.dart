@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package:vegan/src/core/error/failure/failure.dart';
 import 'package:vegan/src/core/usecase/usecase.dart';
@@ -6,11 +7,10 @@ import 'package:vegan/src/features/video_hub/data/model/video_model.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 
 import '../../../../core/function_mapper/function_mapper.dart';
-import '../../../../core/usecase/no_params.dart';
 import '../entity/playlist_entity.dart';
 import '../repository/video_hub_repository.dart';
 
-class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
+class VideoHubUsecase implements UseCase<HomeEntity, Params> {
   VideoHubUsecase({
     required this.videoHubRepository,
   });
@@ -19,7 +19,9 @@ class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
 
   @override
   Future<Either<Failure, HomeEntity>> call(params) async {
-    final result = await videoHubRepository.fetchVideos();
+    final result = await videoHubRepository.fetchVideos(
+      browseId: params.browseId,
+    );
     return result.fold(
       (ex) => Left(ServerFailure()),
       (ytBrowseModel) {
@@ -38,6 +40,7 @@ class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
                   [];
 
           if (contents.isNotEmpty) {
+            contents.removeLast();
             for (final content in contents) {
               final heading = content
                       .musicCarouselShelfRenderer
@@ -98,13 +101,25 @@ class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
                   final title = playlistContent.title?.runs.first.text ?? '';
                   final description =
                       playlistContent.subtitle?.runs.first.text ?? '';
-                  final id = playlistContent
+                  final browseId = playlistContent
                           .navigationEndpoint?.browseEndpoint?.browseId ??
                       '';
+                  final plalistItems =
+                      playlistContent.menu?.menuRenderer?.items ?? [];
+                  final playlistIds = [
+                    ...plalistItems.map(
+                      (item) => item
+                          .menuNavigationItemRenderer
+                          ?.navigationEndpoint
+                          ?.watchPlaylistEndpoint
+                          ?.playlistId,
+                    ),
+                  ];
 
                   playlists.add(
                     PlaylistEntity(
-                      id: id,
+                      id: playlistIds.first ?? '',
+                      browseId: browseId,
                       title: title,
                       description: description,
                       thumbnail: thumbnail,
@@ -121,12 +136,17 @@ class VideoHubUsecase implements UseCase<HomeEntity, NoParams> {
                   ?.moreContentButton;
               if (moreContentButton != null) {
                 videoSuggestions.add(
-                  VideoSuggestionEntity(heading: heading, videos: videos),
+                  VideoSuggestionEntity(
+                    heading: heading,
+                    videos: videos,
+                  ),
                 );
               } else {
                 playlistSuggestions.add(
                   PlaylistSuggestionEntity(
-                      heading: heading, playlists: playlists),
+                    heading: heading,
+                    playlists: playlists,
+                  ),
                 );
               }
             }
@@ -158,4 +178,13 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
       publishDate: t.uploadTime,
     );
   }
+}
+
+class Params extends Equatable {
+  final String? browseId;
+
+  const Params({this.browseId});
+
+  @override
+  List<Object?> get props => [browseId];
 }

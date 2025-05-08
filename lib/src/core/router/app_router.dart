@@ -35,6 +35,10 @@ class AppRouter extends RootStackRouter {
                   page: VideoHubRoute.page,
                   initial: true,
                 ),
+                AutoRoute(
+                  path: 'playlist',
+                  page: PlaylistRoute.page,
+                ),
               ],
             ),
             AutoRoute(

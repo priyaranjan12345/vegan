@@ -5,11 +5,7 @@ import 'package:vegan/src/features/video_hub/presentation/state_ui/moods_state_u
 
 import '../../domain/entity/entity.dart';
 import '../widget/suggestions.dart';
-
-/// top carousels
-///
-/// suggestions
-///   category and tile
+import '../widget/suggestions_playlist.dart';
 
 class VideoHubView extends StatelessWidget {
   const VideoHubView({super.key});
@@ -38,80 +34,32 @@ class VideoHub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      cacheExtent: 1000,
       padding: EdgeInsets.zero,
+      // addAutomaticKeepAlives: true,
       children: [
-        // const MovieBanner(),
-        // Column(
-        //   children: [
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         SvgPicture.asset(
-        //           'assets/svg/top10.svg',
-        //           semanticsLabel: 'Top 10',
-        //           height: 24,
-        //           width: 24,
-        //         ),
-        //         const SizedBox(width: 8),
-        //         const Text(
-        //           '#2 in Nigeria Today',
-        //           style: TextStyle(
-        //             fontSize: 20,
-        //           ),
-        //         )
-        //       ],
-        //     ),
-        //     const SizedBox(height: 16),
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //       children: [
-        //         const AppIconButton(
-        //           icon: Icons.add,
-        //           label: 'My List',
-        //         ),
-        //         ElevatedButton.icon(
-        //           onPressed: () {},
-        //           style: ElevatedButton.styleFrom(
-        //             backgroundColor: AppColors.midGray,
-        //             foregroundColor: AppColors.black,
-        //             shape: const ContinuousRectangleBorder(
-        //               borderRadius: BorderRadius.all(
-        //                 Radius.circular(16),
-        //               ),
-        //             ),
-        //           ),
-        //           icon: const Icon(
-        //             Icons.play_arrow_rounded,
-        //             size: 28,
-        //             color: AppColors.black,
-        //           ),
-        //           label: const Text(
-        //             'PLAY',
-        //             style: TextStyle(
-        //               fontSize: 16,
-        //               fontWeight: FontWeight.w600,
-        //             ),
-        //           ),
-        //         ),
-        //         const AppIconButton(
-        //           icon: Icons.info_outline_rounded,
-        //           label: 'Info',
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
-        const MoodsStateUi(),
+        const MoodsStateUi(
+          key: ValueKey('moods'),
+        ),
         const SizedBox(height: 12),
         ...homeEntity.videoSuggestions.map(
           (suggestion) {
             return Suggestions(
+              key: ValueKey(suggestion.heading),
               suggestions: suggestion.videos,
               heading: suggestion.heading,
             );
           },
         ),
-        const SizedBox(height: 20),
+        ...homeEntity.playlistSuggestions.map(
+          (playlist) {
+            return SuggestionsPlaylist(
+              key: ValueKey(playlist.heading),
+              playlists: playlist.playlists,
+              heading: playlist.heading,
+            );
+          },
+        ),
       ],
     );
   }
