@@ -21,9 +21,7 @@ class FloatingSnackbar extends StatelessWidget {
     super.key,
     required String message,
   }) : floatingSnackbar = _FloatingSnackbar(
-          message: message,
-          type: FloatingSnackbarType.success
-        );
+            message: message, type: FloatingSnackbarType.success);
 
   FloatingSnackbar.error({
     super.key,
@@ -94,23 +92,27 @@ class _FloatingSnackbar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 15,
-        vertical: 10,
+        vertical: 12,
       ),
       child: Card(
         elevation: 1.6,
         clipBehavior: Clip.hardEdge,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(4),
+          ),
+        ),
         child: Container(
           width: double.infinity,
           color: getColor(type).backgroundColor,
           padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 10,
+            horizontal: 8,
+            vertical: 4,
           ),
           child: Text(
             message,
             style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontSize: 14,
               color: getColor(type).textColor,
             ),
           ),

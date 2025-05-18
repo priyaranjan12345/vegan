@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vegan/src/app/app.dart';
 import 'package:vegan/src/features/player/view/state_ui/max_music_player/max_music_player.dart';
 import 'package:vegan/src/features/player/view/state_ui/mini_music_player/mini_music_player.dart';
 

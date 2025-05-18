@@ -41,7 +41,7 @@ class InternetCheckerView extends StatelessWidget {
               ),
             ConnectivityStatus.disconnected => FloatingSnackbar.error(
                 message:
-                    'Internet is not available \nmay be some features will not work!',
+                    'Internet is not available!',
               ),
             ConnectivityStatus.unknown => FloatingSnackbar.warning(
                 message: 'Unknow error',

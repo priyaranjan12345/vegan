@@ -4,7 +4,6 @@ import 'package:vegan/src/core/components/app_image.dart';
 
 import 'package:vegan/src/features/player/view/yt_player.dart';
 import 'package:vegan/src/features/player/widgets/progress_bar.dart';
-import 'package:vegan/src/shared/extension/duration_x.dart';
 
 class MusicPlayer extends StatelessWidget {
   const MusicPlayer({
