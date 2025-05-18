@@ -37,9 +37,9 @@ class YtPlayer extends StatelessWidget {
                       ),
                     PlayerLoadedState() => MusicPlayer(
                         player: state.player,
-                        thumbnail: state.thumbnail,
-                        title: state.title,
-                        artist: state.artist,
+                        thumbnail: 'state.thumbnail',
+                        title: 'state.title',
+                        artist: 'state.artist',
                       ),
                     PlayerErrorState() => Container(),
                   };
@@ -220,16 +220,6 @@ class MusicTile extends StatelessWidget {
   }
 }
 
-/// extract url
-/// play the music
-/// show next music suggestions
-///
-/// player state ui
-/// loading, loaded, and error Ui
-///
-/// suggestion tile
-///
-
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
     super.key,
@@ -257,12 +247,3 @@ class CustomIconButton extends StatelessWidget {
     );
   }
 }
-
-// Column(
-//                 crossAxisAlignment: CrossAxisAlignment.stretch,
-//                 spacing: 12.0,
-//                 children: [
-                  
-//                   NextUp(),
-//                 ],
-//               )

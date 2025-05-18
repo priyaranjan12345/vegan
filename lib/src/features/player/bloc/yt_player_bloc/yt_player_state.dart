@@ -15,15 +15,9 @@ class PlayerLoadingState extends YtPlayerState {
 class PlayerLoadedState extends YtPlayerState {
   const PlayerLoadedState({
     required this.player,
-    required this.title,
-    required this.artist,
-    required this.thumbnail,
   });
 
   final Player player;
-  final String title;
-  final String artist;
-  final String thumbnail;
 }
 
 class PlayerErrorState extends YtPlayerState {

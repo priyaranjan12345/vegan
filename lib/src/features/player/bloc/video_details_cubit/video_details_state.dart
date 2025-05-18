@@ -3,28 +3,32 @@ part of 'video_details_cubit.dart';
 
 class VideoDetailsState extends Equatable {
   const VideoDetailsState({
-    required this.videoDetails,
+    required this.videoDetailsStatus,
+    this.videoId = '',
     required this.title,
     required this.artist,
     required this.author,
     required this.thumbnail,
   });
 
-  final VideoDetails videoDetails;
+  final VideoDetailsStatus videoDetailsStatus;
+  final String videoId;
   final String title;
   final String artist;
   final String author;
   final String thumbnail;
 
   VideoDetailsState copyWith({
-    VideoDetails? videoDetails,
+    VideoDetailsStatus? videoDetailsStatus,
+    String? videoId,
     String? title,
     String? artist,
     String? author,
     String? thumbnail,
   }) {
     return VideoDetailsState(
-      videoDetails: videoDetails ?? this.videoDetails,
+      videoDetailsStatus: videoDetailsStatus ?? this.videoDetailsStatus,
+      videoId: videoId ?? this.videoId,
       title: title ?? this.title,
       artist: artist ?? this.artist,
       author: author ?? this.author,
@@ -34,7 +38,8 @@ class VideoDetailsState extends Equatable {
 
   @override
   List<Object> get props => [
-        videoDetails,
+        videoDetailsStatus,
+        videoId,
         title,
         artist,
         author,
@@ -42,4 +47,4 @@ class VideoDetailsState extends Equatable {
       ];
 }
 
-enum VideoDetails { init, loading, loaded, error }
+enum VideoDetailsStatus { init, loading, loaded, error }

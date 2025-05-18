@@ -24,12 +24,13 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
     try {
       final videoId = event.videoId;
       final streamsClient = _youtubeExplode.videos.streamsClient;
-      final streamManifest = await streamsClient.getManifest(videoId);
-      final audioStream = streamManifest.audioOnly.withHighestBitrate();
+      final streamManifest = await streamsClient.getManifest(
+        videoId,
+        requireWatchPage: true,
+        ytClients: [YoutubeApiClient.androidVr],
+      );
+      final audioStream = streamManifest.audio.withHighestBitrate();
       final url = audioStream.url.toString();
-
-      final ytUrl = 'https://youtube.com/watch?v=$videoId';
-      var video = await _youtubeExplode.videos.get(ytUrl);
 
       await _player.open(Media(url));
       await _player.pause();
@@ -37,9 +38,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
       emit(
         PlayerLoadedState(
           player: _player,
-          title: video.title,
-          artist: video.author,
-          thumbnail: video.thumbnails.mediumResUrl,
         ),
       );
     } catch (e) {
@@ -47,11 +45,13 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
     }
   }
 
+  void getDetails() {}
+
   @override
   Future<void> close() {
     _player.dispose();
     _youtubeExplode.close();
-    
+
     return super.close();
   }
 }

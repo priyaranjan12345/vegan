@@ -15,27 +15,37 @@ class VideoDetailsCubit extends Cubit<VideoDetailsState> {
     author: '',
     thumbnail: '',
     title: '',
-    videoDetails: VideoDetails.init,
+    videoDetailsStatus: VideoDetailsStatus.init,
   );
 
   final YoutubeExplode _youtubeExplode;
 
   Future<void> getVideoDetails(String videoId) async {
-    emit(state.copyWith(videoDetails: VideoDetails.loading));
+    emit(
+      state.copyWith(
+        videoDetailsStatus: VideoDetailsStatus.loading,
+      ),
+    );
     try {
       final ytUrl = 'https://youtube.com/watch?v=$videoId';
       var video = await _youtubeExplode.videos.get(ytUrl);
+
       emit(
         state.copyWith(
-          artist: video.author,
+          videoId: videoId,
+          artist: video.description,
           author: video.author,
           thumbnail: video.thumbnails.mediumResUrl,
           title: video.title,
-          videoDetails: VideoDetails.loaded,
+          videoDetailsStatus: VideoDetailsStatus.loaded,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(videoDetails: VideoDetails.error));
+      emit(
+        state.copyWith(
+          videoDetailsStatus: VideoDetailsStatus.error,
+        ),
+      );
     }
   }
 }

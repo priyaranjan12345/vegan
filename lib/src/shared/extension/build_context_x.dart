@@ -9,6 +9,7 @@ extension BuildContextX on BuildContext {
   bool get isLandscape =>
       MediaQuery.orientationOf(this) == Orientation.landscape;
 
-  bool get isPortrait =>
-      MediaQuery.orientationOf(this) == Orientation.portrait;
+  bool get isPortrait => MediaQuery.orientationOf(this) == Orientation.portrait;
+
+  TextTheme get textTheme => Theme.of(this).textTheme;
 }

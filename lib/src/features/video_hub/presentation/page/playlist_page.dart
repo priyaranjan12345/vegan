@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/app/app.dart';
 import 'package:vegan/src/core/components/app_tile.dart';
+import 'package:vegan/src/features/player/bloc/video_details_cubit/video_details_cubit.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/playlist_cubit/playlist_cubit.dart';
 
 @RoutePage()
@@ -14,6 +15,9 @@ class PlaylistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Playlist'),
+      ),
       body: SafeArea(
         child: BlocProvider<PlaylistCubit>(
           create: (_) => injector<PlaylistCubit>()..loadPlaylist(browseId),
@@ -43,6 +47,9 @@ class PlaylistView extends StatelessWidget {
                 imageUrl: item.thubmnail,
                 title: item.title,
                 subTitle: item.description,
+                onTap: () {
+                  context.read<VideoDetailsCubit>().getVideoDetails(item.id);
+                },
               );
             },
           ),

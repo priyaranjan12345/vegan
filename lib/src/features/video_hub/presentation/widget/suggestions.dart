@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/core/components/app_tile.dart';
-import 'package:vegan/src/features/player/view/yt_player.dart';
+import 'package:vegan/src/features/player/bloc/video_details_cubit/video_details_cubit.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:vegan/src/shared/extension/extensions.dart';
 
@@ -73,13 +74,12 @@ class Suggestions extends StatelessWidget {
                                     title: title,
                                     subTitle: subTitle,
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => YtPlayer(
-                                            videoId: suggestion.id,
-                                          ),
-                                        ),
-                                      );
+                                      context
+                                          .read<VideoDetailsCubit>()
+                                          .getVideoDetails(suggestion.id);
+                                      // context
+                                      //     .read<YtPlayerBloc>()
+                                      //     .add(LoadMusic(suggestion.id));
                                     },
                                   );
                                 },
