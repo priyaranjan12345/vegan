@@ -9,8 +9,8 @@ import 'package:vegan/src/app/bloc_observer.dart';
 import 'package:vegan/src/core/base/app_url.dart';
 import 'package:vegan/src/core/base/dio_config/dio_config.dart';
 import 'package:vegan/src/features/coming_soon/presentation/injector/coming_soon_injector.dart';
+import 'package:vegan/src/features/player/injector/player_injector.dart';
 import 'package:vegan/src/features/video_hub/injector/video_hub_injector.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../core/router/router.dart';
 
@@ -54,14 +54,11 @@ Future<void> init() async {
     () => http.Client(),
   );
 
-  injector.registerLazySingleton(
-    () => YoutubeExplode(),
-  );
-
   // bloc oberver
   Bloc.observer = AppBlocObserver();
 
   /// feature wise injector
   CommingSoonInjector.inject();
   VideoHubInjector.inject();
+  PlayerInjector.inject();
 }
