@@ -87,6 +87,10 @@ class AppRouter extends RootStackRouter {
             ),
           ],
         ),
+        AutoRoute(
+          path: '/max-player',
+          page: MaxPlayerRoute.page,
+        )
       ];
 
   @override
