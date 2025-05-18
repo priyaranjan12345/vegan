@@ -20,7 +20,7 @@ class PlayerProgressIndicator extends StatefulWidget {
     super.key,
     this.colors = const PlayerProgressColors(),
     required this.allowScrubbing,
-    this.padding = const EdgeInsets.only(top: 5.0),
+    this.padding = EdgeInsets.zero,
   });
 
   final Player player;

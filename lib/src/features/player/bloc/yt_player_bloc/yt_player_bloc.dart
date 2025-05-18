@@ -23,6 +23,9 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
 
     try {
       final videoId = event.videoId;
+      final ytUrl = 'https://youtube.com/watch?v=$videoId';
+      var video = await _youtubeExplode.videos.get(ytUrl);
+
       final streamsClient = _youtubeExplode.videos.streamsClient;
       final streamManifest = await streamsClient.getManifest(
         videoId,
@@ -38,6 +41,11 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
       emit(
         PlayerLoadedState(
           player: _player,
+          title: video.title,
+          author: video.author,
+          thumbnail: video.thumbnails.mediumResUrl,
+          videoId: videoId,
+          description: video.description,
         ),
       );
     } catch (e) {

@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:vegan/src/features/player/view/mini_player.dart';
-
-import '../../../core/theme/app_colors.dart';
+import 'package:vegan/src/features/player/view/player_view.dart';
 
 @RoutePage()
 class MaxPlayerPage extends StatelessWidget {
@@ -12,22 +10,10 @@ class MaxPlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            color: AppColors.darkGray,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MiniPlayerDeatilsWrapper(),
-              PlayButtonWrapper(),
-            ],
-          ),
+      body: const Padding(
+        padding: EdgeInsets.all(16),
+        child: PlayerView(
+          isMaxPlayer: true,
         ),
       ),
     );
@@ -69,7 +55,6 @@ class SafeAreaPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     return false;
   }
 }
-
 
 // SafeArea(
 //       child: CustomScrollView(

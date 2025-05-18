@@ -1,5 +1,4 @@
 import 'package:media_kit/media_kit.dart';
-import 'package:vegan/src/features/player/bloc/notifier/player_notifier.dart';
 import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -16,7 +15,7 @@ class PlayerInjector {
     injector.registerFactory(
       () => YoutubeExplode(),
     );
-    injector.registerFactory(
+    injector.registerLazySingleton(
       () => YtPlayerBloc(
         player: injector<Player>(),
         youtubeExplode: injector<YoutubeExplode>(),
@@ -26,10 +25,6 @@ class PlayerInjector {
       () => VideoDetailsCubit(
         youtubeExplode: injector<YoutubeExplode>(),
       ),
-    );
-
-    injector.registerFactory(
-      () => PlayerNotifer(),
     );
   }
 }
