@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:vegan/src/core/error/exception/custom_exception.dart';
+import 'package:vegan/src/features/video_hub/data/model/yt_model/yt_next_up_model.dart';
 
 import '../../domain/repository/video_hub_repository.dart';
 import '../datasource/datasource.dart';
@@ -62,6 +63,29 @@ class IVideoHubRepository implements VideoHubRepository {
         final body = response.data;
         final ytModel = YtPlaylistModel.fromJson(body);
         return Right(ytModel);
+      } catch (e) {
+        return Left(ServerException());
+      }
+    }
+
+    return Left(ServerException());
+  }
+
+  @override
+  Future<Either<Exception, YtNextUpModel>> fetchNextUp({
+    required String videoId,
+    required String playlistId,
+  }) async {
+    final response = await videoHubRemoteDatasource.getNextUpResponse(
+      videoId: videoId,
+      playlistId: playlistId,
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        final body = response.data;
+        final ytNextUpModel = YtNextUpModel.fromJson(body);
+        return Right(ytNextUpModel);
       } catch (e) {
         return Left(ServerException());
       }

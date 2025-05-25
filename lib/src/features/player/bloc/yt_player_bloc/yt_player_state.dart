@@ -20,6 +20,8 @@ class PlayerLoadedState extends YtPlayerState {
     required this.description,
     required this.author,
     required this.thumbnail,
+    required this.playlistId,
+    required this.playlistIndex
   });
 
   final Player player;
@@ -28,6 +30,8 @@ class PlayerLoadedState extends YtPlayerState {
   final String description;
   final String author;
   final String thumbnail;
+  final String playlistId;
+  final int playlistIndex;
 }
 
 class PlayerErrorState extends YtPlayerState {

@@ -57,7 +57,8 @@ class Suggestions extends StatelessWidget {
                         builder: (context, constraints) {
                           return SliverToBoxAdapter(
                             child: SizedBox(
-                              width: (constraints.viewportMainAxisExtent) *
+                              width:
+                                  (constraints.viewportMainAxisExtent) *
                                   controller.viewportFraction,
                               child: ListView.builder(
                                 itemCount: suggestionList.length,
@@ -74,8 +75,12 @@ class Suggestions extends StatelessWidget {
                                     title: title,
                                     subTitle: subTitle,
                                     onTap: () {
-                                      injector<YtPlayerBloc>()
-                                          .add(LoadMusic(suggestion.id));
+                                      injector<YtPlayerBloc>().add(
+                                        LoadMusic(
+                                          suggestion.id,
+                                          playlistId: suggestion.playlistId,
+                                        ),
+                                      );
                                     },
                                   );
                                 },
@@ -84,7 +89,7 @@ class Suggestions extends StatelessWidget {
                           );
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

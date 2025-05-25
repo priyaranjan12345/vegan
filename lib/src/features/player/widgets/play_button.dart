@@ -36,8 +36,8 @@ class LoadingPlayButton extends PlayButton {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      height: 30,
-      width: 30,
+      height: 32,
+      width: 32,
       child: Material(
         color: AppColors.darkGray,
         surfaceTintColor: AppColors.darkGray,
@@ -62,23 +62,30 @@ class LoadedPlayButton extends PlayButton {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30,
-      width: 30,
+      height: 36,
+      width: 36,
       child: Material(
         color: AppColors.darkGray,
         surfaceTintColor: AppColors.darkGray,
         shape: const CircleBorder(),
         child: StreamBuilder(
             stream: player.stream.playing,
+            initialData: player.state.playing,
             builder: (context, data) {
               final isPlaying = data.data ?? false;
               final icon = isPlaying
-                  ? const Icon(Icons.pause_rounded)
-                  : const Icon(Icons.play_arrow_rounded);
+                  ? const Icon(
+                      Icons.pause_rounded,
+                      size: 28,
+                    )
+                  : const Icon(
+                      Icons.play_arrow_rounded,
+                      size: 28,
+                    );
 
               return InkWell(
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(30),
+                  Radius.circular(32),
                 ),
                 onTap: () {
                   if (isPlaying) {
@@ -101,8 +108,8 @@ class ErrorPlayButton extends PlayButton {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      height: 30,
-      width: 30,
+      height: 32,
+      width: 32,
       child: Material(
         color: AppColors.darkGray,
         surfaceTintColor: AppColors.darkGray,

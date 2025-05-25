@@ -7,7 +7,7 @@ class VideoEntity extends Equatable {
     required this.description,
     required this.videoUrl,
     required this.thubmnail,
-    this.publishDate = '',
+    this.browseId = '',
     this.playlistId = '',
   });
 
@@ -16,17 +16,17 @@ class VideoEntity extends Equatable {
   final String description;
   final String videoUrl;
   final String thubmnail;
-  final String publishDate;
+  final String browseId;
   final String playlistId;
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        description,
-        videoUrl,
-        thubmnail,
-        publishDate,
-        playlistId,
-      ];
+    id,
+    title,
+    description,
+    videoUrl,
+    thubmnail,
+    browseId,
+    playlistId,
+  ];
 }

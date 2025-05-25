@@ -6,6 +6,10 @@ import '../../../../core/base/yt_api_body.dart';
 abstract class VideoHubRemoteDatasource {
   Future<Response> getMoodsResponse();
   Future<Response> getVideosResponse({String? browseId});
+  Future<Response> getNextUpResponse({
+    required String videoId,
+    required String playlistId,
+  });
 }
 
 class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
@@ -28,6 +32,20 @@ class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
     return await dio.post(
       AppUrl.browse,
       data: YtApiBody.playlistContent(browseId),
+    );
+  }
+
+  @override
+  Future<Response> getNextUpResponse({
+    required String videoId,
+    required String playlistId,
+  }) async {
+    return await dio.post(
+      AppUrl.next,
+      data: YtApiBody.nextUp(
+        videoId: videoId,
+        playlistId: playlistId,
+      ),
     );
   }
 }

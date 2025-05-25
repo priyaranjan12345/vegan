@@ -3,7 +3,8 @@ import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dar
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../../app/app.dart';
-import '../bloc/video_details_cubit/video_details_cubit.dart';
+import '../domain/usecase/next_up_usecase.dart';
+import '../bloc/next_up_cubit/next_up_cubit.dart';
 
 class PlayerInjector {
   PlayerInjector._();
@@ -15,16 +16,23 @@ class PlayerInjector {
     injector.registerFactory(
       () => YoutubeExplode(),
     );
+
+    // player
     injector.registerLazySingleton(
       () => YtPlayerBloc(
         player: injector<Player>(),
         youtubeExplode: injector<YoutubeExplode>(),
+        nextUpUsecase: injector<NextUpUsecase>(),
       ),
     );
-    injector.registerFactory(
-      () => VideoDetailsCubit(
-        youtubeExplode: injector<YoutubeExplode>(),
-      ),
+
+    // Next up
+    injector.registerFactory<NextUpUsecase>(
+      () => NextUpUsecase(videoHubRepository: injector()),
+    );
+
+    injector.registerLazySingleton<NextUpCubit>(
+      () => NextUpCubit(nextUpUsecase: injector()),
     );
   }
 }

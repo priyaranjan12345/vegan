@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:vegan/src/features/player/view/yt_player.dart';
 import 'package:vegan/src/shared/extension/build_context_x.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -145,14 +144,14 @@ class VideosForYouWidget extends StatelessWidget {
                                             ),
                                             ElevatedButton(
                                               onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        YtPlayer(
-                                                      videoId: video.id,
-                                                    ),
-                                                  ),
-                                                );
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         YtPlayer(
+                                                //       videoId: video.id,
+                                                //     ),
+                                                //   ),
+                                                // );
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors.red,

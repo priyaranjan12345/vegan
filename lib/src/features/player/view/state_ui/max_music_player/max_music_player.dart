@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/core/components/app_image.dart';
+import 'package:vegan/src/core/components/app_text.dart';
 
-import 'package:vegan/src/features/player/view/yt_player.dart';
+import 'package:vegan/src/features/player/widgets/play_button.dart';
 import 'package:vegan/src/features/player/widgets/progress_bar.dart';
+
+import '../../../../../core/components/components.dart';
 
 class MusicPlayer extends StatelessWidget {
   const MusicPlayer({
@@ -92,46 +95,34 @@ class MaxMusicPlayer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(title),
-                  Text(artist),
+                  AppText.heading(
+                    text: title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  AppText.smallText(
+                    text: artist,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomIconButton(
+                      AppIconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.favorite_border),
                       ),
-                      CustomIconButton(
+                      AppIconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
-                      StreamBuilder<bool>(
-                        stream: player.stream.playing,
-                        builder: (context, snapshot) {
-                          final flag = snapshot.data ?? false;
-
-                          return CustomIconButton(
-                            onPressed: () {
-                              if (!flag) {
-                                player.play();
-                              } else {
-                                player.pause();
-                              }
-                            },
-                            icon: Icon(
-                              flag
-                                  ? Icons.pause_rounded
-                                  : Icons.play_arrow_rounded,
-                            ),
-                          );
-                        },
-                      ),
-                      CustomIconButton(
+                      PlayButton.success(player: player),
+                      AppIconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.skip_next_rounded),
                       ),
-                      CustomIconButton(
+                      AppIconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.download_outlined),
                       ),
@@ -142,15 +133,18 @@ class MaxMusicPlayer extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 5,
-          width: double.infinity,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-            child: PlayerProgressIndicator(
-              player,
-              allowScrubbing: true,
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: SizedBox(
+            height: 6,
+            width: double.infinity,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
+              child: PlayerProgressIndicator(
+                player,
+                allowScrubbing: true,
+              ),
             ),
           ),
         ),

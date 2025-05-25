@@ -15,7 +15,7 @@ class VideoHubInjector {
     );
 
     /// register Usecase
-    injector.registerLazySingleton(
+    injector.registerLazySingleton<VideoHubUsecase>(
       () => VideoHubUsecase(videoHubRepository: injector()),
     );
 

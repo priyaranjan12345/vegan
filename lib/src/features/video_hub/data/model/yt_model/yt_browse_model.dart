@@ -15,16 +15,16 @@ class YtBrowseModel {
 
   factory YtBrowseModel.fromJson(Map<String, dynamic> json) {
     return YtBrowseModel(
-      responseContext: json["responseContext"] == null
+      responseContext: json['responseContext'] == null
           ? null
-          : ResponseContext.fromJson(json["responseContext"]),
+          : ResponseContext.fromJson(json['responseContext']),
       contents:
-          json["contents"] == null ? null : Contents.fromJson(json["contents"]),
-      trackingParams: json["trackingParams"],
-      maxAgeStoreSeconds: json["maxAgeStoreSeconds"],
-      background: json["background"] == null
+          json['contents'] == null ? null : Contents.fromJson(json['contents']),
+      trackingParams: json['trackingParams'],
+      maxAgeStoreSeconds: json['maxAgeStoreSeconds'],
+      background: json['background'] == null
           ? null
-          : ThumbnailClass.fromJson(json["background"]),
+          : ThumbnailClass.fromJson(json['background']),
     );
   }
 }
@@ -38,9 +38,9 @@ class ThumbnailClass {
 
   factory ThumbnailClass.fromJson(Map<String, dynamic> json) {
     return ThumbnailClass(
-      musicThumbnailRenderer: json["musicThumbnailRenderer"] == null
+      musicThumbnailRenderer: json['musicThumbnailRenderer'] == null
           ? null
-          : MusicThumbnailRenderer.fromJson(json["musicThumbnailRenderer"]),
+          : MusicThumbnailRenderer.fromJson(json['musicThumbnailRenderer']),
     );
   }
 }
@@ -60,12 +60,12 @@ class MusicThumbnailRenderer {
 
   factory MusicThumbnailRenderer.fromJson(Map<String, dynamic> json) {
     return MusicThumbnailRenderer(
-      thumbnail: json["thumbnail"] == null
+      thumbnail: json['thumbnail'] == null
           ? null
-          : MusicThumbnailRendererThumbnail.fromJson(json["thumbnail"]),
-      thumbnailCrop: json["thumbnailCrop"],
-      thumbnailScale: json["thumbnailScale"],
-      trackingParams: json["trackingParams"],
+          : MusicThumbnailRendererThumbnail.fromJson(json['thumbnail']),
+      thumbnailCrop: json['thumbnailCrop'],
+      thumbnailScale: json['thumbnailScale'],
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -79,10 +79,10 @@ class MusicThumbnailRendererThumbnail {
 
   factory MusicThumbnailRendererThumbnail.fromJson(Map<String, dynamic> json) {
     return MusicThumbnailRendererThumbnail(
-      thumbnails: json["thumbnails"] == null
+      thumbnails: json['thumbnails'] == null
           ? []
           : List<ThumbnailElement>.from(
-              json["thumbnails"]!.map((x) => ThumbnailElement.fromJson(x))),
+              json['thumbnails']!.map((x) => ThumbnailElement.fromJson(x))),
     );
   }
 }
@@ -100,9 +100,9 @@ class ThumbnailElement {
 
   factory ThumbnailElement.fromJson(Map<String, dynamic> json) {
     return ThumbnailElement(
-      url: json["url"],
-      width: json["width"],
-      height: json["height"],
+      url: json['url'],
+      width: json['width'],
+      height: json['height'],
     );
   }
 }
@@ -117,10 +117,10 @@ class Contents {
   factory Contents.fromJson(Map<String, dynamic> json) {
     return Contents(
       singleColumnBrowseResultsRenderer:
-          json["singleColumnBrowseResultsRenderer"] == null
+          json['singleColumnBrowseResultsRenderer'] == null
               ? null
               : SingleColumnBrowseResultsRenderer.fromJson(
-                  json["singleColumnBrowseResultsRenderer"]),
+                  json['singleColumnBrowseResultsRenderer']),
     );
   }
 }
@@ -135,9 +135,9 @@ class SingleColumnBrowseResultsRenderer {
   factory SingleColumnBrowseResultsRenderer.fromJson(
       Map<String, dynamic> json) {
     return SingleColumnBrowseResultsRenderer(
-      tabs: json["tabs"] == null
+      tabs: json['tabs'] == null
           ? []
-          : List<Tab>.from(json["tabs"]!.map((x) => Tab.fromJson(x))),
+          : List<Tab>.from(json['tabs']!.map((x) => Tab.fromJson(x))),
     );
   }
 }
@@ -151,9 +151,9 @@ class Tab {
 
   factory Tab.fromJson(Map<String, dynamic> json) {
     return Tab(
-      tabRenderer: json["tabRenderer"] == null
+      tabRenderer: json['tabRenderer'] == null
           ? null
-          : TabRenderer.fromJson(json["tabRenderer"]),
+          : TabRenderer.fromJson(json['tabRenderer']),
     );
   }
 }
@@ -180,15 +180,15 @@ class TabRenderer {
   factory TabRenderer.fromJson(Map<String, dynamic> json) {
     return TabRenderer(
       endpoint:
-          json["endpoint"] == null ? null : Endpoint.fromJson(json["endpoint"]),
-      title: json["title"],
-      selected: json["selected"],
-      content: json["content"] == null
+          json['endpoint'] == null ? null : Endpoint.fromJson(json['endpoint']),
+      title: json['title'],
+      selected: json['selected'],
+      content: json['content'] == null
           ? null
-          : TabRendererContent.fromJson(json["content"]),
-      icon: json["icon"] == null ? null : Icon.fromJson(json["icon"]),
-      tabIdentifier: json["tabIdentifier"],
-      trackingParams: json["trackingParams"],
+          : TabRendererContent.fromJson(json['content']),
+      icon: json['icon'] == null ? null : Icon.fromJson(json['icon']),
+      tabIdentifier: json['tabIdentifier'],
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -202,9 +202,9 @@ class TabRendererContent {
 
   factory TabRendererContent.fromJson(Map<String, dynamic> json) {
     return TabRendererContent(
-      sectionListRenderer: json["sectionListRenderer"] == null
+      sectionListRenderer: json['sectionListRenderer'] == null
           ? null
-          : SectionListRenderer.fromJson(json["sectionListRenderer"]),
+          : SectionListRenderer.fromJson(json['sectionListRenderer']),
     );
   }
 }
@@ -224,18 +224,18 @@ class SectionListRenderer {
 
   factory SectionListRenderer.fromJson(Map<String, dynamic> json) {
     return SectionListRenderer(
-      contents: json["contents"] == null
+      contents: json['contents'] == null
           ? []
-          : List<SectionListRendererContent>.from(json["contents"]!
+          : List<SectionListRendererContent>.from(json['contents']!
               .map((x) => SectionListRendererContent.fromJson(x))),
-      continuations: json["continuations"] == null
+      continuations: json['continuations'] == null
           ? []
           : List<Continuation>.from(
-              json["continuations"]!.map((x) => Continuation.fromJson(x))),
-      trackingParams: json["trackingParams"],
-      header: json["header"] == null
+              json['continuations']!.map((x) => Continuation.fromJson(x))),
+      trackingParams: json['trackingParams'],
+      header: json['header'] == null
           ? null
-          : SectionListRendererHeader.fromJson(json["header"]),
+          : SectionListRendererHeader.fromJson(json['header']),
     );
   }
 }
@@ -251,15 +251,15 @@ class SectionListRendererContent {
 
   factory SectionListRendererContent.fromJson(Map<String, dynamic> json) {
     return SectionListRendererContent(
-      musicCarouselShelfRenderer: json["musicCarouselShelfRenderer"] == null
+      musicCarouselShelfRenderer: json['musicCarouselShelfRenderer'] == null
           ? null
           : MusicCarouselShelfRenderer.fromJson(
-              json["musicCarouselShelfRenderer"]),
+              json['musicCarouselShelfRenderer']),
       musicTastebuilderShelfRenderer:
-          json["musicTastebuilderShelfRenderer"] == null
+          json['musicTastebuilderShelfRenderer'] == null
               ? null
               : MusicTastebuilderShelfRenderer.fromJson(
-                  json["musicTastebuilderShelfRenderer"]),
+                  json['musicTastebuilderShelfRenderer']),
     );
   }
 }
@@ -281,16 +281,16 @@ class MusicCarouselShelfRenderer {
 
   factory MusicCarouselShelfRenderer.fromJson(Map<String, dynamic> json) {
     return MusicCarouselShelfRenderer(
-      header: json["header"] == null
+      header: json['header'] == null
           ? null
-          : MusicCarouselShelfRendererHeader.fromJson(json["header"]),
-      contents: json["contents"] == null
+          : MusicCarouselShelfRendererHeader.fromJson(json['header']),
+      contents: json['contents'] == null
           ? []
-          : List<MusicCarouselShelfRendererContent>.from(json["contents"]!
+          : List<MusicCarouselShelfRendererContent>.from(json['contents']!
               .map((x) => MusicCarouselShelfRendererContent.fromJson(x))),
-      trackingParams: json["trackingParams"],
-      itemSize: json["itemSize"],
-      numItemsPerColumn: json["numItemsPerColumn"],
+      trackingParams: json['trackingParams'],
+      itemSize: json['itemSize'],
+      numItemsPerColumn: json['numItemsPerColumn'],
     );
   }
 }
@@ -308,13 +308,13 @@ class MusicCarouselShelfRendererContent {
       Map<String, dynamic> json) {
     return MusicCarouselShelfRendererContent(
       musicResponsiveListItemRenderer:
-          json["musicResponsiveListItemRenderer"] == null
+          json['musicResponsiveListItemRenderer'] == null
               ? null
               : MusicResponsiveListItemRenderer.fromJson(
-                  json["musicResponsiveListItemRenderer"]),
-      musicTwoRowItemRenderer: json["musicTwoRowItemRenderer"] == null
+                  json['musicResponsiveListItemRenderer']),
+      musicTwoRowItemRenderer: json['musicTwoRowItemRenderer'] == null
           ? null
-          : MusicTwoRowItemRenderer.fromJson(json["musicTwoRowItemRenderer"]),
+          : MusicTwoRowItemRenderer.fromJson(json['musicTwoRowItemRenderer']),
     );
   }
 }
@@ -344,27 +344,27 @@ class MusicResponsiveListItemRenderer {
 
   factory MusicResponsiveListItemRenderer.fromJson(Map<String, dynamic> json) {
     return MusicResponsiveListItemRenderer(
-      trackingParams: json["trackingParams"],
-      thumbnail: json["thumbnail"] == null
+      trackingParams: json['trackingParams'],
+      thumbnail: json['thumbnail'] == null
           ? null
-          : ThumbnailClass.fromJson(json["thumbnail"]),
+          : ThumbnailClass.fromJson(json['thumbnail']),
       overlay:
-          json["overlay"] == null ? null : Overlay.fromJson(json["overlay"]),
-      flexColumns: json["flexColumns"] == null
+          json['overlay'] == null ? null : Overlay.fromJson(json['overlay']),
+      flexColumns: json['flexColumns'] == null
           ? []
           : List<FlexColumn>.from(
-              json["flexColumns"]!.map((x) => FlexColumn.fromJson(x))),
-      menu: json["menu"] == null
+              json['flexColumns']!.map((x) => FlexColumn.fromJson(x))),
+      menu: json['menu'] == null
           ? null
-          : MusicResponsiveListItemRendererMenu.fromJson(json["menu"]),
-      playlistItemData: json["playlistItemData"] == null
+          : MusicResponsiveListItemRendererMenu.fromJson(json['menu']),
+      playlistItemData: json['playlistItemData'] == null
           ? null
-          : PlaylistItemData.fromJson(json["playlistItemData"]),
-      flexColumnDisplayStyle: json["flexColumnDisplayStyle"],
-      itemHeight: json["itemHeight"],
-      badges: json["badges"] == null
+          : PlaylistItemData.fromJson(json['playlistItemData']),
+      flexColumnDisplayStyle: json['flexColumnDisplayStyle'],
+      itemHeight: json['itemHeight'],
+      badges: json['badges'] == null
           ? []
-          : List<Badge>.from(json["badges"]!.map((x) => Badge.fromJson(x))),
+          : List<Badge>.from(json['badges']!.map((x) => Badge.fromJson(x))),
     );
   }
 }
@@ -378,9 +378,9 @@ class Badge {
 
   factory Badge.fromJson(Map<String, dynamic> json) {
     return Badge(
-      musicInlineBadgeRenderer: json["musicInlineBadgeRenderer"] == null
+      musicInlineBadgeRenderer: json['musicInlineBadgeRenderer'] == null
           ? null
-          : MusicInlineBadgeRenderer.fromJson(json["musicInlineBadgeRenderer"]),
+          : MusicInlineBadgeRenderer.fromJson(json['musicInlineBadgeRenderer']),
     );
   }
 }
@@ -398,11 +398,11 @@ class MusicInlineBadgeRenderer {
 
   factory MusicInlineBadgeRenderer.fromJson(Map<String, dynamic> json) {
     return MusicInlineBadgeRenderer(
-      trackingParams: json["trackingParams"],
-      icon: json["icon"] == null ? null : Icon.fromJson(json["icon"]),
-      accessibilityData: json["accessibilityData"] == null
+      trackingParams: json['trackingParams'],
+      icon: json['icon'] == null ? null : Icon.fromJson(json['icon']),
+      accessibilityData: json['accessibilityData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityData"]),
+          : Accessibility.fromJson(json['accessibilityData']),
     );
   }
 }
@@ -416,9 +416,9 @@ class Accessibility {
 
   factory Accessibility.fromJson(Map<String, dynamic> json) {
     return Accessibility(
-      accessibilityData: json["accessibilityData"] == null
+      accessibilityData: json['accessibilityData'] == null
           ? null
-          : AccessibilityData.fromJson(json["accessibilityData"]),
+          : AccessibilityData.fromJson(json['accessibilityData']),
     );
   }
 }
@@ -432,7 +432,7 @@ class AccessibilityData {
 
   factory AccessibilityData.fromJson(Map<String, dynamic> json) {
     return AccessibilityData(
-      label: json["label"],
+      label: json['label'],
     );
   }
 }
@@ -446,7 +446,7 @@ class Icon {
 
   factory Icon.fromJson(Map<String, dynamic> json) {
     return Icon(
-      iconType: json["iconType"],
+      iconType: json['iconType'],
     );
   }
 }
@@ -462,10 +462,10 @@ class FlexColumn {
   factory FlexColumn.fromJson(Map<String, dynamic> json) {
     return FlexColumn(
       musicResponsiveListItemFlexColumnRenderer:
-          json["musicResponsiveListItemFlexColumnRenderer"] == null
+          json['musicResponsiveListItemFlexColumnRenderer'] == null
               ? null
               : MusicResponsiveListItemFlexColumnRenderer.fromJson(
-                  json["musicResponsiveListItemFlexColumnRenderer"]),
+                  json['musicResponsiveListItemFlexColumnRenderer']),
     );
   }
 }
@@ -482,8 +482,8 @@ class MusicResponsiveListItemFlexColumnRenderer {
   factory MusicResponsiveListItemFlexColumnRenderer.fromJson(
       Map<String, dynamic> json) {
     return MusicResponsiveListItemFlexColumnRenderer(
-      text: json["text"] == null ? null : Text.fromJson(json["text"]),
-      displayPriority: json["displayPriority"],
+      text: json['text'] == null ? null : Text.fromJson(json['text']),
+      displayPriority: json['displayPriority'],
     );
   }
 }
@@ -499,13 +499,13 @@ class Text {
 
   factory Text.fromJson(Map<String, dynamic> json) {
     return Text(
-      runs: json["runs"] == null
+      runs: json['runs'] == null
           ? []
           : List<PurpleRun>.from(
-              json["runs"]!.map((x) => PurpleRun.fromJson(x))),
-      accessibility: json["accessibility"] == null
+              json['runs']!.map((x) => PurpleRun.fromJson(x))),
+      accessibility: json['accessibility'] == null
           ? null
-          : Accessibility.fromJson(json["accessibility"]),
+          : Accessibility.fromJson(json['accessibility']),
     );
   }
 }
@@ -521,10 +521,10 @@ class PurpleRun {
 
   factory PurpleRun.fromJson(Map<String, dynamic> json) {
     return PurpleRun(
-      text: json["text"],
-      navigationEndpoint: json["navigationEndpoint"] == null
+      text: json['text'],
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : PurpleNavigationEndpoint.fromJson(json["navigationEndpoint"]),
+          : PurpleNavigationEndpoint.fromJson(json['navigationEndpoint']),
     );
   }
 }
@@ -542,13 +542,13 @@ class PurpleNavigationEndpoint {
 
   factory PurpleNavigationEndpoint.fromJson(Map<String, dynamic> json) {
     return PurpleNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchEndpoint: json["watchEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : PlayNavigationEndpointWatchEndpoint.fromJson(json["watchEndpoint"]),
-      browseEndpoint: json["browseEndpoint"] == null
+          : PlayNavigationEndpointWatchEndpoint.fromJson(json['watchEndpoint']),
+      browseEndpoint: json['browseEndpoint'] == null
           ? null
-          : PurpleBrowseEndpoint.fromJson(json["browseEndpoint"]),
+          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
     );
   }
 }
@@ -565,12 +565,12 @@ class PurpleBrowseEndpoint {
 
   factory PurpleBrowseEndpoint.fromJson(Map<String, dynamic> json) {
     return PurpleBrowseEndpoint(
-      browseId: json["browseId"],
+      browseId: json['browseId'],
       browseEndpointContextSupportedConfigs:
-          json["browseEndpointContextSupportedConfigs"] == null
+          json['browseEndpointContextSupportedConfigs'] == null
               ? null
               : BrowseEndpointContextSupportedConfigs.fromJson(
-                  json["browseEndpointContextSupportedConfigs"]),
+                  json['browseEndpointContextSupportedConfigs']),
     );
   }
 }
@@ -586,10 +586,10 @@ class BrowseEndpointContextSupportedConfigs {
       Map<String, dynamic> json) {
     return BrowseEndpointContextSupportedConfigs(
       browseEndpointContextMusicConfig:
-          json["browseEndpointContextMusicConfig"] == null
+          json['browseEndpointContextMusicConfig'] == null
               ? null
               : BrowseEndpointContextMusicConfig.fromJson(
-                  json["browseEndpointContextMusicConfig"]),
+                  json['browseEndpointContextMusicConfig']),
     );
   }
 }
@@ -603,7 +603,7 @@ class BrowseEndpointContextMusicConfig {
 
   factory BrowseEndpointContextMusicConfig.fromJson(Map<String, dynamic> json) {
     return BrowseEndpointContextMusicConfig(
-      pageType: json["pageType"],
+      pageType: json['pageType'],
     );
   }
 }
@@ -628,18 +628,18 @@ class PlayNavigationEndpointWatchEndpoint {
   factory PlayNavigationEndpointWatchEndpoint.fromJson(
       Map<String, dynamic> json) {
     return PlayNavigationEndpointWatchEndpoint(
-      videoId: json["videoId"],
-      playlistId: json["playlistId"],
-      params: json["params"],
-      loggingContext: json["loggingContext"] == null
+      videoId: json['videoId'],
+      playlistId: json['playlistId'],
+      params: json['params'],
+      loggingContext: json['loggingContext'] == null
           ? null
-          : LoggingContext.fromJson(json["loggingContext"]),
+          : LoggingContext.fromJson(json['loggingContext']),
       watchEndpointMusicSupportedConfigs:
-          json["watchEndpointMusicSupportedConfigs"] == null
+          json['watchEndpointMusicSupportedConfigs'] == null
               ? null
               : WatchEndpointMusicSupportedConfigs.fromJson(
-                  json["watchEndpointMusicSupportedConfigs"]),
-      playerParams: json["playerParams"],
+                  json['watchEndpointMusicSupportedConfigs']),
+      playerParams: json['playerParams'],
     );
   }
 }
@@ -653,9 +653,9 @@ class LoggingContext {
 
   factory LoggingContext.fromJson(Map<String, dynamic> json) {
     return LoggingContext(
-      vssLoggingContext: json["vssLoggingContext"] == null
+      vssLoggingContext: json['vssLoggingContext'] == null
           ? null
-          : VssLoggingContext.fromJson(json["vssLoggingContext"]),
+          : VssLoggingContext.fromJson(json['vssLoggingContext']),
     );
   }
 }
@@ -669,7 +669,7 @@ class VssLoggingContext {
 
   factory VssLoggingContext.fromJson(Map<String, dynamic> json) {
     return VssLoggingContext(
-      serializedContextData: json["serializedContextData"],
+      serializedContextData: json['serializedContextData'],
     );
   }
 }
@@ -684,9 +684,9 @@ class WatchEndpointMusicSupportedConfigs {
   factory WatchEndpointMusicSupportedConfigs.fromJson(
       Map<String, dynamic> json) {
     return WatchEndpointMusicSupportedConfigs(
-      watchEndpointMusicConfig: json["watchEndpointMusicConfig"] == null
+      watchEndpointMusicConfig: json['watchEndpointMusicConfig'] == null
           ? null
-          : WatchEndpointMusicConfig.fromJson(json["watchEndpointMusicConfig"]),
+          : WatchEndpointMusicConfig.fromJson(json['watchEndpointMusicConfig']),
     );
   }
 }
@@ -700,7 +700,7 @@ class WatchEndpointMusicConfig {
 
   factory WatchEndpointMusicConfig.fromJson(Map<String, dynamic> json) {
     return WatchEndpointMusicConfig(
-      musicVideoType: json["musicVideoType"],
+      musicVideoType: json['musicVideoType'],
     );
   }
 }
@@ -715,9 +715,9 @@ class MusicResponsiveListItemRendererMenu {
   factory MusicResponsiveListItemRendererMenu.fromJson(
       Map<String, dynamic> json) {
     return MusicResponsiveListItemRendererMenu(
-      menuRenderer: json["menuRenderer"] == null
+      menuRenderer: json['menuRenderer'] == null
           ? null
-          : PurpleMenuRenderer.fromJson(json["menuRenderer"]),
+          : PurpleMenuRenderer.fromJson(json['menuRenderer']),
     );
   }
 }
@@ -737,18 +737,18 @@ class PurpleMenuRenderer {
 
   factory PurpleMenuRenderer.fromJson(Map<String, dynamic> json) {
     return PurpleMenuRenderer(
-      items: json["items"] == null
+      items: json['items'] == null
           ? []
           : List<PurpleItem>.from(
-              json["items"]!.map((x) => PurpleItem.fromJson(x))),
-      trackingParams: json["trackingParams"],
-      topLevelButtons: json["topLevelButtons"] == null
+              json['items']!.map((x) => PurpleItem.fromJson(x))),
+      trackingParams: json['trackingParams'],
+      topLevelButtons: json['topLevelButtons'] == null
           ? []
           : List<TopLevelButton>.from(
-              json["topLevelButtons"]!.map((x) => TopLevelButton.fromJson(x))),
-      accessibility: json["accessibility"] == null
+              json['topLevelButtons']!.map((x) => TopLevelButton.fromJson(x))),
+      accessibility: json['accessibility'] == null
           ? null
-          : Accessibility.fromJson(json["accessibility"]),
+          : Accessibility.fromJson(json['accessibility']),
     );
   }
 }
@@ -766,17 +766,17 @@ class PurpleItem {
 
   factory PurpleItem.fromJson(Map<String, dynamic> json) {
     return PurpleItem(
-      menuNavigationItemRenderer: json["menuNavigationItemRenderer"] == null
+      menuNavigationItemRenderer: json['menuNavigationItemRenderer'] == null
           ? null
-          : MenuItemRenderer.fromJson(json["menuNavigationItemRenderer"]),
-      menuServiceItemRenderer: json["menuServiceItemRenderer"] == null
+          : MenuItemRenderer.fromJson(json['menuNavigationItemRenderer']),
+      menuServiceItemRenderer: json['menuServiceItemRenderer'] == null
           ? null
-          : MenuItemRenderer.fromJson(json["menuServiceItemRenderer"]),
+          : MenuItemRenderer.fromJson(json['menuServiceItemRenderer']),
       toggleMenuServiceItemRenderer:
-          json["toggleMenuServiceItemRenderer"] == null
+          json['toggleMenuServiceItemRenderer'] == null
               ? null
               : PurpleToggleMenuServiceItemRenderer.fromJson(
-                  json["toggleMenuServiceItemRenderer"]),
+                  json['toggleMenuServiceItemRenderer']),
     );
   }
 }
@@ -798,16 +798,16 @@ class MenuItemRenderer {
 
   factory MenuItemRenderer.fromJson(Map<String, dynamic> json) {
     return MenuItemRenderer(
-      text: json["text"] == null ? null : PrimaryText.fromJson(json["text"]),
-      icon: json["icon"] == null ? null : Icon.fromJson(json["icon"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+      text: json['text'] == null ? null : PrimaryText.fromJson(json['text']),
+      icon: json['icon'] == null ? null : Icon.fromJson(json['icon']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
           : MenuNavigationItemRendererNavigationEndpoint.fromJson(
-              json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
-      serviceEndpoint: json["serviceEndpoint"] == null
+              json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
+      serviceEndpoint: json['serviceEndpoint'] == null
           ? null
-          : ServiceEndpoint.fromJson(json["serviceEndpoint"]),
+          : ServiceEndpoint.fromJson(json['serviceEndpoint']),
     );
   }
 }
@@ -832,22 +832,22 @@ class MenuNavigationItemRendererNavigationEndpoint {
   factory MenuNavigationItemRendererNavigationEndpoint.fromJson(
       Map<String, dynamic> json) {
     return MenuNavigationItemRendererNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchEndpoint: json["watchEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : PlayNavigationEndpointWatchEndpoint.fromJson(json["watchEndpoint"]),
-      modalEndpoint: json["modalEndpoint"] == null
+          : PlayNavigationEndpointWatchEndpoint.fromJson(json['watchEndpoint']),
+      modalEndpoint: json['modalEndpoint'] == null
           ? null
-          : ModalEndpoint.fromJson(json["modalEndpoint"]),
-      browseEndpoint: json["browseEndpoint"] == null
+          : ModalEndpoint.fromJson(json['modalEndpoint']),
+      browseEndpoint: json['browseEndpoint'] == null
           ? null
-          : PurpleBrowseEndpoint.fromJson(json["browseEndpoint"]),
-      shareEntityEndpoint: json["shareEntityEndpoint"] == null
+          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
+      shareEntityEndpoint: json['shareEntityEndpoint'] == null
           ? null
-          : ShareEntityEndpoint.fromJson(json["shareEntityEndpoint"]),
-      watchPlaylistEndpoint: json["watchPlaylistEndpoint"] == null
+          : ShareEntityEndpoint.fromJson(json['shareEntityEndpoint']),
+      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
           ? null
-          : WatchPlaylistEndpoint.fromJson(json["watchPlaylistEndpoint"]),
+          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
     );
   }
 }
@@ -861,7 +861,7 @@ class ModalEndpoint {
 
   factory ModalEndpoint.fromJson(Map<String, dynamic> json) {
     return ModalEndpoint(
-      modal: json["modal"] == null ? null : Modal.fromJson(json["modal"]),
+      modal: json['modal'] == null ? null : Modal.fromJson(json['modal']),
     );
   }
 }
@@ -876,10 +876,10 @@ class Modal {
   factory Modal.fromJson(Map<String, dynamic> json) {
     return Modal(
       modalWithTitleAndButtonRenderer:
-          json["modalWithTitleAndButtonRenderer"] == null
+          json['modalWithTitleAndButtonRenderer'] == null
               ? null
               : ModalWithTitleAndButtonRenderer.fromJson(
-                  json["modalWithTitleAndButtonRenderer"]),
+                  json['modalWithTitleAndButtonRenderer']),
     );
   }
 }
@@ -897,11 +897,11 @@ class ModalWithTitleAndButtonRenderer {
 
   factory ModalWithTitleAndButtonRenderer.fromJson(Map<String, dynamic> json) {
     return ModalWithTitleAndButtonRenderer(
-      title: json["title"] == null ? null : PrimaryText.fromJson(json["title"]),
-      content: json["content"] == null
+      title: json['title'] == null ? null : PrimaryText.fromJson(json['title']),
+      content: json['content'] == null
           ? null
-          : PrimaryText.fromJson(json["content"]),
-      button: json["button"] == null ? null : Button.fromJson(json["button"]),
+          : PrimaryText.fromJson(json['content']),
+      button: json['button'] == null ? null : Button.fromJson(json['button']),
     );
   }
 }
@@ -915,9 +915,9 @@ class Button {
 
   factory Button.fromJson(Map<String, dynamic> json) {
     return Button(
-      buttonRenderer: json["buttonRenderer"] == null
+      buttonRenderer: json['buttonRenderer'] == null
           ? null
-          : ButtonButtonRenderer.fromJson(json["buttonRenderer"]),
+          : ButtonButtonRenderer.fromJson(json['buttonRenderer']),
     );
   }
 }
@@ -939,13 +939,13 @@ class ButtonButtonRenderer {
 
   factory ButtonButtonRenderer.fromJson(Map<String, dynamic> json) {
     return ButtonButtonRenderer(
-      style: json["style"],
-      isDisabled: json["isDisabled"],
-      text: json["text"] == null ? null : PrimaryText.fromJson(json["text"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+      style: json['style'],
+      isDisabled: json['isDisabled'],
+      text: json['text'] == null ? null : PrimaryText.fromJson(json['text']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : FluffyNavigationEndpoint.fromJson(json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
+          : FluffyNavigationEndpoint.fromJson(json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -961,10 +961,10 @@ class FluffyNavigationEndpoint {
 
   factory FluffyNavigationEndpoint.fromJson(Map<String, dynamic> json) {
     return FluffyNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      signInEndpoint: json["signInEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      signInEndpoint: json['signInEndpoint'] == null
           ? null
-          : SignInEndpoint.fromJson(json["signInEndpoint"]),
+          : SignInEndpoint.fromJson(json['signInEndpoint']),
     );
   }
 }
@@ -978,7 +978,7 @@ class SignInEndpoint {
 
   factory SignInEndpoint.fromJson(Map<String, dynamic> json) {
     return SignInEndpoint(
-      hack: json["hack"],
+      hack: json['hack'],
     );
   }
 }
@@ -992,10 +992,10 @@ class PrimaryText {
 
   factory PrimaryText.fromJson(Map<String, dynamic> json) {
     return PrimaryText(
-      runs: json["runs"] == null
+      runs: json['runs'] == null
           ? []
           : List<PrimaryTextRun>.from(
-              json["runs"]!.map((x) => PrimaryTextRun.fromJson(x))),
+              json['runs']!.map((x) => PrimaryTextRun.fromJson(x))),
     );
   }
 }
@@ -1009,7 +1009,7 @@ class PrimaryTextRun {
 
   factory PrimaryTextRun.fromJson(Map<String, dynamic> json) {
     return PrimaryTextRun(
-      text: json["text"],
+      text: json['text'],
     );
   }
 }
@@ -1025,8 +1025,8 @@ class ShareEntityEndpoint {
 
   factory ShareEntityEndpoint.fromJson(Map<String, dynamic> json) {
     return ShareEntityEndpoint(
-      serializedShareEntity: json["serializedShareEntity"],
-      sharePanelType: json["sharePanelType"],
+      serializedShareEntity: json['serializedShareEntity'],
+      sharePanelType: json['sharePanelType'],
     );
   }
 }
@@ -1042,8 +1042,8 @@ class WatchPlaylistEndpoint {
 
   factory WatchPlaylistEndpoint.fromJson(Map<String, dynamic> json) {
     return WatchPlaylistEndpoint(
-      playlistId: json["playlistId"],
-      params: json["params"],
+      playlistId: json['playlistId'],
+      params: json['params'],
     );
   }
 }
@@ -1059,10 +1059,10 @@ class ServiceEndpoint {
 
   factory ServiceEndpoint.fromJson(Map<String, dynamic> json) {
     return ServiceEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      queueAddEndpoint: json["queueAddEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      queueAddEndpoint: json['queueAddEndpoint'] == null
           ? null
-          : QueueAddEndpoint.fromJson(json["queueAddEndpoint"]),
+          : QueueAddEndpoint.fromJson(json['queueAddEndpoint']),
     );
   }
 }
@@ -1080,14 +1080,14 @@ class QueueAddEndpoint {
 
   factory QueueAddEndpoint.fromJson(Map<String, dynamic> json) {
     return QueueAddEndpoint(
-      queueTarget: json["queueTarget"] == null
+      queueTarget: json['queueTarget'] == null
           ? null
-          : QueueTarget.fromJson(json["queueTarget"]),
-      queueInsertPosition: json["queueInsertPosition"],
-      commands: json["commands"] == null
+          : QueueTarget.fromJson(json['queueTarget']),
+      queueInsertPosition: json['queueInsertPosition'],
+      commands: json['commands'] == null
           ? []
           : List<Command>.from(
-              json["commands"]!.map((x) => Command.fromJson(x))),
+              json['commands']!.map((x) => Command.fromJson(x))),
     );
   }
 }
@@ -1103,10 +1103,10 @@ class Command {
 
   factory Command.fromJson(Map<String, dynamic> json) {
     return Command(
-      clickTrackingParams: json["clickTrackingParams"],
-      addToToastAction: json["addToToastAction"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      addToToastAction: json['addToToastAction'] == null
           ? null
-          : AddToToastAction.fromJson(json["addToToastAction"]),
+          : AddToToastAction.fromJson(json['addToToastAction']),
     );
   }
 }
@@ -1120,9 +1120,9 @@ class AddToToastAction {
 
   factory AddToToastAction.fromJson(Map<String, dynamic> json) {
     return AddToToastAction(
-      item: json["item"] == null
+      item: json['item'] == null
           ? null
-          : AddToToastActionItem.fromJson(json["item"]),
+          : AddToToastActionItem.fromJson(json['item']),
     );
   }
 }
@@ -1136,9 +1136,9 @@ class AddToToastActionItem {
 
   factory AddToToastActionItem.fromJson(Map<String, dynamic> json) {
     return AddToToastActionItem(
-      notificationTextRenderer: json["notificationTextRenderer"] == null
+      notificationTextRenderer: json['notificationTextRenderer'] == null
           ? null
-          : NotificationTextRenderer.fromJson(json["notificationTextRenderer"]),
+          : NotificationTextRenderer.fromJson(json['notificationTextRenderer']),
     );
   }
 }
@@ -1154,10 +1154,10 @@ class NotificationTextRenderer {
 
   factory NotificationTextRenderer.fromJson(Map<String, dynamic> json) {
     return NotificationTextRenderer(
-      successResponseText: json["successResponseText"] == null
+      successResponseText: json['successResponseText'] == null
           ? null
-          : PrimaryText.fromJson(json["successResponseText"]),
-      trackingParams: json["trackingParams"],
+          : PrimaryText.fromJson(json['successResponseText']),
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -1175,11 +1175,11 @@ class QueueTarget {
 
   factory QueueTarget.fromJson(Map<String, dynamic> json) {
     return QueueTarget(
-      videoId: json["videoId"],
-      onEmptyQueue: json["onEmptyQueue"] == null
+      videoId: json['videoId'],
+      onEmptyQueue: json['onEmptyQueue'] == null
           ? null
-          : OnEmptyQueue.fromJson(json["onEmptyQueue"]),
-      playlistId: json["playlistId"],
+          : OnEmptyQueue.fromJson(json['onEmptyQueue']),
+      playlistId: json['playlistId'],
     );
   }
 }
@@ -1195,10 +1195,10 @@ class OnEmptyQueue {
 
   factory OnEmptyQueue.fromJson(Map<String, dynamic> json) {
     return OnEmptyQueue(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchEndpoint: json["watchEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : OnEmptyQueueWatchEndpoint.fromJson(json["watchEndpoint"]),
+          : OnEmptyQueueWatchEndpoint.fromJson(json['watchEndpoint']),
     );
   }
 }
@@ -1214,8 +1214,8 @@ class OnEmptyQueueWatchEndpoint {
 
   factory OnEmptyQueueWatchEndpoint.fromJson(Map<String, dynamic> json) {
     return OnEmptyQueueWatchEndpoint(
-      videoId: json["videoId"],
-      playlistId: json["playlistId"],
+      videoId: json['videoId'],
+      playlistId: json['playlistId'],
     );
   }
 }
@@ -1242,27 +1242,27 @@ class PurpleToggleMenuServiceItemRenderer {
   factory PurpleToggleMenuServiceItemRenderer.fromJson(
       Map<String, dynamic> json) {
     return PurpleToggleMenuServiceItemRenderer(
-      defaultText: json["defaultText"] == null
+      defaultText: json['defaultText'] == null
           ? null
-          : PrimaryText.fromJson(json["defaultText"]),
-      defaultIcon: json["defaultIcon"] == null
+          : PrimaryText.fromJson(json['defaultText']),
+      defaultIcon: json['defaultIcon'] == null
           ? null
-          : Icon.fromJson(json["defaultIcon"]),
-      defaultServiceEndpoint: json["defaultServiceEndpoint"] == null
+          : Icon.fromJson(json['defaultIcon']),
+      defaultServiceEndpoint: json['defaultServiceEndpoint'] == null
           ? null
           : DefaultServiceEndpointClass.fromJson(
-              json["defaultServiceEndpoint"]),
-      toggledText: json["toggledText"] == null
+              json['defaultServiceEndpoint']),
+      toggledText: json['toggledText'] == null
           ? null
-          : PrimaryText.fromJson(json["toggledText"]),
-      toggledIcon: json["toggledIcon"] == null
+          : PrimaryText.fromJson(json['toggledText']),
+      toggledIcon: json['toggledIcon'] == null
           ? null
-          : Icon.fromJson(json["toggledIcon"]),
-      toggledServiceEndpoint: json["toggledServiceEndpoint"] == null
+          : Icon.fromJson(json['toggledIcon']),
+      toggledServiceEndpoint: json['toggledServiceEndpoint'] == null
           ? null
           : PurpleToggledServiceEndpoint.fromJson(
-              json["toggledServiceEndpoint"]),
-      trackingParams: json["trackingParams"],
+              json['toggledServiceEndpoint']),
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -1278,10 +1278,10 @@ class DefaultServiceEndpointClass {
 
   factory DefaultServiceEndpointClass.fromJson(Map<String, dynamic> json) {
     return DefaultServiceEndpointClass(
-      clickTrackingParams: json["clickTrackingParams"],
-      modalEndpoint: json["modalEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      modalEndpoint: json['modalEndpoint'] == null
           ? null
-          : ModalEndpoint.fromJson(json["modalEndpoint"]),
+          : ModalEndpoint.fromJson(json['modalEndpoint']),
     );
   }
 }
@@ -1297,10 +1297,10 @@ class PurpleToggledServiceEndpoint {
 
   factory PurpleToggledServiceEndpoint.fromJson(Map<String, dynamic> json) {
     return PurpleToggledServiceEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      feedbackEndpoint: json["feedbackEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      feedbackEndpoint: json['feedbackEndpoint'] == null
           ? null
-          : FeedbackEndpoint.fromJson(json["feedbackEndpoint"]),
+          : FeedbackEndpoint.fromJson(json['feedbackEndpoint']),
     );
   }
 }
@@ -1314,7 +1314,7 @@ class FeedbackEndpoint {
 
   factory FeedbackEndpoint.fromJson(Map<String, dynamic> json) {
     return FeedbackEndpoint(
-      feedbackToken: json["feedbackToken"],
+      feedbackToken: json['feedbackToken'],
     );
   }
 }
@@ -1328,9 +1328,9 @@ class TopLevelButton {
 
   factory TopLevelButton.fromJson(Map<String, dynamic> json) {
     return TopLevelButton(
-      likeButtonRenderer: json["likeButtonRenderer"] == null
+      likeButtonRenderer: json['likeButtonRenderer'] == null
           ? null
-          : LikeButtonRenderer.fromJson(json["likeButtonRenderer"]),
+          : LikeButtonRenderer.fromJson(json['likeButtonRenderer']),
     );
   }
 }
@@ -1354,19 +1354,19 @@ class LikeButtonRenderer {
 
   factory LikeButtonRenderer.fromJson(Map<String, dynamic> json) {
     return LikeButtonRenderer(
-      target: json["target"] == null
+      target: json['target'] == null
           ? null
-          : PlaylistItemData.fromJson(json["target"]),
-      likeStatus: json["likeStatus"],
-      trackingParams: json["trackingParams"],
-      likesAllowed: json["likesAllowed"],
-      dislikeNavigationEndpoint: json["dislikeNavigationEndpoint"] == null
+          : PlaylistItemData.fromJson(json['target']),
+      likeStatus: json['likeStatus'],
+      trackingParams: json['trackingParams'],
+      likesAllowed: json['likesAllowed'],
+      dislikeNavigationEndpoint: json['dislikeNavigationEndpoint'] == null
           ? null
           : DefaultServiceEndpointClass.fromJson(
-              json["dislikeNavigationEndpoint"]),
-      likeCommand: json["likeCommand"] == null
+              json['dislikeNavigationEndpoint']),
+      likeCommand: json['likeCommand'] == null
           ? null
-          : DefaultServiceEndpointClass.fromJson(json["likeCommand"]),
+          : DefaultServiceEndpointClass.fromJson(json['likeCommand']),
     );
   }
 }
@@ -1380,7 +1380,7 @@ class PlaylistItemData {
 
   factory PlaylistItemData.fromJson(Map<String, dynamic> json) {
     return PlaylistItemData(
-      videoId: json["videoId"],
+      videoId: json['videoId'],
     );
   }
 }
@@ -1396,10 +1396,10 @@ class Overlay {
   factory Overlay.fromJson(Map<String, dynamic> json) {
     return Overlay(
       musicItemThumbnailOverlayRenderer:
-          json["musicItemThumbnailOverlayRenderer"] == null
+          json['musicItemThumbnailOverlayRenderer'] == null
               ? null
               : OverlayMusicItemThumbnailOverlayRenderer.fromJson(
-                  json["musicItemThumbnailOverlayRenderer"]),
+                  json['musicItemThumbnailOverlayRenderer']),
     );
   }
 }
@@ -1420,15 +1420,15 @@ class OverlayMusicItemThumbnailOverlayRenderer {
   factory OverlayMusicItemThumbnailOverlayRenderer.fromJson(
       Map<String, dynamic> json) {
     return OverlayMusicItemThumbnailOverlayRenderer(
-      background: json["background"] == null
+      background: json['background'] == null
           ? null
           : MusicItemThumbnailOverlayRendererBackground.fromJson(
-              json["background"]),
-      content: json["content"] == null
+              json['background']),
+      content: json['content'] == null
           ? null
-          : PurpleContent.fromJson(json["content"]),
-      contentPosition: json["contentPosition"],
-      displayStyle: json["displayStyle"],
+          : PurpleContent.fromJson(json['content']),
+      contentPosition: json['contentPosition'],
+      displayStyle: json['displayStyle'],
     );
   }
 }
@@ -1443,9 +1443,9 @@ class MusicItemThumbnailOverlayRendererBackground {
   factory MusicItemThumbnailOverlayRendererBackground.fromJson(
       Map<String, dynamic> json) {
     return MusicItemThumbnailOverlayRendererBackground(
-      verticalGradient: json["verticalGradient"] == null
+      verticalGradient: json['verticalGradient'] == null
           ? null
-          : VerticalGradient.fromJson(json["verticalGradient"]),
+          : VerticalGradient.fromJson(json['verticalGradient']),
     );
   }
 }
@@ -1459,9 +1459,9 @@ class VerticalGradient {
 
   factory VerticalGradient.fromJson(Map<String, dynamic> json) {
     return VerticalGradient(
-      gradientLayerColors: json["gradientLayerColors"] == null
+      gradientLayerColors: json['gradientLayerColors'] == null
           ? []
-          : List<String>.from(json["gradientLayerColors"]!.map((x) => x)),
+          : List<String>.from(json['gradientLayerColors']!.map((x) => x)),
     );
   }
 }
@@ -1475,10 +1475,10 @@ class PurpleContent {
 
   factory PurpleContent.fromJson(Map<String, dynamic> json) {
     return PurpleContent(
-      musicPlayButtonRenderer: json["musicPlayButtonRenderer"] == null
+      musicPlayButtonRenderer: json['musicPlayButtonRenderer'] == null
           ? null
           : PurpleMusicPlayButtonRenderer.fromJson(
-              json["musicPlayButtonRenderer"]),
+              json['musicPlayButtonRenderer']),
     );
   }
 }
@@ -1520,32 +1520,32 @@ class PurpleMusicPlayButtonRenderer {
 
   factory PurpleMusicPlayButtonRenderer.fromJson(Map<String, dynamic> json) {
     return PurpleMusicPlayButtonRenderer(
-      playNavigationEndpoint: json["playNavigationEndpoint"] == null
+      playNavigationEndpoint: json['playNavigationEndpoint'] == null
           ? null
           : PurplePlayNavigationEndpoint.fromJson(
-              json["playNavigationEndpoint"]),
-      trackingParams: json["trackingParams"],
+              json['playNavigationEndpoint']),
+      trackingParams: json['trackingParams'],
       playIcon:
-          json["playIcon"] == null ? null : Icon.fromJson(json["playIcon"]),
+          json['playIcon'] == null ? null : Icon.fromJson(json['playIcon']),
       pauseIcon:
-          json["pauseIcon"] == null ? null : Icon.fromJson(json["pauseIcon"]),
-      iconColor: json["iconColor"],
-      backgroundColor: json["backgroundColor"],
-      activeBackgroundColor: json["activeBackgroundColor"],
-      loadingIndicatorColor: json["loadingIndicatorColor"],
-      playingIcon: json["playingIcon"] == null
+          json['pauseIcon'] == null ? null : Icon.fromJson(json['pauseIcon']),
+      iconColor: json['iconColor'],
+      backgroundColor: json['backgroundColor'],
+      activeBackgroundColor: json['activeBackgroundColor'],
+      loadingIndicatorColor: json['loadingIndicatorColor'],
+      playingIcon: json['playingIcon'] == null
           ? null
-          : Icon.fromJson(json["playingIcon"]),
-      iconLoadingColor: json["iconLoadingColor"],
-      activeScaleFactor: json["activeScaleFactor"],
-      buttonSize: json["buttonSize"],
-      rippleTarget: json["rippleTarget"],
-      accessibilityPlayData: json["accessibilityPlayData"] == null
+          : Icon.fromJson(json['playingIcon']),
+      iconLoadingColor: json['iconLoadingColor'],
+      activeScaleFactor: json['activeScaleFactor'],
+      buttonSize: json['buttonSize'],
+      rippleTarget: json['rippleTarget'],
+      accessibilityPlayData: json['accessibilityPlayData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityPlayData"]),
-      accessibilityPauseData: json["accessibilityPauseData"] == null
+          : Accessibility.fromJson(json['accessibilityPlayData']),
+      accessibilityPauseData: json['accessibilityPauseData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityPauseData"]),
+          : Accessibility.fromJson(json['accessibilityPauseData']),
     );
   }
 }
@@ -1561,10 +1561,10 @@ class PurplePlayNavigationEndpoint {
 
   factory PurplePlayNavigationEndpoint.fromJson(Map<String, dynamic> json) {
     return PurplePlayNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchEndpoint: json["watchEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : PlayNavigationEndpointWatchEndpoint.fromJson(json["watchEndpoint"]),
+          : PlayNavigationEndpointWatchEndpoint.fromJson(json['watchEndpoint']),
     );
   }
 }
@@ -1592,25 +1592,25 @@ class MusicTwoRowItemRenderer {
 
   factory MusicTwoRowItemRenderer.fromJson(Map<String, dynamic> json) {
     return MusicTwoRowItemRenderer(
-      thumbnailRenderer: json["thumbnailRenderer"] == null
+      thumbnailRenderer: json['thumbnailRenderer'] == null
           ? null
-          : ThumbnailClass.fromJson(json["thumbnailRenderer"]),
-      aspectRatio: json["aspectRatio"],
-      title: json["title"] == null ? null : Title.fromJson(json["title"]),
-      subtitle: json["subtitle"] == null
+          : ThumbnailClass.fromJson(json['thumbnailRenderer']),
+      aspectRatio: json['aspectRatio'],
+      title: json['title'] == null ? null : Title.fromJson(json['title']),
+      subtitle: json['subtitle'] == null
           ? null
-          : PrimaryText.fromJson(json["subtitle"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+          : PrimaryText.fromJson(json['subtitle']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
           : MusicTwoRowItemRendererNavigationEndpoint.fromJson(
-              json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
-      menu: json["menu"] == null
+              json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
+      menu: json['menu'] == null
           ? null
-          : MusicTwoRowItemRendererMenu.fromJson(json["menu"]),
-      thumbnailOverlay: json["thumbnailOverlay"] == null
+          : MusicTwoRowItemRendererMenu.fromJson(json['menu']),
+      thumbnailOverlay: json['thumbnailOverlay'] == null
           ? null
-          : ThumbnailOverlay.fromJson(json["thumbnailOverlay"]),
+          : ThumbnailOverlay.fromJson(json['thumbnailOverlay']),
     );
   }
 }
@@ -1624,9 +1624,9 @@ class MusicTwoRowItemRendererMenu {
 
   factory MusicTwoRowItemRendererMenu.fromJson(Map<String, dynamic> json) {
     return MusicTwoRowItemRendererMenu(
-      menuRenderer: json["menuRenderer"] == null
+      menuRenderer: json['menuRenderer'] == null
           ? null
-          : FluffyMenuRenderer.fromJson(json["menuRenderer"]),
+          : FluffyMenuRenderer.fromJson(json['menuRenderer']),
     );
   }
 }
@@ -1644,14 +1644,14 @@ class FluffyMenuRenderer {
 
   factory FluffyMenuRenderer.fromJson(Map<String, dynamic> json) {
     return FluffyMenuRenderer(
-      items: json["items"] == null
+      items: json['items'] == null
           ? []
           : List<FluffyItem>.from(
-              json["items"]!.map((x) => FluffyItem.fromJson(x))),
-      trackingParams: json["trackingParams"],
-      accessibility: json["accessibility"] == null
+              json['items']!.map((x) => FluffyItem.fromJson(x))),
+      trackingParams: json['trackingParams'],
+      accessibility: json['accessibility'] == null
           ? null
-          : Accessibility.fromJson(json["accessibility"]),
+          : Accessibility.fromJson(json['accessibility']),
     );
   }
 }
@@ -1669,17 +1669,17 @@ class FluffyItem {
 
   factory FluffyItem.fromJson(Map<String, dynamic> json) {
     return FluffyItem(
-      menuNavigationItemRenderer: json["menuNavigationItemRenderer"] == null
+      menuNavigationItemRenderer: json['menuNavigationItemRenderer'] == null
           ? null
-          : MenuItemRenderer.fromJson(json["menuNavigationItemRenderer"]),
-      menuServiceItemRenderer: json["menuServiceItemRenderer"] == null
+          : MenuItemRenderer.fromJson(json['menuNavigationItemRenderer']),
+      menuServiceItemRenderer: json['menuServiceItemRenderer'] == null
           ? null
-          : MenuItemRenderer.fromJson(json["menuServiceItemRenderer"]),
+          : MenuItemRenderer.fromJson(json['menuServiceItemRenderer']),
       toggleMenuServiceItemRenderer:
-          json["toggleMenuServiceItemRenderer"] == null
+          json['toggleMenuServiceItemRenderer'] == null
               ? null
               : FluffyToggleMenuServiceItemRenderer.fromJson(
-                  json["toggleMenuServiceItemRenderer"]),
+                  json['toggleMenuServiceItemRenderer']),
     );
   }
 }
@@ -1706,27 +1706,27 @@ class FluffyToggleMenuServiceItemRenderer {
   factory FluffyToggleMenuServiceItemRenderer.fromJson(
       Map<String, dynamic> json) {
     return FluffyToggleMenuServiceItemRenderer(
-      defaultText: json["defaultText"] == null
+      defaultText: json['defaultText'] == null
           ? null
-          : PrimaryText.fromJson(json["defaultText"]),
-      defaultIcon: json["defaultIcon"] == null
+          : PrimaryText.fromJson(json['defaultText']),
+      defaultIcon: json['defaultIcon'] == null
           ? null
-          : Icon.fromJson(json["defaultIcon"]),
-      defaultServiceEndpoint: json["defaultServiceEndpoint"] == null
+          : Icon.fromJson(json['defaultIcon']),
+      defaultServiceEndpoint: json['defaultServiceEndpoint'] == null
           ? null
           : DefaultServiceEndpointClass.fromJson(
-              json["defaultServiceEndpoint"]),
-      toggledText: json["toggledText"] == null
+              json['defaultServiceEndpoint']),
+      toggledText: json['toggledText'] == null
           ? null
-          : PrimaryText.fromJson(json["toggledText"]),
-      toggledIcon: json["toggledIcon"] == null
+          : PrimaryText.fromJson(json['toggledText']),
+      toggledIcon: json['toggledIcon'] == null
           ? null
-          : Icon.fromJson(json["toggledIcon"]),
-      toggledServiceEndpoint: json["toggledServiceEndpoint"] == null
+          : Icon.fromJson(json['toggledIcon']),
+      toggledServiceEndpoint: json['toggledServiceEndpoint'] == null
           ? null
           : FluffyToggledServiceEndpoint.fromJson(
-              json["toggledServiceEndpoint"]),
-      trackingParams: json["trackingParams"],
+              json['toggledServiceEndpoint']),
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -1742,10 +1742,10 @@ class FluffyToggledServiceEndpoint {
 
   factory FluffyToggledServiceEndpoint.fromJson(Map<String, dynamic> json) {
     return FluffyToggledServiceEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      likeEndpoint: json["likeEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      likeEndpoint: json['likeEndpoint'] == null
           ? null
-          : LikeEndpoint.fromJson(json["likeEndpoint"]),
+          : LikeEndpoint.fromJson(json['likeEndpoint']),
     );
   }
 }
@@ -1761,8 +1761,8 @@ class LikeEndpoint {
 
   factory LikeEndpoint.fromJson(Map<String, dynamic> json) {
     return LikeEndpoint(
-      status: json["status"],
-      target: json["target"] == null ? null : Target.fromJson(json["target"]),
+      status: json['status'],
+      target: json['target'] == null ? null : Target.fromJson(json['target']),
     );
   }
 }
@@ -1776,7 +1776,7 @@ class Target {
 
   factory Target.fromJson(Map<String, dynamic> json) {
     return Target(
-      playlistId: json["playlistId"],
+      playlistId: json['playlistId'],
     );
   }
 }
@@ -1793,10 +1793,10 @@ class MusicTwoRowItemRendererNavigationEndpoint {
   factory MusicTwoRowItemRendererNavigationEndpoint.fromJson(
       Map<String, dynamic> json) {
     return MusicTwoRowItemRendererNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      browseEndpoint: json["browseEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
           ? null
-          : PurpleBrowseEndpoint.fromJson(json["browseEndpoint"]),
+          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
     );
   }
 }
@@ -1812,10 +1812,10 @@ class ThumbnailOverlay {
   factory ThumbnailOverlay.fromJson(Map<String, dynamic> json) {
     return ThumbnailOverlay(
       musicItemThumbnailOverlayRenderer:
-          json["musicItemThumbnailOverlayRenderer"] == null
+          json['musicItemThumbnailOverlayRenderer'] == null
               ? null
               : ThumbnailOverlayMusicItemThumbnailOverlayRenderer.fromJson(
-                  json["musicItemThumbnailOverlayRenderer"]),
+                  json['musicItemThumbnailOverlayRenderer']),
     );
   }
 }
@@ -1836,15 +1836,15 @@ class ThumbnailOverlayMusicItemThumbnailOverlayRenderer {
   factory ThumbnailOverlayMusicItemThumbnailOverlayRenderer.fromJson(
       Map<String, dynamic> json) {
     return ThumbnailOverlayMusicItemThumbnailOverlayRenderer(
-      background: json["background"] == null
+      background: json['background'] == null
           ? null
           : MusicItemThumbnailOverlayRendererBackground.fromJson(
-              json["background"]),
-      content: json["content"] == null
+              json['background']),
+      content: json['content'] == null
           ? null
-          : FluffyContent.fromJson(json["content"]),
-      contentPosition: json["contentPosition"],
-      displayStyle: json["displayStyle"],
+          : FluffyContent.fromJson(json['content']),
+      contentPosition: json['contentPosition'],
+      displayStyle: json['displayStyle'],
     );
   }
 }
@@ -1858,10 +1858,10 @@ class FluffyContent {
 
   factory FluffyContent.fromJson(Map<String, dynamic> json) {
     return FluffyContent(
-      musicPlayButtonRenderer: json["musicPlayButtonRenderer"] == null
+      musicPlayButtonRenderer: json['musicPlayButtonRenderer'] == null
           ? null
           : FluffyMusicPlayButtonRenderer.fromJson(
-              json["musicPlayButtonRenderer"]),
+              json['musicPlayButtonRenderer']),
     );
   }
 }
@@ -1903,32 +1903,32 @@ class FluffyMusicPlayButtonRenderer {
 
   factory FluffyMusicPlayButtonRenderer.fromJson(Map<String, dynamic> json) {
     return FluffyMusicPlayButtonRenderer(
-      playNavigationEndpoint: json["playNavigationEndpoint"] == null
+      playNavigationEndpoint: json['playNavigationEndpoint'] == null
           ? null
           : FluffyPlayNavigationEndpoint.fromJson(
-              json["playNavigationEndpoint"]),
-      trackingParams: json["trackingParams"],
+              json['playNavigationEndpoint']),
+      trackingParams: json['trackingParams'],
       playIcon:
-          json["playIcon"] == null ? null : Icon.fromJson(json["playIcon"]),
+          json['playIcon'] == null ? null : Icon.fromJson(json['playIcon']),
       pauseIcon:
-          json["pauseIcon"] == null ? null : Icon.fromJson(json["pauseIcon"]),
-      iconColor: json["iconColor"],
-      backgroundColor: json["backgroundColor"],
-      activeBackgroundColor: json["activeBackgroundColor"],
-      loadingIndicatorColor: json["loadingIndicatorColor"],
-      playingIcon: json["playingIcon"] == null
+          json['pauseIcon'] == null ? null : Icon.fromJson(json['pauseIcon']),
+      iconColor: json['iconColor'],
+      backgroundColor: json['backgroundColor'],
+      activeBackgroundColor: json['activeBackgroundColor'],
+      loadingIndicatorColor: json['loadingIndicatorColor'],
+      playingIcon: json['playingIcon'] == null
           ? null
-          : Icon.fromJson(json["playingIcon"]),
-      iconLoadingColor: json["iconLoadingColor"],
-      activeScaleFactor: json["activeScaleFactor"],
-      buttonSize: json["buttonSize"],
-      rippleTarget: json["rippleTarget"],
-      accessibilityPlayData: json["accessibilityPlayData"] == null
+          : Icon.fromJson(json['playingIcon']),
+      iconLoadingColor: json['iconLoadingColor'],
+      activeScaleFactor: json['activeScaleFactor'],
+      buttonSize: json['buttonSize'],
+      rippleTarget: json['rippleTarget'],
+      accessibilityPlayData: json['accessibilityPlayData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityPlayData"]),
-      accessibilityPauseData: json["accessibilityPauseData"] == null
+          : Accessibility.fromJson(json['accessibilityPlayData']),
+      accessibilityPauseData: json['accessibilityPauseData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityPauseData"]),
+          : Accessibility.fromJson(json['accessibilityPauseData']),
     );
   }
 }
@@ -1944,10 +1944,10 @@ class FluffyPlayNavigationEndpoint {
 
   factory FluffyPlayNavigationEndpoint.fromJson(Map<String, dynamic> json) {
     return FluffyPlayNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchPlaylistEndpoint: json["watchPlaylistEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
           ? null
-          : WatchPlaylistEndpoint.fromJson(json["watchPlaylistEndpoint"]),
+          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
     );
   }
 }
@@ -1961,10 +1961,10 @@ class Title {
 
   factory Title.fromJson(Map<String, dynamic> json) {
     return Title(
-      runs: json["runs"] == null
+      runs: json['runs'] == null
           ? []
           : List<FluffyRun>.from(
-              json["runs"]!.map((x) => FluffyRun.fromJson(x))),
+              json['runs']!.map((x) => FluffyRun.fromJson(x))),
     );
   }
 }
@@ -1980,11 +1980,11 @@ class FluffyRun {
 
   factory FluffyRun.fromJson(Map<String, dynamic> json) {
     return FluffyRun(
-      text: json["text"],
-      navigationEndpoint: json["navigationEndpoint"] == null
+      text: json['text'],
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
           : MusicTwoRowItemRendererNavigationEndpoint.fromJson(
-              json["navigationEndpoint"]),
+              json['navigationEndpoint']),
     );
   }
 }
@@ -2000,10 +2000,10 @@ class MusicCarouselShelfRendererHeader {
   factory MusicCarouselShelfRendererHeader.fromJson(Map<String, dynamic> json) {
     return MusicCarouselShelfRendererHeader(
       musicCarouselShelfBasicHeaderRenderer:
-          json["musicCarouselShelfBasicHeaderRenderer"] == null
+          json['musicCarouselShelfBasicHeaderRenderer'] == null
               ? null
               : MusicCarouselShelfBasicHeaderRenderer.fromJson(
-                  json["musicCarouselShelfBasicHeaderRenderer"]),
+                  json['musicCarouselShelfBasicHeaderRenderer']),
     );
   }
 }
@@ -2028,18 +2028,18 @@ class MusicCarouselShelfBasicHeaderRenderer {
   factory MusicCarouselShelfBasicHeaderRenderer.fromJson(
       Map<String, dynamic> json) {
     return MusicCarouselShelfBasicHeaderRenderer(
-      title: json["title"] == null ? null : PrimaryText.fromJson(json["title"]),
-      accessibilityData: json["accessibilityData"] == null
+      title: json['title'] == null ? null : PrimaryText.fromJson(json['title']),
+      accessibilityData: json['accessibilityData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityData"]),
-      headerStyle: json["headerStyle"],
-      moreContentButton: json["moreContentButton"] == null
+          : Accessibility.fromJson(json['accessibilityData']),
+      headerStyle: json['headerStyle'],
+      moreContentButton: json['moreContentButton'] == null
           ? null
-          : MoreContentButton.fromJson(json["moreContentButton"]),
-      trackingParams: json["trackingParams"],
-      strapline: json["strapline"] == null
+          : MoreContentButton.fromJson(json['moreContentButton']),
+      trackingParams: json['trackingParams'],
+      strapline: json['strapline'] == null
           ? null
-          : PrimaryText.fromJson(json["strapline"]),
+          : PrimaryText.fromJson(json['strapline']),
     );
   }
 }
@@ -2053,9 +2053,9 @@ class MoreContentButton {
 
   factory MoreContentButton.fromJson(Map<String, dynamic> json) {
     return MoreContentButton(
-      buttonRenderer: json["buttonRenderer"] == null
+      buttonRenderer: json['buttonRenderer'] == null
           ? null
-          : MoreContentButtonButtonRenderer.fromJson(json["buttonRenderer"]),
+          : MoreContentButtonButtonRenderer.fromJson(json['buttonRenderer']),
     );
   }
 }
@@ -2077,15 +2077,15 @@ class MoreContentButtonButtonRenderer {
 
   factory MoreContentButtonButtonRenderer.fromJson(Map<String, dynamic> json) {
     return MoreContentButtonButtonRenderer(
-      style: json["style"],
-      text: json["text"] == null ? null : PrimaryText.fromJson(json["text"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+      style: json['style'],
+      text: json['text'] == null ? null : PrimaryText.fromJson(json['text']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : TentacledNavigationEndpoint.fromJson(json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
-      accessibilityData: json["accessibilityData"] == null
+          : TentacledNavigationEndpoint.fromJson(json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
+      accessibilityData: json['accessibilityData'] == null
           ? null
-          : Accessibility.fromJson(json["accessibilityData"]),
+          : Accessibility.fromJson(json['accessibilityData']),
     );
   }
 }
@@ -2101,10 +2101,10 @@ class TentacledNavigationEndpoint {
 
   factory TentacledNavigationEndpoint.fromJson(Map<String, dynamic> json) {
     return TentacledNavigationEndpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      watchEndpoint: json["watchEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : PurpleWatchEndpoint.fromJson(json["watchEndpoint"]),
+          : PurpleWatchEndpoint.fromJson(json['watchEndpoint']),
     );
   }
 }
@@ -2120,8 +2120,8 @@ class PurpleWatchEndpoint {
 
   factory PurpleWatchEndpoint.fromJson(Map<String, dynamic> json) {
     return PurpleWatchEndpoint(
-      videoId: json["videoId"],
-      params: json["params"],
+      videoId: json['videoId'],
+      params: json['params'],
     );
   }
 }
@@ -2145,20 +2145,20 @@ class MusicTastebuilderShelfRenderer {
 
   factory MusicTastebuilderShelfRenderer.fromJson(Map<String, dynamic> json) {
     return MusicTastebuilderShelfRenderer(
-      thumbnail: json["thumbnail"] == null
+      thumbnail: json['thumbnail'] == null
           ? null
-          : MusicTastebuilderShelfRendererThumbnail.fromJson(json["thumbnail"]),
-      primaryText: json["primaryText"] == null
+          : MusicTastebuilderShelfRendererThumbnail.fromJson(json['thumbnail']),
+      primaryText: json['primaryText'] == null
           ? null
-          : PrimaryText.fromJson(json["primaryText"]),
-      secondaryText: json["secondaryText"] == null
+          : PrimaryText.fromJson(json['primaryText']),
+      secondaryText: json['secondaryText'] == null
           ? null
-          : PrimaryText.fromJson(json["secondaryText"]),
-      actionButton: json["actionButton"] == null
+          : PrimaryText.fromJson(json['secondaryText']),
+      actionButton: json['actionButton'] == null
           ? null
-          : ActionButton.fromJson(json["actionButton"]),
-      isVisible: json["isVisible"],
-      trackingParams: json["trackingParams"],
+          : ActionButton.fromJson(json['actionButton']),
+      isVisible: json['isVisible'],
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -2172,9 +2172,9 @@ class ActionButton {
 
   factory ActionButton.fromJson(Map<String, dynamic> json) {
     return ActionButton(
-      buttonRenderer: json["buttonRenderer"] == null
+      buttonRenderer: json['buttonRenderer'] == null
           ? null
-          : ActionButtonButtonRenderer.fromJson(json["buttonRenderer"]),
+          : ActionButtonButtonRenderer.fromJson(json['buttonRenderer']),
     );
   }
 }
@@ -2194,12 +2194,12 @@ class ActionButtonButtonRenderer {
 
   factory ActionButtonButtonRenderer.fromJson(Map<String, dynamic> json) {
     return ActionButtonButtonRenderer(
-      style: json["style"],
-      text: json["text"] == null ? null : PrimaryText.fromJson(json["text"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+      style: json['style'],
+      text: json['text'] == null ? null : PrimaryText.fromJson(json['text']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : DefaultServiceEndpointClass.fromJson(json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
+          : DefaultServiceEndpointClass.fromJson(json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
     );
   }
 }
@@ -2216,10 +2216,10 @@ class MusicTastebuilderShelfRendererThumbnail {
       Map<String, dynamic> json) {
     return MusicTastebuilderShelfRendererThumbnail(
       musicTastebuilderShelfThumbnailRenderer:
-          json["musicTastebuilderShelfThumbnailRenderer"] == null
+          json['musicTastebuilderShelfThumbnailRenderer'] == null
               ? null
               : MusicTastebuilderShelfThumbnailRenderer.fromJson(
-                  json["musicTastebuilderShelfThumbnailRenderer"]),
+                  json['musicTastebuilderShelfThumbnailRenderer']),
     );
   }
 }
@@ -2234,9 +2234,9 @@ class MusicTastebuilderShelfThumbnailRenderer {
   factory MusicTastebuilderShelfThumbnailRenderer.fromJson(
       Map<String, dynamic> json) {
     return MusicTastebuilderShelfThumbnailRenderer(
-      thumbnail: json["thumbnail"] == null
+      thumbnail: json['thumbnail'] == null
           ? null
-          : MusicThumbnailRendererThumbnail.fromJson(json["thumbnail"]),
+          : MusicThumbnailRendererThumbnail.fromJson(json['thumbnail']),
     );
   }
 }
@@ -2250,9 +2250,9 @@ class Continuation {
 
   factory Continuation.fromJson(Map<String, dynamic> json) {
     return Continuation(
-      nextContinuationData: json["nextContinuationData"] == null
+      nextContinuationData: json['nextContinuationData'] == null
           ? null
-          : NextContinuationData.fromJson(json["nextContinuationData"]),
+          : NextContinuationData.fromJson(json['nextContinuationData']),
     );
   }
 }
@@ -2268,8 +2268,8 @@ class NextContinuationData {
 
   factory NextContinuationData.fromJson(Map<String, dynamic> json) {
     return NextContinuationData(
-      continuation: json["continuation"],
-      clickTrackingParams: json["clickTrackingParams"],
+      continuation: json['continuation'],
+      clickTrackingParams: json['clickTrackingParams'],
     );
   }
 }
@@ -2283,9 +2283,9 @@ class SectionListRendererHeader {
 
   factory SectionListRendererHeader.fromJson(Map<String, dynamic> json) {
     return SectionListRendererHeader(
-      chipCloudRenderer: json["chipCloudRenderer"] == null
+      chipCloudRenderer: json['chipCloudRenderer'] == null
           ? null
-          : ChipCloudRenderer.fromJson(json["chipCloudRenderer"]),
+          : ChipCloudRenderer.fromJson(json['chipCloudRenderer']),
     );
   }
 }
@@ -2303,11 +2303,11 @@ class ChipCloudRenderer {
 
   factory ChipCloudRenderer.fromJson(Map<String, dynamic> json) {
     return ChipCloudRenderer(
-      chips: json["chips"] == null
+      chips: json['chips'] == null
           ? []
-          : List<Chip>.from(json["chips"]!.map((x) => Chip.fromJson(x))),
-      trackingParams: json["trackingParams"],
-      horizontalScrollable: json["horizontalScrollable"],
+          : List<Chip>.from(json['chips']!.map((x) => Chip.fromJson(x))),
+      trackingParams: json['trackingParams'],
+      horizontalScrollable: json['horizontalScrollable'],
     );
   }
 }
@@ -2321,9 +2321,9 @@ class Chip {
 
   factory Chip.fromJson(Map<String, dynamic> json) {
     return Chip(
-      chipCloudChipRenderer: json["chipCloudChipRenderer"] == null
+      chipCloudChipRenderer: json['chipCloudChipRenderer'] == null
           ? null
-          : ChipCloudChipRenderer.fromJson(json["chipCloudChipRenderer"]),
+          : ChipCloudChipRenderer.fromJson(json['chipCloudChipRenderer']),
     );
   }
 }
@@ -2347,16 +2347,16 @@ class ChipCloudChipRenderer {
 
   factory ChipCloudChipRenderer.fromJson(Map<String, dynamic> json) {
     return ChipCloudChipRenderer(
-      style: json["style"] == null ? null : Style.fromJson(json["style"]),
-      text: json["text"] == null ? null : PrimaryText.fromJson(json["text"]),
-      navigationEndpoint: json["navigationEndpoint"] == null
+      style: json['style'] == null ? null : Style.fromJson(json['style']),
+      text: json['text'] == null ? null : PrimaryText.fromJson(json['text']),
+      navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : OnDeselectedCommandClass.fromJson(json["navigationEndpoint"]),
-      trackingParams: json["trackingParams"],
-      isSelected: json["isSelected"],
-      onDeselectedCommand: json["onDeselectedCommand"] == null
+          : OnDeselectedCommandClass.fromJson(json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
+      isSelected: json['isSelected'],
+      onDeselectedCommand: json['onDeselectedCommand'] == null
           ? null
-          : OnDeselectedCommandClass.fromJson(json["onDeselectedCommand"]),
+          : OnDeselectedCommandClass.fromJson(json['onDeselectedCommand']),
     );
   }
 }
@@ -2372,10 +2372,10 @@ class OnDeselectedCommandClass {
 
   factory OnDeselectedCommandClass.fromJson(Map<String, dynamic> json) {
     return OnDeselectedCommandClass(
-      clickTrackingParams: json["clickTrackingParams"],
-      browseEndpoint: json["browseEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
           ? null
-          : OnDeselectedCommandBrowseEndpoint.fromJson(json["browseEndpoint"]),
+          : OnDeselectedCommandBrowseEndpoint.fromJson(json['browseEndpoint']),
     );
   }
 }
@@ -2392,8 +2392,8 @@ class OnDeselectedCommandBrowseEndpoint {
   factory OnDeselectedCommandBrowseEndpoint.fromJson(
       Map<String, dynamic> json) {
     return OnDeselectedCommandBrowseEndpoint(
-      browseId: json["browseId"],
-      params: json["params"],
+      browseId: json['browseId'],
+      params: json['params'],
     );
   }
 }
@@ -2407,7 +2407,7 @@ class Style {
 
   factory Style.fromJson(Map<String, dynamic> json) {
     return Style(
-      styleType: json["styleType"],
+      styleType: json['styleType'],
     );
   }
 }
@@ -2423,10 +2423,10 @@ class Endpoint {
 
   factory Endpoint.fromJson(Map<String, dynamic> json) {
     return Endpoint(
-      clickTrackingParams: json["clickTrackingParams"],
-      browseEndpoint: json["browseEndpoint"] == null
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
           ? null
-          : EndpointBrowseEndpoint.fromJson(json["browseEndpoint"]),
+          : EndpointBrowseEndpoint.fromJson(json['browseEndpoint']),
     );
   }
 }
@@ -2440,7 +2440,7 @@ class EndpointBrowseEndpoint {
 
   factory EndpointBrowseEndpoint.fromJson(Map<String, dynamic> json) {
     return EndpointBrowseEndpoint(
-      browseId: json["browseId"],
+      browseId: json['browseId'],
     );
   }
 }
@@ -2458,12 +2458,12 @@ class ResponseContext {
 
   factory ResponseContext.fromJson(Map<String, dynamic> json) {
     return ResponseContext(
-      visitorData: json["visitorData"],
-      serviceTrackingParams: json["serviceTrackingParams"] == null
+      visitorData: json['visitorData'],
+      serviceTrackingParams: json['serviceTrackingParams'] == null
           ? []
-          : List<ServiceTrackingParam>.from(json["serviceTrackingParams"]!
+          : List<ServiceTrackingParam>.from(json['serviceTrackingParams']!
               .map((x) => ServiceTrackingParam.fromJson(x))),
-      maxAgeSeconds: json["maxAgeSeconds"],
+      maxAgeSeconds: json['maxAgeSeconds'],
     );
   }
 }
@@ -2479,10 +2479,10 @@ class ServiceTrackingParam {
 
   factory ServiceTrackingParam.fromJson(Map<String, dynamic> json) {
     return ServiceTrackingParam(
-      service: json["service"],
-      params: json["params"] == null
+      service: json['service'],
+      params: json['params'] == null
           ? []
-          : List<Param>.from(json["params"]!.map((x) => Param.fromJson(x))),
+          : List<Param>.from(json['params']!.map((x) => Param.fromJson(x))),
     );
   }
 }
@@ -2498,8 +2498,8 @@ class Param {
 
   factory Param.fromJson(Map<String, dynamic> json) {
     return Param(
-      key: json["key"],
-      value: json["value"],
+      key: json['key'],
+      value: json['value'],
     );
   }
 }

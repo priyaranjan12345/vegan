@@ -35,8 +35,7 @@ class VideoHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       cacheExtent: 1000,
-      padding: EdgeInsets.zero,
-      // addAutomaticKeepAlives: true,
+      padding: const EdgeInsets.only(bottom: 92),
       children: [
         const MoodsStateUi(
           key: ValueKey('moods'),

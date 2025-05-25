@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/components/components.dart';
 import '../../../core/theme/app_colors.dart';
 import '../bloc/video_details_cubit/video_details_cubit.dart';
 import '../bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../widgets/play_button.dart';
 import '../widgets/progress_bar.dart';
 import 'mini_player_deatils.dart';
-import 'yt_player.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({
@@ -81,14 +81,14 @@ class PlayButtonWrapper extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CustomIconButton(
+                  AppIconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.skip_previous_rounded),
                   ),
                   PlayButton.success(
                     player: state.player,
                   ),
-                  CustomIconButton(
+                  AppIconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.skip_next_rounded),
                   ),

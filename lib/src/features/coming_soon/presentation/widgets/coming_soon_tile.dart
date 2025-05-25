@@ -57,17 +57,17 @@ class ComingSoonTile extends StatelessWidget {
                   ],
                 ),
               ),
-              AppIconButton(
-                icon: Icons.notifications,
-                label: 'Remind Me',
-                onPressed: () {},
-              ),
+              // AppIconButton(
+              //   icon: Icons.notifications,
+              //   label: 'Remind Me',
+              //   onPressed: () {},
+              // ),
               const SizedBox(width: 16),
-              AppIconButton(
-                icon: Icons.share,
-                label: 'Share',
-                onPressed: () {},
-              ),
+              // AppIconButton(
+              //   icon: Icons.share,
+              //   label: 'Share',
+              //   onPressed: () {},
+              // ),
             ],
           ),
         ),

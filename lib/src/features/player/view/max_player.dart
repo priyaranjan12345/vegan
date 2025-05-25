@@ -1,6 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegan/src/core/components/app_tile.dart';
+import 'package:vegan/src/features/player/bloc/next_up_cubit/next_up_cubit.dart';
 import 'package:vegan/src/features/player/view/player_view.dart';
+import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
+
+import '../../../app/app.dart';
 
 @RoutePage()
 class MaxPlayerPage extends StatelessWidget {
@@ -10,11 +16,86 @@ class MaxPlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: PlayerView(
-          isMaxPlayer: true,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: BlocProvider(
+          create: (_) => injector<NextUpCubit>(),
+          child: Column(
+            children: [
+              BlocProvider.value(
+                value: injector<NextUpCubit>(),
+                child: const PlayerViewWrapper(
+                  isMaxPlayer: true,
+                ),
+              ),
+              SizedBox(height: 16),
+              NextUpWrapper(),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class NextUpWrapper extends StatelessWidget {
+  const NextUpWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NextUpCubit, NextUpState>(
+      builder: (context, state) {
+        return switch (state) {
+          NextUpInitial() => const SizedBox.shrink(),
+          NextUpLoading() => const RepaintBoundary(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          NextUpLoaded() => NextUp(
+            playlist: state.videos,
+          ),
+          NextUpError() => const SizedBox.shrink(),
+        };
+      },
+    );
+  }
+}
+
+class NextUp extends StatelessWidget {
+  const NextUp({super.key, required this.playlist});
+
+  final List<VideoEntity> playlist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Next Up',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: playlist.length,
+              itemBuilder: (context, index) {
+                final e = playlist[index];
+                return AppTile(
+                  imageUrl: e.thubmnail,
+                  title: e.title,
+                  subTitle: e.description,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

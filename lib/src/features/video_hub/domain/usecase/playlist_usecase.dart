@@ -38,13 +38,11 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
         for (final content in innerContents) {
           final item = content.musicResponsiveListItemRenderer;
           final videoId = item
-                  ?.flexColumns
-                  .first
-                  .musicResponsiveListItemFlexColumnRenderer
-                  ?.text
-                  ?.runs
-                  .first
-                  .navigationEndpoint
+                  ?.overlay
+                  ?.musicItemThumbnailOverlayRenderer
+                  ?.content
+                  ?.musicPlayButtonRenderer
+                  ?.playNavigationEndpoint
                   ?.watchEndpoint
                   ?.videoId ??
               '';
@@ -60,7 +58,6 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
                   .first
                   .text ??
               '';
-
           final videoEntity = VideoEntity(
             id: videoId,
             title: title,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vegan/src/app/app.dart';
+import 'package:vegan/src/features/player/bloc/next_up_cubit/next_up_cubit.dart';
 import 'package:vegan/src/features/player/view/state_ui/max_music_player/max_music_player.dart';
 import 'package:vegan/src/features/player/view/state_ui/mini_music_player/mini_music_player.dart';
 
@@ -36,25 +38,34 @@ class PlayerViewWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<YtPlayerBloc, YtPlayerState>(
+    return BlocConsumer<YtPlayerBloc, YtPlayerState>(
+      listener: (context, state) {
+        if (state is PlayerLoadedState) {
+          if (state.playlistId.isNotEmpty) {
+            injector<NextUpCubit>().fetchNextUp(
+              videoId: state.videoId,
+              playlistId: state.playlistId,
+            );
+          }
+        }
+      },
       builder: (context, state) => isMaxPlayer
           ? Container(
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: AppColors.darkGray,
+                color: AppColors.darcular,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: switch (state) {
                 PlayerInitState() ||
-                PlayerLoadingState() =>
-                  const MaxMusicPlayerLoading(),
+                PlayerLoadingState() => const MaxMusicPlayerLoading(),
                 PlayerLoadedState() => MaxMusicPlayer(
-                    thumbnail: state.thumbnail,
-                    title: state.title,
-                    artist: state.author,
-                    player: state.player,
-                  ),
+                  thumbnail: state.thumbnail,
+                  title: state.title,
+                  artist: state.author,
+                  player: state.player,
+                ),
                 PlayerErrorState() => const MaxMusicPlayerError(),
               },
             )
@@ -69,12 +80,12 @@ class PlayerViewWrapper extends StatelessWidget {
                   PlayerInitState() => const SizedBox.shrink(),
                   PlayerLoadingState() => const MiniMusicPlayerLoading(),
                   PlayerLoadedState() => MiniMusicPlayer(
-                      state.player,
-                      title: state.title,
-                      author: state.author,
-                      thumbnail: state.thumbnail,
-                      description: state.description,
-                    ),
+                    state.player,
+                    title: state.title,
+                    author: state.author,
+                    thumbnail: state.thumbnail,
+                    description: state.description,
+                  ),
                   PlayerErrorState() => const MiniMusicPlayerError(),
                 },
               ),

@@ -32,17 +32,18 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
 
         final tabs =
             ytBrowseModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
-                [];
+            [];
 
         if (tabs.isNotEmpty) {
           final contents =
               tabs.first.tabRenderer?.content?.sectionListRenderer?.contents ??
-                  [];
+              [];
 
           if (contents.isNotEmpty) {
             contents.removeLast();
             for (final content in contents) {
-              final heading = content
+              final heading =
+                  content
                       .musicCarouselShelfRenderer
                       ?.header
                       ?.musicCarouselShelfBasicHeaderRenderer
@@ -63,9 +64,12 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
 
                 // musics
                 if (videoContent != null) {
-                  final musicRenderer = videoContent.flexColumns.first
+                  final musicRenderer = videoContent
+                      .flexColumns
+                      .first
                       .musicResponsiveListItemFlexColumnRenderer;
-                  final thumbnail = videoContent
+                  final thumbnail =
+                      videoContent
                           .thumbnail
                           ?.musicThumbnailRenderer
                           ?.thumbnail
@@ -75,18 +79,38 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
                       '';
                   final flexColumnRuns = musicRenderer?.text?.runs.first;
                   final title = flexColumnRuns?.text ?? '';
-                  final id = flexColumnRuns
-                          ?.navigationEndpoint?.watchEndpoint?.videoId ??
+                  final subTitle =
+                      videoContent
+                          .flexColumns
+                          .last
+                          .musicResponsiveListItemFlexColumnRenderer
+                          ?.text
+                          ?.runs
+                          .first
+                          .text ??
+                      '';
+                  final id =
+                      flexColumnRuns
+                          ?.navigationEndpoint
+                          ?.watchEndpoint
+                          ?.videoId ??
+                      '';
+                  final playlistId =
+                      flexColumnRuns
+                          ?.navigationEndpoint
+                          ?.watchEndpoint
+                          ?.playlistId ??
                       '';
 
                   videos.add(
                     VideoEntity(
                       id: id,
                       title: title,
-                      description: '',
+                      description: subTitle,
                       videoUrl: '',
                       thubmnail: thumbnail,
-                      publishDate: '',
+                      browseId: '',
+                      playlistId: playlistId,
                     ),
                   );
                 }
@@ -95,14 +119,20 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
 
                 // playlist
                 if (playlistContent != null) {
-                  final thumbnails = playlistContent.thumbnailRenderer
-                      ?.musicThumbnailRenderer?.thumbnail?.thumbnails;
+                  final thumbnails = playlistContent
+                      .thumbnailRenderer
+                      ?.musicThumbnailRenderer
+                      ?.thumbnail
+                      ?.thumbnails;
                   final thumbnail = thumbnails?.first.url ?? '';
                   final title = playlistContent.title?.runs.first.text ?? '';
                   final description =
                       playlistContent.subtitle?.runs.first.text ?? '';
-                  final browseId = playlistContent
-                          .navigationEndpoint?.browseEndpoint?.browseId ??
+                  final browseId =
+                      playlistContent
+                          .navigationEndpoint
+                          ?.browseEndpoint
+                          ?.browseId ??
                       '';
                   final plalistItems =
                       playlistContent.menu?.menuRenderer?.items ?? [];
@@ -175,7 +205,7 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
       description: t.description,
       videoUrl: t.videoUrl,
       thubmnail: t.thumbnailUrl,
-      publishDate: t.uploadTime,
+      browseId: t.uploadTime,
     );
   }
 }

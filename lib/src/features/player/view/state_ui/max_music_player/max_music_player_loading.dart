@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vegan/src/core/components/components.dart';
 import 'package:vegan/src/core/theme/app_colors.dart';
-import 'package:vegan/src/features/player/view/yt_player.dart';
 
 class MaxMusicPlayerLoading extends StatelessWidget {
   const MaxMusicPlayerLoading({super.key});
@@ -47,31 +46,31 @@ class MaxMusicPlayerLoading extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AppShimmer(
-                        child: CustomIconButton(
+                        child: AppIconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.favorite_sharp),
                         ),
                       ),
                       AppShimmer(
-                        child: CustomIconButton(
+                        child: AppIconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.skip_previous_rounded),
                         ),
                       ),
                       AppShimmer(
-                        child: CustomIconButton(
+                        child: AppIconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.play_arrow_rounded),
                         ),
                       ),
                       AppShimmer(
-                        child: CustomIconButton(
+                        child: AppIconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.skip_next_rounded),
                         ),
                       ),
                       AppShimmer(
-                        child: CustomIconButton(
+                        child: AppIconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.download_outlined),
                         ),
@@ -80,7 +79,7 @@ class MaxMusicPlayerLoading extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
         const AppShimmer(
