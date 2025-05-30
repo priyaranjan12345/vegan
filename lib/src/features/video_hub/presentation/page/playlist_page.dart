@@ -36,26 +36,31 @@ class PlaylistView extends StatelessWidget {
     return BlocBuilder<PlaylistCubit, PlaylistState>(
       builder: (context, state) => switch (state) {
         PlaylistLoadingState() => const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
+          child: CircularProgressIndicator.adaptive(),
+        ),
         PlaylistLoadedState() => ListView.builder(
-            itemCount: state.videoEntities.length,
-            itemBuilder: (context, index) {
-              final item = state.videoEntities[index];
+          itemCount: state.videoEntities.length,
+          itemBuilder: (context, index) {
+            final item = state.videoEntities[index];
 
-              return AppTile(
-                imageUrl: item.thubmnail,
-                title: item.title,
-                subTitle: item.description,
-                onTap: () {
-                  context.read<YtPlayerBloc>().add(LoadMusic(item.id));
-                },
-              );
-            },
-          ),
+            return AppTile(
+              imageUrl: item.thubmnail,
+              title: item.title,
+              subTitle: item.description,
+              onTap: () {
+                context.read<YtPlayerBloc>().add(
+                  LoadMusic(
+                    item.id,
+                    playlist: state.videoEntities,
+                  ),
+                );
+              },
+            );
+          },
+        ),
         PlaylistErrorState() => Center(
-            child: Text(state.message),
-          ),
+          child: Text(state.message),
+        ),
       },
     );
   }

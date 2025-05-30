@@ -11,6 +11,8 @@ Future<void> main() async {
   runApp(const VeganApp());
 }
 
-// playlist
-// global player route(with mini player and Default Ui)
-// netx up
+// moods, search
+// download, play history, custom local playlist, favourite
+// settings
+
+// notification player(service)

@@ -1,13 +1,16 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../domain/usecase/next_up_usecase.dart';
 
 part 'yt_player_event.dart';
 part 'yt_player_state.dart';
+part 'music_player_state.dart';
 
-class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
+class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   YtPlayerBloc({
     required Player player,
     required YoutubeExplode youtubeExplode,
@@ -15,7 +18,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
   }) : _player = player,
        _youtubeExplode = youtubeExplode,
        _nextUpUsecase = nextUpUsecase,
-       super(const PlayerInitState()) {
+       super(const MusicPlayerState()) {
     on<LoadMusic>(loadMusic);
   }
 
@@ -23,8 +26,15 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
   final YoutubeExplode _youtubeExplode;
   final NextUpUsecase _nextUpUsecase;
 
-  Future<void> loadMusic(LoadMusic event, Emitter<YtPlayerState> emit) async {
-    emit(const PlayerLoadingState());
+  Future<void> loadMusic(
+    LoadMusic event,
+    Emitter<MusicPlayerState> emit,
+  ) async {
+    final loadingState = state.copyWith(
+      playerState: PlayerStatus.LOADING,
+      nextUpState: NextUpStatus.INIT,
+    );
+    emit(loadingState);
 
     try {
       final videoId = event.videoId;
@@ -41,43 +51,86 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, YtPlayerState> {
       final url = audioStream.url.toString();
 
       await _player.open(Media(url));
-      await _player.pause();
-
-      // final playlist = await _youtubeExplode.playlists.get('xxxxx');
+      await _player.play();
 
       emit(
-        PlayerLoadedState(
+        state.copyWith(
+          playerState: PlayerStatus.LOADED,
           player: _player,
-          title: video.title,
-          author: video.author,
-          thumbnail: video.thumbnails.mediumResUrl,
-          videoId: videoId,
-          description: video.description,
-          playlistId: event.playlistId ?? '',
-          playlistIndex: 0,
+          video: VideoEntity(
+            id: videoId,
+            title: video.title,
+            description: video.description,
+            videoUrl: ytUrl,
+            thubmnail: video.thumbnails.mediumResUrl,
+          ),
         ),
       );
+
+      /// on click playlist
+      if (event.playlist.isNotEmpty) {
+        emit(
+          state.copyWith(
+            nextUpState: NextUpStatus.LOADED,
+            playlist: event.playlist,
+          ),
+        );
+      }
+
+      /// on click music suggestions
+      if (event.playlistId != null) {
+        await loadPlaylist(
+          emit,
+          videoId: videoId,
+          playlistId: event.playlistId ?? '',
+        );
+      }
     } catch (e) {
-      emit(const PlayerErrorState());
+      emit(state.copyWith(playerState: PlayerStatus.ERROR));
     }
   }
 
-  Future<void> loadPlaylist(String videoId, String playlistId) async {
+  Future<void> loadPlaylist(
+    Emitter<MusicPlayerState> emit, {
+    required String videoId,
+    required String playlistId,
+  }) async {
     // final playlist = await _youtubeExplode.playlists.getVideos(
     //   playlistId,
     // );
 
-    // final result = await _nextUpUsecase(
-    //   NextUpParams(
-    //     videoId: videoId,
-    //     playlistId: playlistId,
-    //   ),
-    // );
+    emit(state.copyWith(nextUpState: NextUpStatus.LOADING));
+    try {
+      final result = await _nextUpUsecase(
+        NextUpParams(
+          videoId: videoId,
+          playlistId: playlistId,
+        ),
+      );
 
-    if (state is PlayerLoadedState) {}
+      result.fold(
+        (l) {
+          emit(state.copyWith(nextUpState: NextUpStatus.ERROR));
+        },
+        (playlist) {
+          emit(
+            state.copyWith(
+              nextUpState: NextUpStatus.LOADED,
+              playlist: playlist,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(nextUpState: NextUpStatus.ERROR));
+    }
   }
 
   void getDetails() {}
+
+  void onNext() {}
+
+  void onPrevious() {}
 
   @override
   Future<void> close() {

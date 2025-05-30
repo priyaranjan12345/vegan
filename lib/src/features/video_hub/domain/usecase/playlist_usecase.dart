@@ -24,7 +24,8 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
       (ytPlaylistModel) {
         final videos = <VideoEntity>[];
 
-        final contents = ytPlaylistModel
+        final contents =
+            ytPlaylistModel
                 .contents
                 ?.twoColumnBrowseResultsRenderer
                 ?.secondaryContents
@@ -37,7 +38,8 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
 
         for (final content in innerContents) {
           final item = content.musicResponsiveListItemRenderer;
-          final videoId = item
+          final videoId =
+              item
                   ?.overlay
                   ?.musicItemThumbnailOverlayRenderer
                   ?.content
@@ -46,12 +48,28 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
                   ?.watchEndpoint
                   ?.videoId ??
               '';
-          final thubmnail = item?.thumbnail?.musicThumbnailRenderer?.thumbnail
-                  ?.thumbnails.first.url ??
+          final thubmnail =
+              item
+                  ?.thumbnail
+                  ?.musicThumbnailRenderer
+                  ?.thumbnail
+                  ?.thumbnails
+                  .first
+                  .url ??
               '';
-          final title = item
+          final title =
+              item
                   ?.flexColumns
                   .first
+                  .musicResponsiveListItemFlexColumnRenderer
+                  ?.text
+                  ?.runs
+                  .first
+                  .text ??
+              '';
+          final desc =
+              item
+                  ?.flexColumns[1]
                   .musicResponsiveListItemFlexColumnRenderer
                   ?.text
                   ?.runs
@@ -61,7 +79,7 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
           final videoEntity = VideoEntity(
             id: videoId,
             title: title,
-            description: '',
+            description: desc,
             videoUrl: '',
             thubmnail: thubmnail,
           );

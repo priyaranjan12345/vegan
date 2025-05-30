@@ -9,8 +9,17 @@ class InitPlayer extends YtPlayerEvent {
 }
 
 class LoadMusic extends YtPlayerEvent {
-  const LoadMusic(this.videoId, {this.playlistId});
+  const LoadMusic(
+    this.videoId, {
+    this.playlistId,
+    this.playlist = const [],
+  });
 
   final String videoId;
   final String? playlistId;
+  final List<VideoEntity> playlist;
+}
+
+class LoadPlaylist extends YtPlayerEvent {
+  const LoadPlaylist();
 }

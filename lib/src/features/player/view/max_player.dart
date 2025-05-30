@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/core/components/app_tile.dart';
 import 'package:vegan/src/features/player/bloc/next_up_cubit/next_up_cubit.dart';
+import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
 import 'package:vegan/src/features/player/view/player_view.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 
@@ -15,23 +16,22 @@ class MaxPlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Music Player'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocProvider(
-          create: (_) => injector<NextUpCubit>(),
-          child: Column(
-            children: [
-              BlocProvider.value(
-                value: injector<NextUpCubit>(),
-                child: const PlayerViewWrapper(
-                  isMaxPlayer: true,
-                ),
+        child: Column(
+          children: [
+            BlocProvider.value(
+              value: injector<NextUpCubit>(),
+              child: const PlayerViewWrapper(
+                isMaxPlayer: true,
               ),
-              SizedBox(height: 16),
-              NextUpWrapper(),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+            const NextUpWrapper(),
+          ],
         ),
       ),
     );
@@ -43,19 +43,21 @@ class NextUpWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NextUpCubit, NextUpState>(
+    return BlocBuilder<YtPlayerBloc, MusicPlayerState>(
+      buildWhen: (previous, current) =>
+          previous.nextUpState != current.nextUpState,
       builder: (context, state) {
-        return switch (state) {
-          NextUpInitial() => const SizedBox.shrink(),
-          NextUpLoading() => const RepaintBoundary(
+        return switch (state.nextUpState) {
+          NextUpStatus.INIT => const SizedBox.shrink(),
+          NextUpStatus.LOADING => const RepaintBoundary(
             child: Center(
               child: CircularProgressIndicator(),
             ),
           ),
-          NextUpLoaded() => NextUp(
-            playlist: state.videos,
+          NextUpStatus.LOADED => NextUp(
+            playlist: state.playlist,
           ),
-          NextUpError() => const SizedBox.shrink(),
+          NextUpStatus.ERROR => const SizedBox.shrink(),
         };
       },
     );

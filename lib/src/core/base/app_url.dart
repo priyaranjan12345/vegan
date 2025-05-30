@@ -1,8 +1,6 @@
 class AppUrl {
-  static const _comingSoonUrl = "https://www.apirequest.in/movie/api";
+  static const _comingSoonUrl = 'https://www.apirequest.in/movie/api';
   //String.fromEnvironment('api');
-  //
-  // https://www.apirequest.in/movie/api/Avatar // by title
 
   static const _key = 'AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30';
   static const _apiVersion = 'v1';
@@ -18,4 +16,5 @@ class AppUrl {
   static const String browse = '/browse?key=$_key';
   static const String library = '/library?key=$_key';
   static const String music = '/music?key=$_key';
+  static const String next = '/next?key=$_key';
 }
