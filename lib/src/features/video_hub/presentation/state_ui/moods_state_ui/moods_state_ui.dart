@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/app/app.dart';
 import 'package:vegan/src/features/video_hub/presentation/bloc/moods_cubit/moods_cubit.dart';
+import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.dart';
 
 import '../../widget/moods_chips.dart';
 import 'moods_loading_ui.dart';
@@ -27,8 +28,11 @@ class MoodsWrapper extends StatelessWidget {
       builder: (context, state) => switch (state) {
         MoodsInitialState() || MoodsLoadingState() => const MoodsLoadingUi(),
         MoodsLoadedState() => MoodsChips(
-            moods: state.moods,
-          ),
+          moods: state.moods,
+          onSelectMoods: (param) {
+            context.read<VideoHubBloc>().add(LoadMoodMusic(params: param));
+          },
+        ),
         MoodsErrorState() => Container(),
       },
     );

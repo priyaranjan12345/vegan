@@ -37,8 +37,8 @@ class PlayerViewWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<YtPlayerBloc, MusicPlayerState>(
-      // buildWhen: (previous, current) =>
-      //     current.playerState != previous.playerState,
+      buildWhen: (previous, current) =>
+          current.playerState != previous.playerState,
       builder: (_, state) => isMaxPlayer
           ? Container(
               width: double.infinity,
@@ -47,17 +47,20 @@ class PlayerViewWrapper extends StatelessWidget {
                 color: AppColors.darcular,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: switch (state.playerState) {
-                PlayerStatus.INIT ||
-                PlayerStatus.LOADING => const MaxMusicPlayerLoading(),
-                PlayerStatus.LOADED => MaxMusicPlayer(
-                  thumbnail: state.video!.thubmnail,
-                  title: state.video!.title,
-                  artist: state.video!.description,
-                  player: state.player!,
-                ),
-                PlayerStatus.ERROR => const MaxMusicPlayerError(),
-              },
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                child: switch (state.playerState) {
+                  PlayerStatus.INIT ||
+                  PlayerStatus.LOADING => const MaxMusicPlayerLoading(),
+                  PlayerStatus.LOADED => MaxMusicPlayer(
+                    thumbnail: state.video!.thubmnail,
+                    title: state.video!.title,
+                    artist: state.video!.description,
+                    player: state.player!,
+                  ),
+                  PlayerStatus.ERROR => const MaxMusicPlayerError(),
+                },
+              ),
             )
           : Container(
               color: AppColors.dark,
@@ -66,18 +69,21 @@ class PlayerViewWrapper extends StatelessWidget {
                   horizontal: 16.0,
                   vertical: 4.0,
                 ),
-                child: switch (state.playerState) {
-                  PlayerStatus.INIT => const SizedBox.shrink(),
-                  PlayerStatus.LOADING => const MiniMusicPlayerLoading(),
-                  PlayerStatus.LOADED => MiniMusicPlayer(
-                    state.player!,
-                    title: state.video!.title,
-                    author: state.video!.description,
-                    thumbnail: state.video!.thubmnail,
-                    description: state.video!.description,
-                  ),
-                  PlayerStatus.ERROR => const MiniMusicPlayerError(),
-                },
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: switch (state.playerState) {
+                    PlayerStatus.INIT => const SizedBox.shrink(),
+                    PlayerStatus.LOADING => const MiniMusicPlayerLoading(),
+                    PlayerStatus.LOADED => MiniMusicPlayer(
+                      state.player!,
+                      title: state.video!.title,
+                      author: state.video!.description,
+                      thumbnail: state.video!.thubmnail,
+                      description: state.video!.description,
+                    ),
+                    PlayerStatus.ERROR => const MiniMusicPlayerError(),
+                  },
+                ),
               ),
             ),
     );

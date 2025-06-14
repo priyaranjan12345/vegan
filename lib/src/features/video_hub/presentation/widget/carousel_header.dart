@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegan/src/core/theme/app_colors.dart';
 
 class CarouselHeader extends StatelessWidget {
   const CarouselHeader({
@@ -32,26 +33,45 @@ class CarouselHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  child: IconButton(
-                    onPressed: onBackword,
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 16,
+                Container(
+                  decoration: BoxDecoration(
+                    border: BoxBorder.all(
+                      color: AppColors.grey,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Colors.transparent,
+
+                    child: IconButton(
+                      onPressed: onBackword,
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                CircleAvatar(
-                  radius: 20,
-                  child: IconButton(
-                    onPressed: onForward,
-                    icon: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 16,
+                Container(
+                  decoration: BoxDecoration(
+                    border: BoxBorder.all(
+                      color: AppColors.grey,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
+                      onPressed: onForward,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),

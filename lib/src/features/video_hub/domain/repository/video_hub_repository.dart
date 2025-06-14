@@ -13,4 +13,5 @@ abstract interface class VideoHubRepository {
     required String videoId,
     required String playlistId,
   });
+  Future<Either<Exception, YtBrowseModel>> fetchMoodMusic({required String params});
 }

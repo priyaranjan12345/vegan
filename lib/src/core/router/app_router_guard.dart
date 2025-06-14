@@ -10,7 +10,7 @@ class SpalshRouteGuard extends AutoRouteGuard {
     resolver.next(true);
     // any loading operations
     // await Future.delayed(const Duration(seconds: 4));
-    router.popAndPush(const DashboardRoute());
+    router.replaceAll([const DashboardRoute()]);
   }
 }
 

@@ -8,17 +8,20 @@ class AppTile extends StatelessWidget {
     required this.title,
     required this.subTitle,
     this.onTap,
+    this.isSelected = false,
   });
 
   final String imageUrl;
   final String title;
   final String subTitle;
   final void Function()? onTap;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: onTap,
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: AppImage(
@@ -38,7 +41,7 @@ class AppTile extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        onTap: onTap,
+        trailing: isSelected ? const Icon(Icons.queue_music_rounded) : null,
       ),
     );
   }

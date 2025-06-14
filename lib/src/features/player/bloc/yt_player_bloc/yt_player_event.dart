@@ -17,9 +17,22 @@ class LoadMusic extends YtPlayerEvent {
 
   final String videoId;
   final String? playlistId;
-  final List<VideoEntity> playlist;
+  final List<VideoEntity>? playlist;
 }
 
 class LoadPlaylist extends YtPlayerEvent {
   const LoadPlaylist();
+}
+
+
+class NextMusic extends YtPlayerEvent {
+  const NextMusic();
+}
+
+class PrevMusic extends YtPlayerEvent {
+  const PrevMusic();
+}
+
+class LoadPlaylistMusic extends YtPlayerEvent {
+  const LoadPlaylistMusic();
 }

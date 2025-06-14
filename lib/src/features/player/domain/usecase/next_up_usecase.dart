@@ -57,10 +57,12 @@ class NextUpUsecase implements UseCase<List<VideoEntity>, NextUpParams> {
           final thubmnail = item?.thumbnail?.thumbnails.first.url ?? '';
 
           final title = item?.title?.runs.first.text ?? '';
+          final desc = item?.longBylineText?.runs.first.text ?? '';
+
           final videoEntity = VideoEntity(
             id: videoId,
             title: title,
-            description: '',
+            description: desc,
             videoUrl: '',
             thubmnail: thubmnail,
             browseId: '',

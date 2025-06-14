@@ -10,9 +10,10 @@ part 'video_hub_state.dart';
 class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
   VideoHubBloc({
     required VideoHubUsecase videoHubUsecase,
-  })  : _videoHubUsecase = videoHubUsecase,
-        super(const VideoHubInitial()) {
+  }) : _videoHubUsecase = videoHubUsecase,
+       super(const VideoHubInitial()) {
     on<GetVideoHubEvent>(getVideos);
+    on<LoadMoodMusic>(loadMoodMusic);
   }
 
   final VideoHubUsecase _videoHubUsecase;
@@ -22,10 +23,30 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
     Emitter<VideoHubState> emit,
   ) async {
     emit(const VideoHubLoading());
-    final result = await _videoHubUsecase(const Params());
-    result.fold(
-      (l) => emit(const VideoHubError()),
-      (r) => emit(VideoHubLoaded(homeEntity: r)),
-    );
+    try {
+      final result = await _videoHubUsecase(const Params());
+      result.fold(
+        (l) => emit(const VideoHubError()),
+        (r) => emit(VideoHubLoaded(homeEntity: r)),
+      );
+    } catch (_) {
+      emit(const VideoHubError());
+    }
+  }
+
+  void loadMoodMusic(
+    LoadMoodMusic event,
+    Emitter<VideoHubState> emit,
+  ) async {
+    emit(const VideoHubLoading());
+    try {
+      final result = await _videoHubUsecase(Params(params: event.params));
+      result.fold(
+        (l) => emit(const VideoHubError()),
+        (r) => emit(VideoHubLoaded(homeEntity: r)),
+      );
+    } catch (_) {
+      emit(const VideoHubError());
+    }
   }
 }

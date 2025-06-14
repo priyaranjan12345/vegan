@@ -31,14 +31,14 @@ class DashboardPage extends StatelessWidget {
             ),
             items: const [
               BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.home, color: AppColors.grey),
+                label: 'Browse',
+                icon: Icon(Icons.home_outlined, color: AppColors.grey),
                 activeIcon: Icon(Icons.home),
               ),
               BottomNavigationBarItem(
                 label: 'Search',
-                icon: Icon(Icons.search, color: AppColors.grey),
-                activeIcon: Icon(Icons.search),
+                icon: Icon(Icons.manage_search_rounded, color: AppColors.grey),
+                activeIcon: Icon(Icons.manage_search_rounded),
               ),
               BottomNavigationBarItem(
                 label: 'Coming Soon',

@@ -11,7 +11,7 @@ Future<void> main() async {
   runApp(const VeganApp());
 }
 
-// moods, search
+// search
 // download, play history, custom local playlist, favourite
 // settings
 

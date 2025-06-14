@@ -32,7 +32,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   ) async {
     final loadingState = state.copyWith(
       playerState: PlayerStatus.LOADING,
-      nextUpState: NextUpStatus.INIT,
     );
     emit(loadingState);
 
@@ -64,11 +63,12 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
             videoUrl: ytUrl,
             thubmnail: video.thumbnails.mediumResUrl,
           ),
+          currentVideoId: videoId,
         ),
       );
 
       /// on click playlist
-      if (event.playlist.isNotEmpty) {
+      if (event.playlist?.isNotEmpty ?? false) {
         emit(
           state.copyWith(
             nextUpState: NextUpStatus.LOADED,
@@ -128,9 +128,17 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
   void getDetails() {}
 
-  void onNext() {}
+  void onNext() {
+    if (state.playlist.isNotEmpty) {
+      
+    }
+  }
 
   void onPrevious() {}
+
+  void onPlayPause() {}
+
+  void onVolumeChange() {}
 
   @override
   Future<void> close() {

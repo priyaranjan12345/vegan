@@ -12,3 +12,13 @@ final class GetVideoHubEvent extends VideoHubEvent {
   @override
   List<Object> get props => [];
 }
+
+class LoadMoodMusic extends VideoHubEvent {
+  const LoadMoodMusic({
+
+    required this.params,
+  });
+
+  
+  final String params;
+}

@@ -11,6 +11,8 @@ class MusicPlayerState extends Equatable {
     /// use buildwhen
     this.nextUpState = NextUpStatus.INIT,
     this.playerState = PlayerStatus.INIT,
+
+    this.currentVideoId,
   });
 
   final NextUpStatus nextUpState;
@@ -22,6 +24,8 @@ class MusicPlayerState extends Equatable {
   final List<VideoEntity> playlist;
   final int playlistIndex;
 
+  final String? currentVideoId;
+
   @override
   List<Object?> get props => [
     nextUpState,
@@ -31,6 +35,7 @@ class MusicPlayerState extends Equatable {
     playlistId,
     playlist,
     playlistIndex,
+    currentVideoId,
   ];
 
   MusicPlayerState copyWith({
@@ -41,6 +46,7 @@ class MusicPlayerState extends Equatable {
     String? playlistId,
     List<VideoEntity>? playlist,
     int? playlistIndex,
+    String? currentVideoId,
   }) {
     return MusicPlayerState(
       nextUpState: nextUpState ?? this.nextUpState,
@@ -50,6 +56,7 @@ class MusicPlayerState extends Equatable {
       playlistId: playlistId ?? this.playlistId,
       playlist: playlist ?? this.playlist,
       playlistIndex: playlistIndex ?? this.playlistIndex,
+      currentVideoId: currentVideoId ?? this.currentVideoId,
     );
   }
 }

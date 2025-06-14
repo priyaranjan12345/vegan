@@ -39,6 +39,7 @@ class PlaylistView extends StatelessWidget {
           child: CircularProgressIndicator.adaptive(),
         ),
         PlaylistLoadedState() => ListView.builder(
+          padding: const EdgeInsets.only(bottom: 94),
           itemCount: state.videoEntities.length,
           itemBuilder: (context, index) {
             final item = state.videoEntities[index];

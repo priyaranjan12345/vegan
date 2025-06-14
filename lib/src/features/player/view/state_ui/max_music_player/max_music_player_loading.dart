@@ -17,6 +17,7 @@ class MaxMusicPlayerLoading extends StatelessWidget {
                 height: 80,
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
+                  color: AppColors.midGray,
                   borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
@@ -82,10 +83,20 @@ class MaxMusicPlayerLoading extends StatelessWidget {
             ),
           ],
         ),
-        const AppShimmer(
-          child: SizedBox(
-            height: 8,
-            width: double.infinity,
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: AppShimmer(
+            child: SizedBox(
+              height: 6,
+              width: double.infinity,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                child: Container(
+                  color: AppColors.grey,
+                ),
+              ),
+            ),
           ),
         ),
       ],

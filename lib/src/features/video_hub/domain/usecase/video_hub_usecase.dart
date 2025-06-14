@@ -19,9 +19,14 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
 
   @override
   Future<Either<Failure, HomeEntity>> call(params) async {
-    final result = await videoHubRepository.fetchVideos(
-      browseId: params.browseId,
-    );
+    final result = params.params == null
+        ? await videoHubRepository.fetchVideos(
+            browseId: params.browseId,
+          )
+        : await videoHubRepository.fetchMoodMusic(
+            params: params.params!,
+          );
+
     return result.fold(
       (ex) => Left(ServerFailure()),
       (ytBrowseModel) {
@@ -211,9 +216,13 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
 }
 
 class Params extends Equatable {
-  final String? browseId;
+  const Params({
+    this.browseId,
+    this.params,
+  });
 
-  const Params({this.browseId});
+  final String? browseId;
+  final String? params;
 
   @override
   List<Object?> get props => [browseId];

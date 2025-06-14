@@ -93,4 +93,25 @@ class IVideoHubRepository implements VideoHubRepository {
 
     return Left(ServerException());
   }
+
+  @override
+  Future<Either<Exception, YtBrowseModel>> fetchMoodMusic({
+    required String params,
+  }) async {
+    final response = await videoHubRemoteDatasource.getMoodMusicResponse(
+      params: params,
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        final body = response.data;
+        final ytBrowseModel = YtBrowseModel.fromJson(body);
+        return Right(ytBrowseModel);
+      } catch (e) {
+        return Left(ServerException());
+      }
+    }
+
+    return Left(ServerException());
+  }
 }

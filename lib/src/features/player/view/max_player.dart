@@ -6,6 +6,7 @@ import 'package:vegan/src/features/player/bloc/next_up_cubit/next_up_cubit.dart'
 import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
 import 'package:vegan/src/features/player/view/player_view.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
+import 'package:vegan/src/shared/extension/extensions.dart';
 
 import '../../../app/app.dart';
 
@@ -21,18 +22,34 @@ class MaxPlayerPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            BlocProvider.value(
-              value: injector<NextUpCubit>(),
-              child: const PlayerViewWrapper(
-                isMaxPlayer: true,
+        child: context.isPortrait
+            ? Column(
+                children: [
+                  BlocProvider.value(
+                    value: injector<NextUpCubit>(),
+                    child: const PlayerViewWrapper(
+                      isMaxPlayer: true,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const NextUpWrapper(),
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: BlocProvider.value(
+                      value: injector<NextUpCubit>(),
+                      child: const PlayerViewWrapper(
+                        isMaxPlayer: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  const NextUpWrapper(),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            const NextUpWrapper(),
-          ],
-        ),
       ),
     );
   }
@@ -45,7 +62,7 @@ class NextUpWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<YtPlayerBloc, MusicPlayerState>(
       buildWhen: (previous, current) =>
-          previous.nextUpState != current.nextUpState,
+          (previous.nextUpState != current.nextUpState),
       builder: (context, state) {
         return switch (state.nextUpState) {
           NextUpStatus.INIT => const SizedBox.shrink(),
@@ -56,6 +73,7 @@ class NextUpWrapper extends StatelessWidget {
           ),
           NextUpStatus.LOADED => NextUp(
             playlist: state.playlist,
+            currentVideoId: state.currentVideoId ?? '',
           ),
           NextUpStatus.ERROR => const SizedBox.shrink(),
         };
@@ -65,9 +83,14 @@ class NextUpWrapper extends StatelessWidget {
 }
 
 class NextUp extends StatelessWidget {
-  const NextUp({super.key, required this.playlist});
+  const NextUp({
+    super.key,
+    required this.playlist,
+    required this.currentVideoId,
+  });
 
   final List<VideoEntity> playlist;
+  final String currentVideoId;
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +113,15 @@ class NextUp extends StatelessWidget {
               itemBuilder: (context, index) {
                 final e = playlist[index];
                 return AppTile(
+                  isSelected: currentVideoId == e.id,
                   imageUrl: e.thubmnail,
                   title: e.title,
                   subTitle: e.description,
+                  onTap: () {
+                    injector<YtPlayerBloc>().add(
+                      LoadMusic(e.id),
+                    );
+                  },
                 );
               },
             ),

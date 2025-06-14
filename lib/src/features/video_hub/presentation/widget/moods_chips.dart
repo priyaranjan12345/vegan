@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import '../../domain/entity/moods_entity.dart';
 
 class MoodsChips extends StatelessWidget {
-  const MoodsChips({super.key, required this.moods});
+  const MoodsChips({
+    super.key,
+    required this.moods,
+    this.onSelectMoods,
+  });
 
   final List<MoodsEntity> moods;
+  final void Function(String params)? onSelectMoods;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +24,11 @@ class MoodsChips extends StatelessWidget {
           final mood = moods[index];
           return Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Chip(
-              label: Text(mood.label),
+            child: GestureDetector(
+              onTap: () => onSelectMoods?.call(mood.params),
+              child: Chip(
+                label: Text(mood.label),
+              ),
             ),
           );
         },
