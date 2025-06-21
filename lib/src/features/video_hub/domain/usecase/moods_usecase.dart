@@ -7,7 +7,7 @@ import '../../../../core/usecase/no_params.dart';
 import '../entity/entity.dart';
 import '../repository/video_hub_repository.dart';
 
-class MoodsUsecase implements UseCase<List<MoodsEntity>, NoParams> {
+class MoodsUsecase implements UseCase<List<MoodEntity>, NoParams> {
   MoodsUsecase({
     required this.videoHubRepository,
   });
@@ -15,12 +15,12 @@ class MoodsUsecase implements UseCase<List<MoodsEntity>, NoParams> {
   final VideoHubRepository videoHubRepository;
 
   @override
-  Future<Either<Failure, List<MoodsEntity>>> call(params) async {
+  Future<Either<Failure, List<MoodEntity>>> call(params) async {
     final result = await videoHubRepository.fetchMoods();
     return result.fold(
       (ex) => Left(ServerFailure()),
       (ytMoodsModel) {
-        final moods = <MoodsEntity>[];
+        final moods = <MoodEntity>[];
         final tabs =
             ytMoodsModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
                 [];
@@ -36,7 +36,7 @@ class MoodsUsecase implements UseCase<List<MoodsEntity>, NoParams> {
               final title = runs.firstOrNull?.text ?? '';
               final browseEndpoint = renderer?.clickCommand?.browseEndpoint;
               moods.add(
-                MoodsEntity(
+                MoodEntity(
                   label: title,
                   browseId: browseEndpoint?.browseId ?? '',
                   params: browseEndpoint?.params ?? '',

@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class MoodsEntity extends Equatable {
+class MoodEntity extends Equatable {
   final String label;
   final String browseId;
   final String params;
 
-  const MoodsEntity({
+  const MoodEntity({
     required this.label,
     required this.browseId,
     required this.params,

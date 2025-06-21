@@ -9,7 +9,7 @@ class MoodsChips extends StatelessWidget {
     this.onSelectMoods,
   });
 
-  final List<MoodsEntity> moods;
+  final List<MoodEntity> moods;
   final void Function(String params)? onSelectMoods;
 
   @override

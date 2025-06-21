@@ -48,14 +48,22 @@ abstract class YtApiBody {
     ..._context,
   };
 
+  /// continution for browse
+  /// next content
+  static Map<String, Object> continuationContent({String? continuationId}) => {
+    'browseId': 'FEmusic_home',
+    if (continuationId != null) 'continuation': continuationId,
+    ..._context,
+  };
+
   static const global = {
     'browseId': 'FEmusic_home',
     'context': {
       'client': {
-        'clientName': 'WEB_REMIX',
-        'clientVersion': '1.20220708.01.00',
         'hl': 'en',
         'gl': 'US',
+        'clientName': 'WEB_REMIX',
+        'clientVersion': '1.20220708.01.00',
         'experimentIds': [],
         'experimentsToken': '',
         'browserName': 'Chrome',
@@ -63,8 +71,11 @@ abstract class YtApiBody {
         'osName': 'Android',
         'osVersion': '13.0',
         'platform': 'MOBILE',
+        'visitorData': 'CgtYRldyczRsdm9XUSjPybTCBjIKCgJJThIEGgAgWw%3D%3D',
       },
-      'user': {'lockedSafetyMode': false},
+      'user': {
+        'lockedSafetyMode': false,
+      },
     },
   };
 }

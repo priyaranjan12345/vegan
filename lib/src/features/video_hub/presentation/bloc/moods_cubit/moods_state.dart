@@ -21,7 +21,7 @@ final class MoodsLoadingState extends MoodsState {
 final class MoodsLoadedState extends MoodsState {
   const MoodsLoadedState({required this.moods});
 
-  final List<MoodsEntity> moods;
+  final List<MoodEntity> moods;
 
   @override
   List<Object?> get props => [moods];

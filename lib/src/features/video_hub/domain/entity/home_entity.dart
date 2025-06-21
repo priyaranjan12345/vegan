@@ -1,22 +1,26 @@
 import 'package:equatable/equatable.dart';
 
+import 'moods_entity.dart';
 import 'playlist_entity.dart';
 import 'video_entity.dart';
 
 class HomeEntity extends Equatable {
   const HomeEntity({
+    required this.moods,
     required this.videoSuggestions,
     required this.playlistSuggestions,
   });
 
+  final List<MoodEntity> moods;
   final List<VideoSuggestionEntity> videoSuggestions;
   final List<PlaylistSuggestionEntity> playlistSuggestions;
 
   @override
   List<Object?> get props => [
-        videoSuggestions,
-        playlistSuggestions,
-      ];
+    moods,
+    videoSuggestions,
+    playlistSuggestions,
+  ];
 }
 
 class VideoSuggestionEntity extends Equatable {
@@ -30,9 +34,9 @@ class VideoSuggestionEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        heading,
-        videos,
-      ];
+    heading,
+    videos,
+  ];
 }
 
 class PlaylistSuggestionEntity extends Equatable {
@@ -46,7 +50,7 @@ class PlaylistSuggestionEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        heading,
-        playlists,
-      ];
+    heading,
+    playlists,
+  ];
 }

@@ -4,6 +4,7 @@ import 'package:vegan/src/features/video_hub/presentation/bloc/video_hub_bloc.da
 import 'package:vegan/src/features/video_hub/presentation/state_ui/moods_state_ui/moods_state_ui.dart';
 
 import '../../domain/entity/entity.dart';
+import '../widget/moods_chips.dart';
 import '../widget/suggestions.dart';
 import '../widget/suggestions_playlist.dart';
 
@@ -15,12 +16,12 @@ class VideoHubView extends StatelessWidget {
     return BlocBuilder<VideoHubBloc, VideoHubState>(
       builder: (context, state) => switch (state) {
         VideoHubInitial() || VideoHubLoading() => const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
+          child: CircularProgressIndicator.adaptive(),
+        ),
         VideoHubLoaded() => VideoHub(homeEntity: state.homeEntity),
         VideoHubError() => const Center(
-            child: Text('Oops something went wrong...'),
-          ),
+          child: Text('Oops something went wrong...'),
+        ),
       },
     );
   }
@@ -34,11 +35,11 @@ class VideoHub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      cacheExtent: 1000,
-      padding: const EdgeInsets.only(bottom: 92),
+      padding: const EdgeInsets.only(bottom: 116),
       children: [
-        const MoodsStateUi(
-          key: ValueKey('moods'),
+        MoodsChips(
+          moods: homeEntity.moods,
+          onSelectMoods: (params) {},
         ),
         const SizedBox(height: 12),
         ...homeEntity.videoSuggestions.map(
@@ -50,6 +51,7 @@ class VideoHub extends StatelessWidget {
             );
           },
         ),
+        const SizedBox(height: 12),
         ...homeEntity.playlistSuggestions.map(
           (playlist) {
             return SuggestionsPlaylist(
@@ -59,6 +61,14 @@ class VideoHub extends StatelessWidget {
             );
           },
         ),
+
+        /// load more
+        // const SizedBox(height: 16),
+        // const Center(
+        //   child: RepaintBoundary(
+        //     child: CircularProgressIndicator(),
+        //   ),
+        // ),
       ],
     );
   }

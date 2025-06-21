@@ -11,6 +11,7 @@ abstract class VideoHubRemoteDatasource {
     required String playlistId,
   });
   Future<Response> getMoodMusicResponse({required String params});
+  Future<Response> getContinuationResponse({required String continuationId});
 }
 
 class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
@@ -57,6 +58,18 @@ class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
     return await dio.post(
       AppUrl.browse,
       data: YtApiBody.moodsContent(params),
+    );
+  }
+
+  @override
+  Future<Response> getContinuationResponse({
+    required String continuationId,
+  }) async {
+    return await dio.post(
+      AppUrl.browse,
+      data: YtApiBody.continuationContent(
+        continuationId: continuationId,
+      ),
     );
   }
 }

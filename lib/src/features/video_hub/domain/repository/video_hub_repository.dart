@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:vegan/src/features/video_hub/data/model/yt_model/yt_playlist_model.dart';
 
 import '../../data/model/yt_model/yt_browse_model.dart';
+import '../../data/model/yt_model/yt_continuation_model.dart';
 import '../../data/model/yt_model/yt_moods_model.dart';
 import '../../data/model/yt_model/yt_next_up_model.dart';
 
@@ -13,5 +14,10 @@ abstract interface class VideoHubRepository {
     required String videoId,
     required String playlistId,
   });
-  Future<Either<Exception, YtBrowseModel>> fetchMoodMusic({required String params});
+  Future<Either<Exception, YtBrowseModel>> fetchMoodMusic({
+    required String params,
+  });
+  Future<Either<Exception, YtContinuationModel>> fetchContinuation({
+    required String continuationId,
+  });
 }
