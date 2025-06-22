@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:vegan/src/core/base/app_url.dart';
 
@@ -65,11 +68,14 @@ class IVideoHubRemoteDatasource implements VideoHubRemoteDatasource {
   Future<Response> getContinuationResponse({
     required String continuationId,
   }) async {
-    return await dio.post(
+    final response =  await dio.post(
       AppUrl.browse,
       data: YtApiBody.continuationContent(
         continuationId: continuationId,
       ),
     );
+    print('continuation: $continuationId');
+    log(jsonEncode(response.data).toString());
+    return response;
   }
 }

@@ -49,18 +49,20 @@ class ContinuationContentEntity extends Equatable {
   const ContinuationContentEntity({
     required this.title,
     required this.thumbnailUrl,
-    this.playlistId,
-    this.playlistParams,
-    this.browseId,
-    this.browseParams,
+    required this.subTitle,
+    required this.playlistId,
+    required this.playlistParams,
+    required this.browseId,
+    required this.browseParams,
   });
 
   final String title;
+  final String subTitle;
   final String thumbnailUrl;
-  final String? browseId;
-  final String? browseParams;
-  final String? playlistId;
-  final String? playlistParams;
+  final String browseId;
+  final String browseParams;
+  final String playlistId;
+  final String playlistParams;
 
   @override
   List<Object?> get props => [

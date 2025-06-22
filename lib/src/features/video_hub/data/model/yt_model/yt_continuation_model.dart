@@ -300,12 +300,14 @@ class MusicCarouselShelfRenderer extends Equatable {
     required this.contents,
     required this.trackingParams,
     required this.itemSize,
+    required this.numItemsPerColumn,
   });
 
   final Header? header;
   final List<MusicCarouselShelfRendererContent> contents;
   final String? trackingParams;
   final String? itemSize;
+  final String? numItemsPerColumn;
 
   factory MusicCarouselShelfRenderer.fromJson(Map<String, dynamic> json) {
     return MusicCarouselShelfRenderer(
@@ -319,6 +321,7 @@ class MusicCarouselShelfRenderer extends Equatable {
             ),
       trackingParams: json['trackingParams'],
       itemSize: json['itemSize'],
+      numItemsPerColumn: json['numItemsPerColumn'],
     );
   }
 
@@ -328,20 +331,29 @@ class MusicCarouselShelfRenderer extends Equatable {
     contents,
     trackingParams,
     itemSize,
+    numItemsPerColumn,
   ];
 }
 
 class MusicCarouselShelfRendererContent extends Equatable {
   const MusicCarouselShelfRendererContent({
+    required this.musicResponsiveListItemRenderer,
     required this.musicTwoRowItemRenderer,
   });
 
+  final MusicResponsiveListItemRenderer? musicResponsiveListItemRenderer;
   final MusicTwoRowItemRenderer? musicTwoRowItemRenderer;
 
   factory MusicCarouselShelfRendererContent.fromJson(
     Map<String, dynamic> json,
   ) {
     return MusicCarouselShelfRendererContent(
+      musicResponsiveListItemRenderer:
+          json['musicResponsiveListItemRenderer'] == null
+          ? null
+          : MusicResponsiveListItemRenderer.fromJson(
+              json['musicResponsiveListItemRenderer'],
+            ),
       musicTwoRowItemRenderer: json['musicTwoRowItemRenderer'] == null
           ? null
           : MusicTwoRowItemRenderer.fromJson(json['musicTwoRowItemRenderer']),
@@ -350,107 +362,136 @@ class MusicCarouselShelfRendererContent extends Equatable {
 
   @override
   List<Object?> get props => [
+    musicResponsiveListItemRenderer,
     musicTwoRowItemRenderer,
   ];
 }
 
-class MusicTwoRowItemRenderer extends Equatable {
-  const MusicTwoRowItemRenderer({
-    required this.thumbnailRenderer,
-    required this.aspectRatio,
-    required this.title,
-    required this.subtitle,
-    required this.navigationEndpoint,
+class MusicResponsiveListItemRenderer extends Equatable {
+  const MusicResponsiveListItemRenderer({
     required this.trackingParams,
+    required this.thumbnail,
+    required this.overlay,
+    required this.flexColumns,
     required this.menu,
-    required this.thumbnailOverlay,
+    required this.playlistItemData,
+    required this.flexColumnDisplayStyle,
+    required this.itemHeight,
   });
 
-  final ThumbnailRenderer? thumbnailRenderer;
-  final String? aspectRatio;
-  final Title? title;
-  final Subtitle? subtitle;
-  final MusicTwoRowItemRendererNavigationEndpoint? navigationEndpoint;
   final String? trackingParams;
-  final Menu? menu;
-  final ThumbnailOverlay? thumbnailOverlay;
+  final ThumbnailRendererClass? thumbnail;
+  final Overlay? overlay;
+  final List<FlexColumn> flexColumns;
+  final MusicResponsiveListItemRendererMenu? menu;
+  final PlaylistItemData? playlistItemData;
+  final String? flexColumnDisplayStyle;
+  final String? itemHeight;
 
-  factory MusicTwoRowItemRenderer.fromJson(Map<String, dynamic> json) {
-    return MusicTwoRowItemRenderer(
-      thumbnailRenderer: json['thumbnailRenderer'] == null
-          ? null
-          : ThumbnailRenderer.fromJson(json['thumbnailRenderer']),
-      aspectRatio: json['aspectRatio'],
-      title: json['title'] == null ? null : Title.fromJson(json['title']),
-      subtitle: json['subtitle'] == null
-          ? null
-          : Subtitle.fromJson(json['subtitle']),
-      navigationEndpoint: json['navigationEndpoint'] == null
-          ? null
-          : MusicTwoRowItemRendererNavigationEndpoint.fromJson(
-              json['navigationEndpoint'],
-            ),
+  factory MusicResponsiveListItemRenderer.fromJson(Map<String, dynamic> json) {
+    return MusicResponsiveListItemRenderer(
       trackingParams: json['trackingParams'],
-      menu: json['menu'] == null ? null : Menu.fromJson(json['menu']),
-      thumbnailOverlay: json['thumbnailOverlay'] == null
+      thumbnail: json['thumbnail'] == null
           ? null
-          : ThumbnailOverlay.fromJson(json['thumbnailOverlay']),
+          : ThumbnailRendererClass.fromJson(json['thumbnail']),
+      overlay: json['overlay'] == null
+          ? null
+          : Overlay.fromJson(json['overlay']),
+      flexColumns: json['flexColumns'] == null
+          ? []
+          : List<FlexColumn>.from(
+              json['flexColumns']!.map((x) => FlexColumn.fromJson(x)),
+            ),
+      menu: json['menu'] == null
+          ? null
+          : MusicResponsiveListItemRendererMenu.fromJson(json['menu']),
+      playlistItemData: json['playlistItemData'] == null
+          ? null
+          : PlaylistItemData.fromJson(json['playlistItemData']),
+      flexColumnDisplayStyle: json['flexColumnDisplayStyle'],
+      itemHeight: json['itemHeight'],
     );
   }
 
   @override
   List<Object?> get props => [
-    thumbnailRenderer,
-    aspectRatio,
-    title,
-    subtitle,
-    navigationEndpoint,
     trackingParams,
+    thumbnail,
+    overlay,
+    flexColumns,
     menu,
-    thumbnailOverlay,
+    playlistItemData,
+    flexColumnDisplayStyle,
+    itemHeight,
   ];
 }
 
-class Menu extends Equatable {
-  const Menu({
-    required this.menuRenderer,
+class FlexColumn extends Equatable {
+  const FlexColumn({
+    required this.musicResponsiveListItemFlexColumnRenderer,
   });
 
-  final MenuRenderer? menuRenderer;
+  final MusicResponsiveListItemFlexColumnRenderer?
+  musicResponsiveListItemFlexColumnRenderer;
 
-  factory Menu.fromJson(Map<String, dynamic> json) {
-    return Menu(
-      menuRenderer: json['menuRenderer'] == null
+  factory FlexColumn.fromJson(Map<String, dynamic> json) {
+    return FlexColumn(
+      musicResponsiveListItemFlexColumnRenderer:
+          json['musicResponsiveListItemFlexColumnRenderer'] == null
           ? null
-          : MenuRenderer.fromJson(json['menuRenderer']),
+          : MusicResponsiveListItemFlexColumnRenderer.fromJson(
+              json['musicResponsiveListItemFlexColumnRenderer'],
+            ),
     );
   }
 
   @override
   List<Object?> get props => [
-    menuRenderer,
+    musicResponsiveListItemFlexColumnRenderer,
   ];
 }
 
-class MenuRenderer extends Equatable {
-  const MenuRenderer({
-    required this.items,
-    required this.trackingParams,
+class MusicResponsiveListItemFlexColumnRenderer extends Equatable {
+  const MusicResponsiveListItemFlexColumnRenderer({
+    required this.text,
+    required this.displayPriority,
+  });
+
+  final Text? text;
+  final String? displayPriority;
+
+  factory MusicResponsiveListItemFlexColumnRenderer.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MusicResponsiveListItemFlexColumnRenderer(
+      text: json['text'] == null ? null : Text.fromJson(json['text']),
+      displayPriority: json['displayPriority'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    text,
+    displayPriority,
+  ];
+}
+
+class Text extends Equatable {
+  const Text({
+    required this.runs,
     required this.accessibility,
   });
 
-  final List<ItemElement> items;
-  final String? trackingParams;
+  final List<PurpleRun> runs;
   final Accessibility? accessibility;
 
-  factory MenuRenderer.fromJson(Map<String, dynamic> json) {
-    return MenuRenderer(
-      items: json['items'] == null
+  factory Text.fromJson(Map<String, dynamic> json) {
+    return Text(
+      runs: json['runs'] == null
           ? []
-          : List<ItemElement>.from(
-              json['items']!.map((x) => ItemElement.fromJson(x)),
+          : List<PurpleRun>.from(
+              json['runs']!.map((x) => PurpleRun.fromJson(x)),
             ),
-      trackingParams: json['trackingParams'],
       accessibility: json['accessibility'] == null
           ? null
           : Accessibility.fromJson(json['accessibility']),
@@ -459,8 +500,7 @@ class MenuRenderer extends Equatable {
 
   @override
   List<Object?> get props => [
-    items,
-    trackingParams,
+    runs,
     accessibility,
   ];
 }
@@ -505,31 +545,349 @@ class AccessibilityData extends Equatable {
   ];
 }
 
-class ItemElement extends Equatable {
-  const ItemElement({
+class PurpleRun extends Equatable {
+  const PurpleRun({
+    required this.text,
+    required this.navigationEndpoint,
+  });
+
+  final String? text;
+  final PurpleNavigationEndpoint? navigationEndpoint;
+
+  factory PurpleRun.fromJson(Map<String, dynamic> json) {
+    return PurpleRun(
+      text: json['text'],
+      navigationEndpoint: json['navigationEndpoint'] == null
+          ? null
+          : PurpleNavigationEndpoint.fromJson(json['navigationEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    text,
+    navigationEndpoint,
+  ];
+}
+
+class PurpleNavigationEndpoint extends Equatable {
+  const PurpleNavigationEndpoint({
+    required this.clickTrackingParams,
+    required this.watchEndpoint,
+    required this.browseEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final PurpleWatchEndpoint? watchEndpoint;
+  final PurpleBrowseEndpoint? browseEndpoint;
+
+  factory PurpleNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return PurpleNavigationEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      watchEndpoint: json['watchEndpoint'] == null
+          ? null
+          : PurpleWatchEndpoint.fromJson(json['watchEndpoint']),
+      browseEndpoint: json['browseEndpoint'] == null
+          ? null
+          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    watchEndpoint,
+    browseEndpoint,
+  ];
+}
+
+class PurpleBrowseEndpoint extends Equatable {
+  const PurpleBrowseEndpoint({
+    required this.browseId,
+    required this.browseEndpointContextSupportedConfigs,
+    required this.params,
+  });
+
+  final String? browseId;
+  final BrowseEndpointContextSupportedConfigs?
+  browseEndpointContextSupportedConfigs;
+  final String? params;
+
+  factory PurpleBrowseEndpoint.fromJson(Map<String, dynamic> json) {
+    return PurpleBrowseEndpoint(
+      browseId: json['browseId'],
+      browseEndpointContextSupportedConfigs:
+          json['browseEndpointContextSupportedConfigs'] == null
+          ? null
+          : BrowseEndpointContextSupportedConfigs.fromJson(
+              json['browseEndpointContextSupportedConfigs'],
+            ),
+      params: json['params'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    browseId,
+    browseEndpointContextSupportedConfigs,
+    params,
+  ];
+}
+
+class BrowseEndpointContextSupportedConfigs extends Equatable {
+  const BrowseEndpointContextSupportedConfigs({
+    required this.browseEndpointContextMusicConfig,
+  });
+
+  final BrowseEndpointContextMusicConfig? browseEndpointContextMusicConfig;
+
+  factory BrowseEndpointContextSupportedConfigs.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return BrowseEndpointContextSupportedConfigs(
+      browseEndpointContextMusicConfig:
+          json['browseEndpointContextMusicConfig'] == null
+          ? null
+          : BrowseEndpointContextMusicConfig.fromJson(
+              json['browseEndpointContextMusicConfig'],
+            ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    browseEndpointContextMusicConfig,
+  ];
+}
+
+class BrowseEndpointContextMusicConfig extends Equatable {
+  const BrowseEndpointContextMusicConfig({
+    required this.pageType,
+  });
+
+  final String? pageType;
+
+  factory BrowseEndpointContextMusicConfig.fromJson(Map<String, dynamic> json) {
+    return BrowseEndpointContextMusicConfig(
+      pageType: json['pageType'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    pageType,
+  ];
+}
+
+class PurpleWatchEndpoint extends Equatable {
+  const PurpleWatchEndpoint({
+    required this.videoId,
+    required this.playlistId,
+    required this.playerParams,
+    required this.loggingContext,
+    required this.watchEndpointMusicSupportedConfigs,
+    required this.params,
+  });
+
+  final String? videoId;
+  final String? playlistId;
+  final String? playerParams;
+  final LoggingContext? loggingContext;
+  final WatchEndpointMusicSupportedConfigs? watchEndpointMusicSupportedConfigs;
+  final String? params;
+
+  factory PurpleWatchEndpoint.fromJson(Map<String, dynamic> json) {
+    return PurpleWatchEndpoint(
+      videoId: json['videoId'],
+      playlistId: json['playlistId'],
+      playerParams: json['playerParams'],
+      loggingContext: json['loggingContext'] == null
+          ? null
+          : LoggingContext.fromJson(json['loggingContext']),
+      watchEndpointMusicSupportedConfigs:
+          json['watchEndpointMusicSupportedConfigs'] == null
+          ? null
+          : WatchEndpointMusicSupportedConfigs.fromJson(
+              json['watchEndpointMusicSupportedConfigs'],
+            ),
+      params: json['params'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    videoId,
+    playlistId,
+    playerParams,
+    loggingContext,
+    watchEndpointMusicSupportedConfigs,
+    params,
+  ];
+}
+
+class LoggingContext extends Equatable {
+  const LoggingContext({
+    required this.vssLoggingContext,
+  });
+
+  final VssLoggingContext? vssLoggingContext;
+
+  factory LoggingContext.fromJson(Map<String, dynamic> json) {
+    return LoggingContext(
+      vssLoggingContext: json['vssLoggingContext'] == null
+          ? null
+          : VssLoggingContext.fromJson(json['vssLoggingContext']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    vssLoggingContext,
+  ];
+}
+
+class VssLoggingContext extends Equatable {
+  const VssLoggingContext({
+    required this.serializedContextData,
+  });
+
+  final String? serializedContextData;
+
+  factory VssLoggingContext.fromJson(Map<String, dynamic> json) {
+    return VssLoggingContext(
+      serializedContextData: json['serializedContextData'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    serializedContextData,
+  ];
+}
+
+class WatchEndpointMusicSupportedConfigs extends Equatable {
+  const WatchEndpointMusicSupportedConfigs({
+    required this.watchEndpointMusicConfig,
+  });
+
+  final WatchEndpointMusicConfig? watchEndpointMusicConfig;
+
+  factory WatchEndpointMusicSupportedConfigs.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return WatchEndpointMusicSupportedConfigs(
+      watchEndpointMusicConfig: json['watchEndpointMusicConfig'] == null
+          ? null
+          : WatchEndpointMusicConfig.fromJson(json['watchEndpointMusicConfig']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    watchEndpointMusicConfig,
+  ];
+}
+
+class WatchEndpointMusicConfig extends Equatable {
+  const WatchEndpointMusicConfig({
+    required this.musicVideoType,
+  });
+
+  final String? musicVideoType;
+
+  factory WatchEndpointMusicConfig.fromJson(Map<String, dynamic> json) {
+    return WatchEndpointMusicConfig(
+      musicVideoType: json['musicVideoType'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    musicVideoType,
+  ];
+}
+
+class MusicResponsiveListItemRendererMenu extends Equatable {
+  const MusicResponsiveListItemRendererMenu({
+    required this.menuRenderer,
+  });
+
+  final PurpleMenuRenderer? menuRenderer;
+
+  factory MusicResponsiveListItemRendererMenu.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MusicResponsiveListItemRendererMenu(
+      menuRenderer: json['menuRenderer'] == null
+          ? null
+          : PurpleMenuRenderer.fromJson(json['menuRenderer']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    menuRenderer,
+  ];
+}
+
+class PurpleMenuRenderer extends Equatable {
+  const PurpleMenuRenderer({
+    required this.items,
+    required this.trackingParams,
+    required this.topLevelButtons,
+    required this.accessibility,
+  });
+
+  final List<PurpleItem> items;
+  final String? trackingParams;
+  final List<TopLevelButton> topLevelButtons;
+  final Accessibility? accessibility;
+
+  factory PurpleMenuRenderer.fromJson(Map<String, dynamic> json) {
+    return PurpleMenuRenderer(
+      items: json['items'] == null
+          ? []
+          : List<PurpleItem>.from(
+              json['items']!.map((x) => PurpleItem.fromJson(x)),
+            ),
+      trackingParams: json['trackingParams'],
+      topLevelButtons: json['topLevelButtons'] == null
+          ? []
+          : List<TopLevelButton>.from(
+              json['topLevelButtons']!.map((x) => TopLevelButton.fromJson(x)),
+            ),
+      accessibility: json['accessibility'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibility']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    items,
+    trackingParams,
+    topLevelButtons,
+    accessibility,
+  ];
+}
+
+class PurpleItem extends Equatable {
+  const PurpleItem({
     required this.menuNavigationItemRenderer,
     required this.menuServiceItemRenderer,
-    required this.toggleMenuServiceItemRenderer,
   });
 
   final MenuItemRenderer? menuNavigationItemRenderer;
   final MenuItemRenderer? menuServiceItemRenderer;
-  final ToggleMenuServiceItemRenderer? toggleMenuServiceItemRenderer;
 
-  factory ItemElement.fromJson(Map<String, dynamic> json) {
-    return ItemElement(
+  factory PurpleItem.fromJson(Map<String, dynamic> json) {
+    return PurpleItem(
       menuNavigationItemRenderer: json['menuNavigationItemRenderer'] == null
           ? null
           : MenuItemRenderer.fromJson(json['menuNavigationItemRenderer']),
       menuServiceItemRenderer: json['menuServiceItemRenderer'] == null
           ? null
           : MenuItemRenderer.fromJson(json['menuServiceItemRenderer']),
-      toggleMenuServiceItemRenderer:
-          json['toggleMenuServiceItemRenderer'] == null
-          ? null
-          : ToggleMenuServiceItemRenderer.fromJson(
-              json['toggleMenuServiceItemRenderer'],
-            ),
     );
   }
 
@@ -537,7 +895,6 @@ class ItemElement extends Equatable {
   List<Object?> get props => [
     menuNavigationItemRenderer,
     menuServiceItemRenderer,
-    toggleMenuServiceItemRenderer,
   ];
 }
 
@@ -585,50 +942,56 @@ class MenuItemRenderer extends Equatable {
 class MenuNavigationItemRendererNavigationEndpoint extends Equatable {
   const MenuNavigationItemRendererNavigationEndpoint({
     required this.clickTrackingParams,
-    required this.watchPlaylistEndpoint,
+    required this.watchEndpoint,
     required this.modalEndpoint,
-    required this.shareEntityEndpoint,
     required this.browseEndpoint,
+    required this.shareEntityEndpoint,
+    required this.watchPlaylistEndpoint,
   });
 
   final String? clickTrackingParams;
-  final WatchPlaylistEndpoint? watchPlaylistEndpoint;
+  final PurpleWatchEndpoint? watchEndpoint;
   final ModalEndpoint? modalEndpoint;
+  final FluffyBrowseEndpoint? browseEndpoint;
   final ShareEntityEndpoint? shareEntityEndpoint;
-  final PurpleBrowseEndpoint? browseEndpoint;
+  final WatchPlaylistEndpoint? watchPlaylistEndpoint;
 
   factory MenuNavigationItemRendererNavigationEndpoint.fromJson(
     Map<String, dynamic> json,
   ) {
     return MenuNavigationItemRendererNavigationEndpoint(
       clickTrackingParams: json['clickTrackingParams'],
-      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
+          : PurpleWatchEndpoint.fromJson(json['watchEndpoint']),
       modalEndpoint: json['modalEndpoint'] == null
           ? null
           : ModalEndpoint.fromJson(json['modalEndpoint']),
+      browseEndpoint: json['browseEndpoint'] == null
+          ? null
+          : FluffyBrowseEndpoint.fromJson(json['browseEndpoint']),
       shareEntityEndpoint: json['shareEntityEndpoint'] == null
           ? null
           : ShareEntityEndpoint.fromJson(json['shareEntityEndpoint']),
-      browseEndpoint: json['browseEndpoint'] == null
+      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
           ? null
-          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
+          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
     );
   }
 
   @override
   List<Object?> get props => [
     clickTrackingParams,
-    watchPlaylistEndpoint,
+    watchEndpoint,
     modalEndpoint,
-    shareEntityEndpoint,
     browseEndpoint,
+    shareEntityEndpoint,
+    watchPlaylistEndpoint,
   ];
 }
 
-class PurpleBrowseEndpoint extends Equatable {
-  const PurpleBrowseEndpoint({
+class FluffyBrowseEndpoint extends Equatable {
+  const FluffyBrowseEndpoint({
     required this.browseId,
     required this.browseEndpointContextSupportedConfigs,
   });
@@ -637,8 +1000,8 @@ class PurpleBrowseEndpoint extends Equatable {
   final BrowseEndpointContextSupportedConfigs?
   browseEndpointContextSupportedConfigs;
 
-  factory PurpleBrowseEndpoint.fromJson(Map<String, dynamic> json) {
-    return PurpleBrowseEndpoint(
+  factory FluffyBrowseEndpoint.fromJson(Map<String, dynamic> json) {
+    return FluffyBrowseEndpoint(
       browseId: json['browseId'],
       browseEndpointContextSupportedConfigs:
           json['browseEndpointContextSupportedConfigs'] == null
@@ -653,51 +1016,6 @@ class PurpleBrowseEndpoint extends Equatable {
   List<Object?> get props => [
     browseId,
     browseEndpointContextSupportedConfigs,
-  ];
-}
-
-class BrowseEndpointContextSupportedConfigs extends Equatable {
-  const BrowseEndpointContextSupportedConfigs({
-    required this.browseEndpointContextMusicConfig,
-  });
-
-  final BrowseEndpointContextMusicConfig? browseEndpointContextMusicConfig;
-
-  factory BrowseEndpointContextSupportedConfigs.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return BrowseEndpointContextSupportedConfigs(
-      browseEndpointContextMusicConfig:
-          json['browseEndpointContextMusicConfig'] == null
-          ? null
-          : BrowseEndpointContextMusicConfig.fromJson(
-              json['browseEndpointContextMusicConfig'],
-            ),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    browseEndpointContextMusicConfig,
-  ];
-}
-
-class BrowseEndpointContextMusicConfig extends Equatable {
-  const BrowseEndpointContextMusicConfig({
-    required this.pageType,
-  });
-
-  final String? pageType;
-
-  factory BrowseEndpointContextMusicConfig.fromJson(Map<String, dynamic> json) {
-    return BrowseEndpointContextMusicConfig(
-      pageType: json['pageType'],
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    pageType,
   ];
 }
 
@@ -778,13 +1096,13 @@ class Button extends Equatable {
     required this.buttonRenderer,
   });
 
-  final ButtonRenderer? buttonRenderer;
+  final ButtonButtonRenderer? buttonRenderer;
 
   factory Button.fromJson(Map<String, dynamic> json) {
     return Button(
       buttonRenderer: json['buttonRenderer'] == null
           ? null
-          : ButtonRenderer.fromJson(json['buttonRenderer']),
+          : ButtonButtonRenderer.fromJson(json['buttonRenderer']),
     );
   }
 
@@ -794,8 +1112,8 @@ class Button extends Equatable {
   ];
 }
 
-class ButtonRenderer extends Equatable {
-  const ButtonRenderer({
+class ButtonButtonRenderer extends Equatable {
+  const ButtonButtonRenderer({
     required this.style,
     required this.isDisabled,
     required this.text,
@@ -806,19 +1124,17 @@ class ButtonRenderer extends Equatable {
   final String? style;
   final bool? isDisabled;
   final Strapline? text;
-  final ButtonRendererNavigationEndpoint? navigationEndpoint;
+  final FluffyNavigationEndpoint? navigationEndpoint;
   final String? trackingParams;
 
-  factory ButtonRenderer.fromJson(Map<String, dynamic> json) {
-    return ButtonRenderer(
+  factory ButtonButtonRenderer.fromJson(Map<String, dynamic> json) {
+    return ButtonButtonRenderer(
       style: json['style'],
       isDisabled: json['isDisabled'],
       text: json['text'] == null ? null : Strapline.fromJson(json['text']),
       navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : ButtonRendererNavigationEndpoint.fromJson(
-              json['navigationEndpoint'],
-            ),
+          : FluffyNavigationEndpoint.fromJson(json['navigationEndpoint']),
       trackingParams: json['trackingParams'],
     );
   }
@@ -833,8 +1149,8 @@ class ButtonRenderer extends Equatable {
   ];
 }
 
-class ButtonRendererNavigationEndpoint extends Equatable {
-  const ButtonRendererNavigationEndpoint({
+class FluffyNavigationEndpoint extends Equatable {
+  const FluffyNavigationEndpoint({
     required this.clickTrackingParams,
     required this.signInEndpoint,
   });
@@ -842,8 +1158,8 @@ class ButtonRendererNavigationEndpoint extends Equatable {
   final String? clickTrackingParams;
   final SignInEndpoint? signInEndpoint;
 
-  factory ButtonRendererNavigationEndpoint.fromJson(Map<String, dynamic> json) {
-    return ButtonRendererNavigationEndpoint(
+  factory FluffyNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return FluffyNavigationEndpoint(
       clickTrackingParams: json['clickTrackingParams'],
       signInEndpoint: json['signInEndpoint'] == null
           ? null
@@ -1117,26 +1433,30 @@ class NotificationTextRenderer extends Equatable {
 
 class QueueTarget extends Equatable {
   const QueueTarget({
-    required this.playlistId,
+    required this.videoId,
     required this.onEmptyQueue,
+    required this.playlistId,
   });
 
-  final String? playlistId;
+  final String? videoId;
   final OnEmptyQueue? onEmptyQueue;
+  final String? playlistId;
 
   factory QueueTarget.fromJson(Map<String, dynamic> json) {
     return QueueTarget(
-      playlistId: json['playlistId'],
+      videoId: json['videoId'],
       onEmptyQueue: json['onEmptyQueue'] == null
           ? null
           : OnEmptyQueue.fromJson(json['onEmptyQueue']),
+      playlistId: json['playlistId'],
     );
   }
 
   @override
   List<Object?> get props => [
-    playlistId,
+    videoId,
     onEmptyQueue,
+    playlistId,
   ];
 }
 
@@ -1147,14 +1467,14 @@ class OnEmptyQueue extends Equatable {
   });
 
   final String? clickTrackingParams;
-  final Target? watchEndpoint;
+  final OnEmptyQueueWatchEndpoint? watchEndpoint;
 
   factory OnEmptyQueue.fromJson(Map<String, dynamic> json) {
     return OnEmptyQueue(
       clickTrackingParams: json['clickTrackingParams'],
       watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : Target.fromJson(json['watchEndpoint']),
+          : OnEmptyQueueWatchEndpoint.fromJson(json['watchEndpoint']),
     );
   }
 
@@ -1165,82 +1485,99 @@ class OnEmptyQueue extends Equatable {
   ];
 }
 
-class Target extends Equatable {
-  const Target({
+class OnEmptyQueueWatchEndpoint extends Equatable {
+  const OnEmptyQueueWatchEndpoint({
+    required this.videoId,
     required this.playlistId,
   });
 
+  final String? videoId;
   final String? playlistId;
 
-  factory Target.fromJson(Map<String, dynamic> json) {
-    return Target(
+  factory OnEmptyQueueWatchEndpoint.fromJson(Map<String, dynamic> json) {
+    return OnEmptyQueueWatchEndpoint(
+      videoId: json['videoId'],
       playlistId: json['playlistId'],
     );
   }
 
   @override
   List<Object?> get props => [
+    videoId,
     playlistId,
   ];
 }
 
-class ToggleMenuServiceItemRenderer extends Equatable {
-  const ToggleMenuServiceItemRenderer({
-    required this.defaultText,
-    required this.defaultIcon,
-    required this.defaultServiceEndpoint,
-    required this.toggledText,
-    required this.toggledIcon,
-    required this.toggledServiceEndpoint,
-    required this.trackingParams,
+class TopLevelButton extends Equatable {
+  const TopLevelButton({
+    required this.likeButtonRenderer,
   });
 
-  final Strapline? defaultText;
-  final Icon? defaultIcon;
-  final DefaultServiceEndpoint? defaultServiceEndpoint;
-  final Strapline? toggledText;
-  final Icon? toggledIcon;
-  final ToggledServiceEndpoint? toggledServiceEndpoint;
-  final String? trackingParams;
+  final LikeButtonRenderer? likeButtonRenderer;
 
-  factory ToggleMenuServiceItemRenderer.fromJson(Map<String, dynamic> json) {
-    return ToggleMenuServiceItemRenderer(
-      defaultText: json['defaultText'] == null
+  factory TopLevelButton.fromJson(Map<String, dynamic> json) {
+    return TopLevelButton(
+      likeButtonRenderer: json['likeButtonRenderer'] == null
           ? null
-          : Strapline.fromJson(json['defaultText']),
-      defaultIcon: json['defaultIcon'] == null
-          ? null
-          : Icon.fromJson(json['defaultIcon']),
-      defaultServiceEndpoint: json['defaultServiceEndpoint'] == null
-          ? null
-          : DefaultServiceEndpoint.fromJson(json['defaultServiceEndpoint']),
-      toggledText: json['toggledText'] == null
-          ? null
-          : Strapline.fromJson(json['toggledText']),
-      toggledIcon: json['toggledIcon'] == null
-          ? null
-          : Icon.fromJson(json['toggledIcon']),
-      toggledServiceEndpoint: json['toggledServiceEndpoint'] == null
-          ? null
-          : ToggledServiceEndpoint.fromJson(json['toggledServiceEndpoint']),
-      trackingParams: json['trackingParams'],
+          : LikeButtonRenderer.fromJson(json['likeButtonRenderer']),
     );
   }
 
   @override
   List<Object?> get props => [
-    defaultText,
-    defaultIcon,
-    defaultServiceEndpoint,
-    toggledText,
-    toggledIcon,
-    toggledServiceEndpoint,
-    trackingParams,
+    likeButtonRenderer,
   ];
 }
 
-class DefaultServiceEndpoint extends Equatable {
-  const DefaultServiceEndpoint({
+class LikeButtonRenderer extends Equatable {
+  const LikeButtonRenderer({
+    required this.target,
+    required this.likeStatus,
+    required this.trackingParams,
+    required this.likesAllowed,
+    required this.dislikeNavigationEndpoint,
+    required this.likeCommand,
+  });
+
+  final PlaylistItemData? target;
+  final String? likeStatus;
+  final String? trackingParams;
+  final bool? likesAllowed;
+  final DislikeNavigationEndpoint? dislikeNavigationEndpoint;
+  final DislikeNavigationEndpoint? likeCommand;
+
+  factory LikeButtonRenderer.fromJson(Map<String, dynamic> json) {
+    return LikeButtonRenderer(
+      target: json['target'] == null
+          ? null
+          : PlaylistItemData.fromJson(json['target']),
+      likeStatus: json['likeStatus'],
+      trackingParams: json['trackingParams'],
+      likesAllowed: json['likesAllowed'],
+      dislikeNavigationEndpoint: json['dislikeNavigationEndpoint'] == null
+          ? null
+          : DislikeNavigationEndpoint.fromJson(
+              json['dislikeNavigationEndpoint'],
+            ),
+      likeCommand: json['likeCommand'] == null
+          ? null
+          : DislikeNavigationEndpoint.fromJson(json['likeCommand']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    target,
+    likeStatus,
+    trackingParams,
+    likesAllowed,
+    dislikeNavigationEndpoint,
+    likeCommand,
+  ];
+}
+
+class DislikeNavigationEndpoint extends Equatable {
+  const DislikeNavigationEndpoint({
     required this.clickTrackingParams,
     required this.modalEndpoint,
   });
@@ -1248,8 +1585,8 @@ class DefaultServiceEndpoint extends Equatable {
   final String? clickTrackingParams;
   final ModalEndpoint? modalEndpoint;
 
-  factory DefaultServiceEndpoint.fromJson(Map<String, dynamic> json) {
-    return DefaultServiceEndpoint(
+  factory DislikeNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return DislikeNavigationEndpoint(
       clickTrackingParams: json['clickTrackingParams'],
       modalEndpoint: json['modalEndpoint'] == null
           ? null
@@ -1264,200 +1601,39 @@ class DefaultServiceEndpoint extends Equatable {
   ];
 }
 
-class ToggledServiceEndpoint extends Equatable {
-  const ToggledServiceEndpoint({
-    required this.clickTrackingParams,
-    required this.likeEndpoint,
+class PlaylistItemData extends Equatable {
+  const PlaylistItemData({
+    required this.videoId,
   });
 
-  final String? clickTrackingParams;
-  final LikeEndpoint? likeEndpoint;
+  final String? videoId;
 
-  factory ToggledServiceEndpoint.fromJson(Map<String, dynamic> json) {
-    return ToggledServiceEndpoint(
-      clickTrackingParams: json['clickTrackingParams'],
-      likeEndpoint: json['likeEndpoint'] == null
-          ? null
-          : LikeEndpoint.fromJson(json['likeEndpoint']),
+  factory PlaylistItemData.fromJson(Map<String, dynamic> json) {
+    return PlaylistItemData(
+      videoId: json['videoId'],
     );
   }
 
   @override
   List<Object?> get props => [
-    clickTrackingParams,
-    likeEndpoint,
+    videoId,
   ];
 }
 
-class LikeEndpoint extends Equatable {
-  const LikeEndpoint({
-    required this.status,
-    required this.target,
-  });
-
-  final String? status;
-  final Target? target;
-
-  factory LikeEndpoint.fromJson(Map<String, dynamic> json) {
-    return LikeEndpoint(
-      status: json['status'],
-      target: json['target'] == null ? null : Target.fromJson(json['target']),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    status,
-    target,
-  ];
-}
-
-class MusicTwoRowItemRendererNavigationEndpoint extends Equatable {
-  const MusicTwoRowItemRendererNavigationEndpoint({
-    required this.clickTrackingParams,
-    required this.browseEndpoint,
-  });
-
-  final String? clickTrackingParams;
-  final FluffyBrowseEndpoint? browseEndpoint;
-
-  factory MusicTwoRowItemRendererNavigationEndpoint.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return MusicTwoRowItemRendererNavigationEndpoint(
-      clickTrackingParams: json['clickTrackingParams'],
-      browseEndpoint: json['browseEndpoint'] == null
-          ? null
-          : FluffyBrowseEndpoint.fromJson(json['browseEndpoint']),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    clickTrackingParams,
-    browseEndpoint,
-  ];
-}
-
-class FluffyBrowseEndpoint extends Equatable {
-  const FluffyBrowseEndpoint({
-    required this.browseId,
-    required this.browseEndpointContextSupportedConfigs,
-    required this.params,
-  });
-
-  final String? browseId;
-  final BrowseEndpointContextSupportedConfigs?
-  browseEndpointContextSupportedConfigs;
-  final String? params;
-
-  factory FluffyBrowseEndpoint.fromJson(Map<String, dynamic> json) {
-    return FluffyBrowseEndpoint(
-      browseId: json['browseId'],
-      browseEndpointContextSupportedConfigs:
-          json['browseEndpointContextSupportedConfigs'] == null
-          ? null
-          : BrowseEndpointContextSupportedConfigs.fromJson(
-              json['browseEndpointContextSupportedConfigs'],
-            ),
-      params: json['params'],
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    browseId,
-    browseEndpointContextSupportedConfigs,
-    params,
-  ];
-}
-
-class Subtitle extends Equatable {
-  const Subtitle({
-    required this.runs,
-  });
-
-  final List<SubtitleRun> runs;
-
-  factory Subtitle.fromJson(Map<String, dynamic> json) {
-    return Subtitle(
-      runs: json['runs'] == null
-          ? []
-          : List<SubtitleRun>.from(
-              json['runs']!.map((x) => SubtitleRun.fromJson(x)),
-            ),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    runs,
-  ];
-}
-
-class SubtitleRun extends Equatable {
-  const SubtitleRun({
-    required this.text,
-    required this.navigationEndpoint,
-  });
-
-  final String? text;
-  final PurpleNavigationEndpoint? navigationEndpoint;
-
-  factory SubtitleRun.fromJson(Map<String, dynamic> json) {
-    return SubtitleRun(
-      text: json['text'],
-      navigationEndpoint: json['navigationEndpoint'] == null
-          ? null
-          : PurpleNavigationEndpoint.fromJson(json['navigationEndpoint']),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    text,
-    navigationEndpoint,
-  ];
-}
-
-class PurpleNavigationEndpoint extends Equatable {
-  const PurpleNavigationEndpoint({
-    required this.clickTrackingParams,
-    required this.browseEndpoint,
-  });
-
-  final String? clickTrackingParams;
-  final PurpleBrowseEndpoint? browseEndpoint;
-
-  factory PurpleNavigationEndpoint.fromJson(Map<String, dynamic> json) {
-    return PurpleNavigationEndpoint(
-      clickTrackingParams: json['clickTrackingParams'],
-      browseEndpoint: json['browseEndpoint'] == null
-          ? null
-          : PurpleBrowseEndpoint.fromJson(json['browseEndpoint']),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    clickTrackingParams,
-    browseEndpoint,
-  ];
-}
-
-class ThumbnailOverlay extends Equatable {
-  const ThumbnailOverlay({
+class Overlay extends Equatable {
+  const Overlay({
     required this.musicItemThumbnailOverlayRenderer,
   });
 
-  final MusicItemThumbnailOverlayRenderer? musicItemThumbnailOverlayRenderer;
+  final OverlayMusicItemThumbnailOverlayRenderer?
+  musicItemThumbnailOverlayRenderer;
 
-  factory ThumbnailOverlay.fromJson(Map<String, dynamic> json) {
-    return ThumbnailOverlay(
+  factory Overlay.fromJson(Map<String, dynamic> json) {
+    return Overlay(
       musicItemThumbnailOverlayRenderer:
           json['musicItemThumbnailOverlayRenderer'] == null
           ? null
-          : MusicItemThumbnailOverlayRenderer.fromJson(
+          : OverlayMusicItemThumbnailOverlayRenderer.fromJson(
               json['musicItemThumbnailOverlayRenderer'],
             ),
     );
@@ -1469,8 +1645,8 @@ class ThumbnailOverlay extends Equatable {
   ];
 }
 
-class MusicItemThumbnailOverlayRenderer extends Equatable {
-  const MusicItemThumbnailOverlayRenderer({
+class OverlayMusicItemThumbnailOverlayRenderer extends Equatable {
+  const OverlayMusicItemThumbnailOverlayRenderer({
     required this.background,
     required this.content,
     required this.contentPosition,
@@ -1478,20 +1654,20 @@ class MusicItemThumbnailOverlayRenderer extends Equatable {
   });
 
   final Background? background;
-  final MusicItemThumbnailOverlayRendererContent? content;
+  final PurpleContent? content;
   final String? contentPosition;
   final String? displayStyle;
 
-  factory MusicItemThumbnailOverlayRenderer.fromJson(
+  factory OverlayMusicItemThumbnailOverlayRenderer.fromJson(
     Map<String, dynamic> json,
   ) {
-    return MusicItemThumbnailOverlayRenderer(
+    return OverlayMusicItemThumbnailOverlayRenderer(
       background: json['background'] == null
           ? null
           : Background.fromJson(json['background']),
       content: json['content'] == null
           ? null
-          : MusicItemThumbnailOverlayRendererContent.fromJson(json['content']),
+          : PurpleContent.fromJson(json['content']),
       contentPosition: json['contentPosition'],
       displayStyle: json['displayStyle'],
     );
@@ -1548,20 +1724,20 @@ class VerticalGradient extends Equatable {
   ];
 }
 
-class MusicItemThumbnailOverlayRendererContent extends Equatable {
-  const MusicItemThumbnailOverlayRendererContent({
+class PurpleContent extends Equatable {
+  const PurpleContent({
     required this.musicPlayButtonRenderer,
   });
 
-  final MusicPlayButtonRenderer? musicPlayButtonRenderer;
+  final PurpleMusicPlayButtonRenderer? musicPlayButtonRenderer;
 
-  factory MusicItemThumbnailOverlayRendererContent.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return MusicItemThumbnailOverlayRendererContent(
+  factory PurpleContent.fromJson(Map<String, dynamic> json) {
+    return PurpleContent(
       musicPlayButtonRenderer: json['musicPlayButtonRenderer'] == null
           ? null
-          : MusicPlayButtonRenderer.fromJson(json['musicPlayButtonRenderer']),
+          : PurpleMusicPlayButtonRenderer.fromJson(
+              json['musicPlayButtonRenderer'],
+            ),
     );
   }
 
@@ -1571,8 +1747,8 @@ class MusicItemThumbnailOverlayRendererContent extends Equatable {
   ];
 }
 
-class MusicPlayButtonRenderer extends Equatable {
-  const MusicPlayButtonRenderer({
+class PurpleMusicPlayButtonRenderer extends Equatable {
+  const PurpleMusicPlayButtonRenderer({
     required this.playNavigationEndpoint,
     required this.trackingParams,
     required this.playIcon,
@@ -1590,7 +1766,7 @@ class MusicPlayButtonRenderer extends Equatable {
     required this.accessibilityPauseData,
   });
 
-  final PlayNavigationEndpoint? playNavigationEndpoint;
+  final PurplePlayNavigationEndpoint? playNavigationEndpoint;
   final String? trackingParams;
   final Icon? playIcon;
   final Icon? pauseIcon;
@@ -1600,17 +1776,19 @@ class MusicPlayButtonRenderer extends Equatable {
   final int? loadingIndicatorColor;
   final Icon? playingIcon;
   final int? iconLoadingColor;
-  final double? activeScaleFactor;
+  final int? activeScaleFactor;
   final String? buttonSize;
   final String? rippleTarget;
   final Accessibility? accessibilityPlayData;
   final Accessibility? accessibilityPauseData;
 
-  factory MusicPlayButtonRenderer.fromJson(Map<String, dynamic> json) {
-    return MusicPlayButtonRenderer(
+  factory PurpleMusicPlayButtonRenderer.fromJson(Map<String, dynamic> json) {
+    return PurpleMusicPlayButtonRenderer(
       playNavigationEndpoint: json['playNavigationEndpoint'] == null
           ? null
-          : PlayNavigationEndpoint.fromJson(json['playNavigationEndpoint']),
+          : PurplePlayNavigationEndpoint.fromJson(
+              json['playNavigationEndpoint'],
+            ),
       trackingParams: json['trackingParams'],
       playIcon: json['playIcon'] == null
           ? null
@@ -1658,40 +1836,40 @@ class MusicPlayButtonRenderer extends Equatable {
   ];
 }
 
-class PlayNavigationEndpoint extends Equatable {
-  const PlayNavigationEndpoint({
+class PurplePlayNavigationEndpoint extends Equatable {
+  const PurplePlayNavigationEndpoint({
     required this.clickTrackingParams,
-    required this.watchPlaylistEndpoint,
+    required this.watchEndpoint,
   });
 
   final String? clickTrackingParams;
-  final WatchPlaylistEndpoint? watchPlaylistEndpoint;
+  final PurpleWatchEndpoint? watchEndpoint;
 
-  factory PlayNavigationEndpoint.fromJson(Map<String, dynamic> json) {
-    return PlayNavigationEndpoint(
+  factory PurplePlayNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return PurplePlayNavigationEndpoint(
       clickTrackingParams: json['clickTrackingParams'],
-      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
+      watchEndpoint: json['watchEndpoint'] == null
           ? null
-          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
+          : PurpleWatchEndpoint.fromJson(json['watchEndpoint']),
     );
   }
 
   @override
   List<Object?> get props => [
     clickTrackingParams,
-    watchPlaylistEndpoint,
+    watchEndpoint,
   ];
 }
 
-class ThumbnailRenderer extends Equatable {
-  const ThumbnailRenderer({
+class ThumbnailRendererClass extends Equatable {
+  const ThumbnailRendererClass({
     required this.musicThumbnailRenderer,
   });
 
   final MusicThumbnailRenderer? musicThumbnailRenderer;
 
-  factory ThumbnailRenderer.fromJson(Map<String, dynamic> json) {
-    return ThumbnailRenderer(
+  factory ThumbnailRendererClass.fromJson(Map<String, dynamic> json) {
+    return ThumbnailRendererClass(
       musicThumbnailRenderer: json['musicThumbnailRenderer'] == null
           ? null
           : MusicThumbnailRenderer.fromJson(json['musicThumbnailRenderer']),
@@ -1787,46 +1965,386 @@ class ThumbnailElement extends Equatable {
   ];
 }
 
-class Title extends Equatable {
-  const Title({
-    required this.runs,
+class MusicTwoRowItemRenderer extends Equatable {
+  const MusicTwoRowItemRenderer({
+    required this.thumbnailRenderer,
+    required this.aspectRatio,
+    required this.title,
+    required this.subtitle,
+    required this.navigationEndpoint,
+    required this.trackingParams,
+    required this.menu,
+    required this.thumbnailOverlay,
   });
 
-  final List<PurpleRun> runs;
+  final ThumbnailRendererClass? thumbnailRenderer;
+  final String? aspectRatio;
+  final Title? title;
+  final Subtitle? subtitle;
+  final MusicTwoRowItemRendererNavigationEndpoint? navigationEndpoint;
+  final String? trackingParams;
+  final MusicTwoRowItemRendererMenu? menu;
+  final ThumbnailOverlay? thumbnailOverlay;
 
-  factory Title.fromJson(Map<String, dynamic> json) {
-    return Title(
-      runs: json['runs'] == null
+  factory MusicTwoRowItemRenderer.fromJson(Map<String, dynamic> json) {
+    return MusicTwoRowItemRenderer(
+      thumbnailRenderer: json['thumbnailRenderer'] == null
+          ? null
+          : ThumbnailRendererClass.fromJson(json['thumbnailRenderer']),
+      aspectRatio: json['aspectRatio'],
+      title: json['title'] == null ? null : Title.fromJson(json['title']),
+      subtitle: json['subtitle'] == null
+          ? null
+          : Subtitle.fromJson(json['subtitle']),
+      navigationEndpoint: json['navigationEndpoint'] == null
+          ? null
+          : MusicTwoRowItemRendererNavigationEndpoint.fromJson(
+              json['navigationEndpoint'],
+            ),
+      trackingParams: json['trackingParams'],
+      menu: json['menu'] == null
+          ? null
+          : MusicTwoRowItemRendererMenu.fromJson(json['menu']),
+      thumbnailOverlay: json['thumbnailOverlay'] == null
+          ? null
+          : ThumbnailOverlay.fromJson(json['thumbnailOverlay']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    thumbnailRenderer,
+    aspectRatio,
+    title,
+    subtitle,
+    navigationEndpoint,
+    trackingParams,
+    menu,
+    thumbnailOverlay,
+  ];
+}
+
+class MusicTwoRowItemRendererMenu extends Equatable {
+  const MusicTwoRowItemRendererMenu({
+    required this.menuRenderer,
+  });
+
+  final FluffyMenuRenderer? menuRenderer;
+
+  factory MusicTwoRowItemRendererMenu.fromJson(Map<String, dynamic> json) {
+    return MusicTwoRowItemRendererMenu(
+      menuRenderer: json['menuRenderer'] == null
+          ? null
+          : FluffyMenuRenderer.fromJson(json['menuRenderer']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    menuRenderer,
+  ];
+}
+
+class FluffyMenuRenderer extends Equatable {
+  const FluffyMenuRenderer({
+    required this.items,
+    required this.trackingParams,
+    required this.accessibility,
+  });
+
+  final List<FluffyItem> items;
+  final String? trackingParams;
+  final Accessibility? accessibility;
+
+  factory FluffyMenuRenderer.fromJson(Map<String, dynamic> json) {
+    return FluffyMenuRenderer(
+      items: json['items'] == null
           ? []
-          : List<PurpleRun>.from(
-              json['runs']!.map((x) => PurpleRun.fromJson(x)),
+          : List<FluffyItem>.from(
+              json['items']!.map((x) => FluffyItem.fromJson(x)),
+            ),
+      trackingParams: json['trackingParams'],
+      accessibility: json['accessibility'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibility']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    items,
+    trackingParams,
+    accessibility,
+  ];
+}
+
+class FluffyItem extends Equatable {
+  const FluffyItem({
+    required this.menuNavigationItemRenderer,
+    required this.menuServiceItemRenderer,
+    required this.toggleMenuServiceItemRenderer,
+  });
+
+  final MenuItemRenderer? menuNavigationItemRenderer;
+  final MenuItemRenderer? menuServiceItemRenderer;
+  final ToggleMenuServiceItemRenderer? toggleMenuServiceItemRenderer;
+
+  factory FluffyItem.fromJson(Map<String, dynamic> json) {
+    return FluffyItem(
+      menuNavigationItemRenderer: json['menuNavigationItemRenderer'] == null
+          ? null
+          : MenuItemRenderer.fromJson(json['menuNavigationItemRenderer']),
+      menuServiceItemRenderer: json['menuServiceItemRenderer'] == null
+          ? null
+          : MenuItemRenderer.fromJson(json['menuServiceItemRenderer']),
+      toggleMenuServiceItemRenderer:
+          json['toggleMenuServiceItemRenderer'] == null
+          ? null
+          : ToggleMenuServiceItemRenderer.fromJson(
+              json['toggleMenuServiceItemRenderer'],
             ),
     );
   }
 
   @override
   List<Object?> get props => [
-    runs,
+    menuNavigationItemRenderer,
+    menuServiceItemRenderer,
+    toggleMenuServiceItemRenderer,
   ];
 }
 
-class PurpleRun extends Equatable {
-  const PurpleRun({
+class ToggleMenuServiceItemRenderer extends Equatable {
+  const ToggleMenuServiceItemRenderer({
+    required this.defaultText,
+    required this.defaultIcon,
+    required this.defaultServiceEndpoint,
+    required this.toggledText,
+    required this.toggledIcon,
+    required this.toggledServiceEndpoint,
+    required this.trackingParams,
+  });
+
+  final Strapline? defaultText;
+  final Icon? defaultIcon;
+  final DislikeNavigationEndpoint? defaultServiceEndpoint;
+  final Strapline? toggledText;
+  final Icon? toggledIcon;
+  final ToggledServiceEndpoint? toggledServiceEndpoint;
+  final String? trackingParams;
+
+  factory ToggleMenuServiceItemRenderer.fromJson(Map<String, dynamic> json) {
+    return ToggleMenuServiceItemRenderer(
+      defaultText: json['defaultText'] == null
+          ? null
+          : Strapline.fromJson(json['defaultText']),
+      defaultIcon: json['defaultIcon'] == null
+          ? null
+          : Icon.fromJson(json['defaultIcon']),
+      defaultServiceEndpoint: json['defaultServiceEndpoint'] == null
+          ? null
+          : DislikeNavigationEndpoint.fromJson(json['defaultServiceEndpoint']),
+      toggledText: json['toggledText'] == null
+          ? null
+          : Strapline.fromJson(json['toggledText']),
+      toggledIcon: json['toggledIcon'] == null
+          ? null
+          : Icon.fromJson(json['toggledIcon']),
+      toggledServiceEndpoint: json['toggledServiceEndpoint'] == null
+          ? null
+          : ToggledServiceEndpoint.fromJson(json['toggledServiceEndpoint']),
+      trackingParams: json['trackingParams'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    defaultText,
+    defaultIcon,
+    defaultServiceEndpoint,
+    toggledText,
+    toggledIcon,
+    toggledServiceEndpoint,
+    trackingParams,
+  ];
+}
+
+class ToggledServiceEndpoint extends Equatable {
+  const ToggledServiceEndpoint({
+    required this.clickTrackingParams,
+    required this.likeEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final LikeEndpoint? likeEndpoint;
+
+  factory ToggledServiceEndpoint.fromJson(Map<String, dynamic> json) {
+    return ToggledServiceEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      likeEndpoint: json['likeEndpoint'] == null
+          ? null
+          : LikeEndpoint.fromJson(json['likeEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    likeEndpoint,
+  ];
+}
+
+class LikeEndpoint extends Equatable {
+  const LikeEndpoint({
+    required this.status,
+    required this.target,
+  });
+
+  final String? status;
+  final Target? target;
+
+  factory LikeEndpoint.fromJson(Map<String, dynamic> json) {
+    return LikeEndpoint(
+      status: json['status'],
+      target: json['target'] == null ? null : Target.fromJson(json['target']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    status,
+    target,
+  ];
+}
+
+class Target extends Equatable {
+  const Target({
+    required this.playlistId,
+  });
+
+  final String? playlistId;
+
+  factory Target.fromJson(Map<String, dynamic> json) {
+    return Target(
+      playlistId: json['playlistId'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    playlistId,
+  ];
+}
+
+class MusicTwoRowItemRendererNavigationEndpoint extends Equatable {
+  const MusicTwoRowItemRendererNavigationEndpoint({
+    required this.clickTrackingParams,
+    required this.browseEndpoint,
+    required this.watchEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final FluffyBrowseEndpoint? browseEndpoint;
+  final FluffyWatchEndpoint? watchEndpoint;
+
+  factory MusicTwoRowItemRendererNavigationEndpoint.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MusicTwoRowItemRendererNavigationEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
+          ? null
+          : FluffyBrowseEndpoint.fromJson(json['browseEndpoint']),
+      watchEndpoint: json['watchEndpoint'] == null
+          ? null
+          : FluffyWatchEndpoint.fromJson(json['watchEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    browseEndpoint,
+    watchEndpoint,
+  ];
+}
+
+class FluffyWatchEndpoint extends Equatable {
+  const FluffyWatchEndpoint({
+    required this.videoId,
+    required this.watchEndpointMusicSupportedConfigs,
+    required this.playerParams,
+  });
+
+  final String? videoId;
+  final WatchEndpointMusicSupportedConfigs? watchEndpointMusicSupportedConfigs;
+  final String? playerParams;
+
+  factory FluffyWatchEndpoint.fromJson(Map<String, dynamic> json) {
+    return FluffyWatchEndpoint(
+      videoId: json['videoId'],
+      watchEndpointMusicSupportedConfigs:
+          json['watchEndpointMusicSupportedConfigs'] == null
+          ? null
+          : WatchEndpointMusicSupportedConfigs.fromJson(
+              json['watchEndpointMusicSupportedConfigs'],
+            ),
+      playerParams: json['playerParams'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    videoId,
+    watchEndpointMusicSupportedConfigs,
+    playerParams,
+  ];
+}
+
+class Subtitle extends Equatable {
+  const Subtitle({
+    required this.runs,
+    required this.accessibility,
+  });
+
+  final List<SubtitleRun> runs;
+  final Accessibility? accessibility;
+
+  factory Subtitle.fromJson(Map<String, dynamic> json) {
+    return Subtitle(
+      runs: json['runs'] == null
+          ? []
+          : List<SubtitleRun>.from(
+              json['runs']!.map((x) => SubtitleRun.fromJson(x)),
+            ),
+      accessibility: json['accessibility'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibility']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    runs,
+    accessibility,
+  ];
+}
+
+class SubtitleRun extends Equatable {
+  const SubtitleRun({
     required this.text,
     required this.navigationEndpoint,
   });
 
   final String? text;
-  final MusicTwoRowItemRendererNavigationEndpoint? navigationEndpoint;
+  final TentacledNavigationEndpoint? navigationEndpoint;
 
-  factory PurpleRun.fromJson(Map<String, dynamic> json) {
-    return PurpleRun(
+  factory SubtitleRun.fromJson(Map<String, dynamic> json) {
+    return SubtitleRun(
       text: json['text'],
       navigationEndpoint: json['navigationEndpoint'] == null
           ? null
-          : MusicTwoRowItemRendererNavigationEndpoint.fromJson(
-              json['navigationEndpoint'],
-            ),
+          : TentacledNavigationEndpoint.fromJson(json['navigationEndpoint']),
     );
   }
 
@@ -1834,6 +2352,291 @@ class PurpleRun extends Equatable {
   List<Object?> get props => [
     text,
     navigationEndpoint,
+  ];
+}
+
+class TentacledNavigationEndpoint extends Equatable {
+  const TentacledNavigationEndpoint({
+    required this.clickTrackingParams,
+    required this.browseEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final FluffyBrowseEndpoint? browseEndpoint;
+
+  factory TentacledNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return TentacledNavigationEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
+          ? null
+          : FluffyBrowseEndpoint.fromJson(json['browseEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    browseEndpoint,
+  ];
+}
+
+class ThumbnailOverlay extends Equatable {
+  const ThumbnailOverlay({
+    required this.musicItemThumbnailOverlayRenderer,
+  });
+
+  final ThumbnailOverlayMusicItemThumbnailOverlayRenderer?
+  musicItemThumbnailOverlayRenderer;
+
+  factory ThumbnailOverlay.fromJson(Map<String, dynamic> json) {
+    return ThumbnailOverlay(
+      musicItemThumbnailOverlayRenderer:
+          json['musicItemThumbnailOverlayRenderer'] == null
+          ? null
+          : ThumbnailOverlayMusicItemThumbnailOverlayRenderer.fromJson(
+              json['musicItemThumbnailOverlayRenderer'],
+            ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    musicItemThumbnailOverlayRenderer,
+  ];
+}
+
+class ThumbnailOverlayMusicItemThumbnailOverlayRenderer extends Equatable {
+  const ThumbnailOverlayMusicItemThumbnailOverlayRenderer({
+    required this.background,
+    required this.content,
+    required this.contentPosition,
+    required this.displayStyle,
+  });
+
+  final Background? background;
+  final FluffyContent? content;
+  final String? contentPosition;
+  final String? displayStyle;
+
+  factory ThumbnailOverlayMusicItemThumbnailOverlayRenderer.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return ThumbnailOverlayMusicItemThumbnailOverlayRenderer(
+      background: json['background'] == null
+          ? null
+          : Background.fromJson(json['background']),
+      content: json['content'] == null
+          ? null
+          : FluffyContent.fromJson(json['content']),
+      contentPosition: json['contentPosition'],
+      displayStyle: json['displayStyle'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    background,
+    content,
+    contentPosition,
+    displayStyle,
+  ];
+}
+
+class FluffyContent extends Equatable {
+  const FluffyContent({
+    required this.musicPlayButtonRenderer,
+  });
+
+  final FluffyMusicPlayButtonRenderer? musicPlayButtonRenderer;
+
+  factory FluffyContent.fromJson(Map<String, dynamic> json) {
+    return FluffyContent(
+      musicPlayButtonRenderer: json['musicPlayButtonRenderer'] == null
+          ? null
+          : FluffyMusicPlayButtonRenderer.fromJson(
+              json['musicPlayButtonRenderer'],
+            ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    musicPlayButtonRenderer,
+  ];
+}
+
+class FluffyMusicPlayButtonRenderer extends Equatable {
+  const FluffyMusicPlayButtonRenderer({
+    required this.playNavigationEndpoint,
+    required this.trackingParams,
+    required this.playIcon,
+    required this.pauseIcon,
+    required this.iconColor,
+    required this.backgroundColor,
+    required this.activeBackgroundColor,
+    required this.loadingIndicatorColor,
+    required this.playingIcon,
+    required this.iconLoadingColor,
+    required this.activeScaleFactor,
+    required this.buttonSize,
+    required this.rippleTarget,
+    required this.accessibilityPlayData,
+    required this.accessibilityPauseData,
+  });
+
+  final FluffyPlayNavigationEndpoint? playNavigationEndpoint;
+  final String? trackingParams;
+  final Icon? playIcon;
+  final Icon? pauseIcon;
+  final int? iconColor;
+  final int? backgroundColor;
+  final int? activeBackgroundColor;
+  final int? loadingIndicatorColor;
+  final Icon? playingIcon;
+  final int? iconLoadingColor;
+  final double? activeScaleFactor;
+  final String? buttonSize;
+  final String? rippleTarget;
+  final Accessibility? accessibilityPlayData;
+  final Accessibility? accessibilityPauseData;
+
+  factory FluffyMusicPlayButtonRenderer.fromJson(Map<String, dynamic> json) {
+    return FluffyMusicPlayButtonRenderer(
+      playNavigationEndpoint: json['playNavigationEndpoint'] == null
+          ? null
+          : FluffyPlayNavigationEndpoint.fromJson(
+              json['playNavigationEndpoint'],
+            ),
+      trackingParams: json['trackingParams'],
+      playIcon: json['playIcon'] == null
+          ? null
+          : Icon.fromJson(json['playIcon']),
+      pauseIcon: json['pauseIcon'] == null
+          ? null
+          : Icon.fromJson(json['pauseIcon']),
+      iconColor: json['iconColor'],
+      backgroundColor: json['backgroundColor'],
+      activeBackgroundColor: json['activeBackgroundColor'],
+      loadingIndicatorColor: json['loadingIndicatorColor'],
+      playingIcon: json['playingIcon'] == null
+          ? null
+          : Icon.fromJson(json['playingIcon']),
+      iconLoadingColor: json['iconLoadingColor'],
+      activeScaleFactor: json['activeScaleFactor'],
+      buttonSize: json['buttonSize'],
+      rippleTarget: json['rippleTarget'],
+      accessibilityPlayData: json['accessibilityPlayData'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibilityPlayData']),
+      accessibilityPauseData: json['accessibilityPauseData'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibilityPauseData']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    playNavigationEndpoint,
+    trackingParams,
+    playIcon,
+    pauseIcon,
+    iconColor,
+    backgroundColor,
+    activeBackgroundColor,
+    loadingIndicatorColor,
+    playingIcon,
+    iconLoadingColor,
+    activeScaleFactor,
+    buttonSize,
+    rippleTarget,
+    accessibilityPlayData,
+    accessibilityPauseData,
+  ];
+}
+
+class FluffyPlayNavigationEndpoint extends Equatable {
+  const FluffyPlayNavigationEndpoint({
+    required this.clickTrackingParams,
+    required this.watchPlaylistEndpoint,
+    required this.watchEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final WatchPlaylistEndpoint? watchPlaylistEndpoint;
+  final TentacledWatchEndpoint? watchEndpoint;
+
+  factory FluffyPlayNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return FluffyPlayNavigationEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      watchPlaylistEndpoint: json['watchPlaylistEndpoint'] == null
+          ? null
+          : WatchPlaylistEndpoint.fromJson(json['watchPlaylistEndpoint']),
+      watchEndpoint: json['watchEndpoint'] == null
+          ? null
+          : TentacledWatchEndpoint.fromJson(json['watchEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    watchPlaylistEndpoint,
+    watchEndpoint,
+  ];
+}
+
+class TentacledWatchEndpoint extends Equatable {
+  const TentacledWatchEndpoint({
+    required this.videoId,
+    required this.params,
+    required this.watchEndpointMusicSupportedConfigs,
+  });
+
+  final String? videoId;
+  final String? params;
+  final WatchEndpointMusicSupportedConfigs? watchEndpointMusicSupportedConfigs;
+
+  factory TentacledWatchEndpoint.fromJson(Map<String, dynamic> json) {
+    return TentacledWatchEndpoint(
+      videoId: json['videoId'],
+      params: json['params'],
+      watchEndpointMusicSupportedConfigs:
+          json['watchEndpointMusicSupportedConfigs'] == null
+          ? null
+          : WatchEndpointMusicSupportedConfigs.fromJson(
+              json['watchEndpointMusicSupportedConfigs'],
+            ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    videoId,
+    params,
+    watchEndpointMusicSupportedConfigs,
+  ];
+}
+
+class Title extends Equatable {
+  const Title({
+    required this.runs,
+  });
+
+  final List<SubtitleRun> runs;
+
+  factory Title.fromJson(Map<String, dynamic> json) {
+    return Title(
+      runs: json['runs'] == null
+          ? []
+          : List<SubtitleRun>.from(
+              json['runs']!.map((x) => SubtitleRun.fromJson(x)),
+            ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    runs,
   ];
 }
 
@@ -1865,41 +2668,161 @@ class Header extends Equatable {
 class MusicCarouselShelfBasicHeaderRenderer extends Equatable {
   const MusicCarouselShelfBasicHeaderRenderer({
     required this.title,
-    required this.strapline,
     required this.accessibilityData,
     required this.headerStyle,
+    required this.moreContentButton,
     required this.trackingParams,
+    required this.strapline,
   });
 
-  final Strapline? title;
-  final Strapline? strapline;
+  final Title? title;
   final Accessibility? accessibilityData;
   final String? headerStyle;
+  final MoreContentButton? moreContentButton;
   final String? trackingParams;
+  final Strapline? strapline;
 
   factory MusicCarouselShelfBasicHeaderRenderer.fromJson(
     Map<String, dynamic> json,
   ) {
     return MusicCarouselShelfBasicHeaderRenderer(
-      title: json['title'] == null ? null : Strapline.fromJson(json['title']),
-      strapline: json['strapline'] == null
-          ? null
-          : Strapline.fromJson(json['strapline']),
+      title: json['title'] == null ? null : Title.fromJson(json['title']),
       accessibilityData: json['accessibilityData'] == null
           ? null
           : Accessibility.fromJson(json['accessibilityData']),
       headerStyle: json['headerStyle'],
+      moreContentButton: json['moreContentButton'] == null
+          ? null
+          : MoreContentButton.fromJson(json['moreContentButton']),
       trackingParams: json['trackingParams'],
+      strapline: json['strapline'] == null
+          ? null
+          : Strapline.fromJson(json['strapline']),
     );
   }
 
   @override
   List<Object?> get props => [
     title,
-    strapline,
     accessibilityData,
     headerStyle,
+    moreContentButton,
     trackingParams,
+    strapline,
+  ];
+}
+
+class MoreContentButton extends Equatable {
+  const MoreContentButton({
+    required this.buttonRenderer,
+  });
+
+  final MoreContentButtonButtonRenderer? buttonRenderer;
+
+  factory MoreContentButton.fromJson(Map<String, dynamic> json) {
+    return MoreContentButton(
+      buttonRenderer: json['buttonRenderer'] == null
+          ? null
+          : MoreContentButtonButtonRenderer.fromJson(json['buttonRenderer']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    buttonRenderer,
+  ];
+}
+
+class MoreContentButtonButtonRenderer extends Equatable {
+  const MoreContentButtonButtonRenderer({
+    required this.style,
+    required this.text,
+    required this.navigationEndpoint,
+    required this.trackingParams,
+    required this.accessibilityData,
+  });
+
+  final String? style;
+  final Strapline? text;
+  final StickyNavigationEndpoint? navigationEndpoint;
+  final String? trackingParams;
+  final Accessibility? accessibilityData;
+
+  factory MoreContentButtonButtonRenderer.fromJson(Map<String, dynamic> json) {
+    return MoreContentButtonButtonRenderer(
+      style: json['style'],
+      text: json['text'] == null ? null : Strapline.fromJson(json['text']),
+      navigationEndpoint: json['navigationEndpoint'] == null
+          ? null
+          : StickyNavigationEndpoint.fromJson(json['navigationEndpoint']),
+      trackingParams: json['trackingParams'],
+      accessibilityData: json['accessibilityData'] == null
+          ? null
+          : Accessibility.fromJson(json['accessibilityData']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    style,
+    text,
+    navigationEndpoint,
+    trackingParams,
+    accessibilityData,
+  ];
+}
+
+class StickyNavigationEndpoint extends Equatable {
+  const StickyNavigationEndpoint({
+    required this.clickTrackingParams,
+    required this.browseEndpoint,
+    required this.watchEndpoint,
+  });
+
+  final String? clickTrackingParams;
+  final FluffyBrowseEndpoint? browseEndpoint;
+  final StickyWatchEndpoint? watchEndpoint;
+
+  factory StickyNavigationEndpoint.fromJson(Map<String, dynamic> json) {
+    return StickyNavigationEndpoint(
+      clickTrackingParams: json['clickTrackingParams'],
+      browseEndpoint: json['browseEndpoint'] == null
+          ? null
+          : FluffyBrowseEndpoint.fromJson(json['browseEndpoint']),
+      watchEndpoint: json['watchEndpoint'] == null
+          ? null
+          : StickyWatchEndpoint.fromJson(json['watchEndpoint']),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    clickTrackingParams,
+    browseEndpoint,
+    watchEndpoint,
+  ];
+}
+
+class StickyWatchEndpoint extends Equatable {
+  const StickyWatchEndpoint({
+    required this.videoId,
+    required this.params,
+  });
+
+  final String? videoId;
+  final String? params;
+
+  factory StickyWatchEndpoint.fromJson(Map<String, dynamic> json) {
+    return StickyWatchEndpoint(
+      videoId: json['videoId'],
+      params: json['params'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    videoId,
+    params,
   ];
 }
 
@@ -1949,15 +2872,18 @@ class NextContinuationData extends Equatable {
 
 class ResponseContext extends Equatable {
   const ResponseContext({
+    required this.visitorData,
     required this.serviceTrackingParams,
     required this.maxAgeSeconds,
   });
 
+  final String? visitorData;
   final List<ServiceTrackingParam> serviceTrackingParams;
   final int? maxAgeSeconds;
 
   factory ResponseContext.fromJson(Map<String, dynamic> json) {
     return ResponseContext(
+      visitorData: json['visitorData'],
       serviceTrackingParams: json['serviceTrackingParams'] == null
           ? []
           : List<ServiceTrackingParam>.from(
@@ -1971,6 +2897,7 @@ class ResponseContext extends Equatable {
 
   @override
   List<Object?> get props => [
+    visitorData,
     serviceTrackingParams,
     maxAgeSeconds,
   ];

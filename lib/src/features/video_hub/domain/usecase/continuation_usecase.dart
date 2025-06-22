@@ -24,50 +24,83 @@ class ContinuationUsecase
     return result.fold(
       (ex) => Left(ServerFailure()),
       (ytContinuationModel) {
+        final items = <ContinuationContentEntity>[];
+        final carousels = <ContinuationCarouselEntity>[];
+
         final sectionListContinuation =
             ytContinuationModel.continuationContents?.sectionListContinuation;
+        final continuationId = sectionListContinuation
+            ?.continuations
+            .first
+            .nextContinuationData
+            ?.continuation;
         final outerContents = sectionListContinuation?.contents ?? [];
 
-        /// Carousel
+        /// Carousel (outer content loop)
         for (var outerContent in outerContents) {
           final musicCarouselShelfRenderer =
               outerContent.musicCarouselShelfRenderer;
           final header = musicCarouselShelfRenderer?.header;
+          final carouselTitle = header
+              ?.musicCarouselShelfBasicHeaderRenderer
+              ?.title
+              ?.runs
+              .first
+              .text;
+          final carouselSubTitle = header
+              ?.musicCarouselShelfBasicHeaderRenderer
+              ?.strapline
+              ?.runs
+              .first
+              .text;
           final innerContents = musicCarouselShelfRenderer?.contents ?? [];
 
-          // Items
+          /// inner content loop
           for (var innerContent in innerContents) {
             final musicTwoRowItemRenderer =
                 innerContent.musicTwoRowItemRenderer;
 
-            final carouselTitle =
-                musicTwoRowItemRenderer?.title?.runs.first.text;
+            final title = musicTwoRowItemRenderer?.title?.runs.first.text;
             final subtitle = musicTwoRowItemRenderer?.subtitle?.runs.first.text;
+            final thumbnail = musicTwoRowItemRenderer
+                ?.thumbnailRenderer
+                ?.musicThumbnailRenderer
+                ?.thumbnail
+                ?.thumbnails
+                .first
+                .url;
+            final browseId = musicTwoRowItemRenderer
+                ?.navigationEndpoint
+                ?.browseEndpoint
+                ?.browseId;
 
             /// construct item model
+            items.add(
+              ContinuationContentEntity(
+                title: title ?? '',
+                thumbnailUrl: thumbnail ?? '',
+                browseId: browseId ?? '',
+                browseParams: '',
+                subTitle: subtitle ?? '',
+                playlistId: '',
+                playlistParams: '',
+              ),
+            );
           }
 
-          /// construct main model
-          /// add model
+          carousels.add(
+            ContinuationCarouselEntity(
+              title: carouselTitle ?? '',
+              subTitle: carouselSubTitle ?? '',
+              items: items,
+            ),
+          );
         }
 
-        return const Right(
+        return Right(
           ContinuationEntity(
-            continuationId: '',
-            carousels: [
-              /// carousel
-              ContinuationCarouselEntity(
-                title: '',
-                subTitle: '',
-                items: [
-                  /// item
-                  ContinuationContentEntity(
-                    title: '',
-                    thumbnailUrl: '',
-                  ),
-                ],
-              ),
-            ],
+            continuationId: continuationId ?? '',
+            carousels: carousels,
             heading: '',
             continuationParams: '',
           ),
