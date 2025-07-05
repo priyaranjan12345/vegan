@@ -21,9 +21,28 @@ class VideoHubView extends StatelessWidget {
           moods: state.moods,
           browseCarousels: state.browseCarousels,
           continuationId: state.continuationId,
+          hasReachedMax: state.hasReachedMax,
         ),
-        BrowseStatus.failure => const Center(
-          child: Text('Oops something went wrong...'),
+        BrowseStatus.failure => Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Oops something went wrong...',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  context.read<BrowseBloc>().add(
+                    const BrowseInitEvent(),
+                  );
+                },
+                child: const Text('Retry'),
+              ),
+            ),
+          ],
         ),
       },
     );
@@ -36,11 +55,13 @@ class BrowseView extends StatefulWidget {
     required this.moods,
     required this.browseCarousels,
     required this.continuationId,
+    this.hasReachedMax = false,
   });
 
   final List<MoodEntity> moods;
   final List<Object> browseCarousels;
   final String continuationId;
+  final bool hasReachedMax;
 
   @override
   State<BrowseView> createState() => _BrowseViewState();
@@ -57,43 +78,46 @@ class _BrowseViewState extends State<BrowseView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       controller: _scrollController,
       padding: const EdgeInsets.only(bottom: 116),
-      child: Column(
-        children: [
-          MoodsChips(
-            moods: widget.moods,
-            onSelectMoods: (params) {
-              // context.read<VideoHubBloc>().add(
-              //   LoadMoodMusic(
-              //     params: params,
-              //   ),
-              // );
-            },
-          ),
-          const SizedBox(height: 12),
-          ...widget.browseCarousels.map(
-            (carousel) {
-              if (carousel is VideoSuggestionEntity) {
-                return Suggestions(
-                  suggestions: carousel.videos,
-                  heading: carousel.heading,
-                );
-              }
+      children: [
+        MoodsChips(
+          moods: widget.moods,
+          onSelectMoods: (params) {
+            context.read<BrowseBloc>().add(
+              BrowseMoodEvent(params: params),
+            );
+          },
+        ),
+        const SizedBox(height: 12),
+        ...widget.browseCarousels.map(
+          (carousel) {
+            if (carousel is VideoSuggestionEntity) {
+              return Suggestions(
+                suggestions: carousel.videos,
+                heading: carousel.heading,
+              );
+            }
 
-              if (carousel is PlaylistSuggestionEntity) {
-                return SuggestionsPlaylist(
-                  playlists: carousel.playlists,
-                  heading: carousel.heading,
-                );
-              }
+            if (carousel is PlaylistSuggestionEntity) {
+              return SuggestionsPlaylist(
+                playlists: carousel.playlists,
+                heading: carousel.heading,
+              );
+            }
 
-              return const SizedBox.shrink();
-            },
+            return const SizedBox.shrink();
+          },
+        ),
+        const SizedBox(height: 12),
+        if (!widget.hasReachedMax)
+          const Center(
+            child: RepaintBoundary(
+              child: CircularProgressIndicator(),
+            ),
           ),
-        ],
-      ),
+      ],
     );
   }
 

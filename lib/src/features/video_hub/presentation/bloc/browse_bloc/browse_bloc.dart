@@ -1,5 +1,7 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 import '../../../domain/entity/moods_entity.dart';
 import '../../../domain/usecase/usecase.dart';
@@ -15,11 +17,22 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
        _continuationUsecase = continuationUsecase,
        super(const BrowseState()) {
     on<BrowseInitEvent>(loadInitialContent);
-    on<BrowseContinuationEvent>(loadContinuationContent);
+    on<BrowseMoodEvent>(loadMoodContents);
+    on<BrowseContinuationEvent>(
+      loadContinuationContent,
+      transformer: throttleDroppable(const Duration(milliseconds: 800)),
+    );
   }
 
   final VideoHubUsecase _videoHubUsecase;
   final ContinuationUsecase _continuationUsecase;
+
+  /// prevent span calling.
+  EventTransformer<E> throttleDroppable<E>(Duration duration) {
+    return (events, mapper) {
+      return droppable<E>().call(events.throttle(duration), mapper);
+    };
+  }
 
   void loadInitialContent(
     BrowseInitEvent event,
@@ -27,10 +40,37 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   ) async {
     try {
       final result = await _videoHubUsecase(
-        const Params(
-          browse: Browse.initial,
+        const Params(browse: Browse.initial),
+      );
+
+      result.fold(
+        (l) => emit(state.copyWith(browseStatus: BrowseStatus.failure)),
+        (r) => emit(
+          state.copyWith(
+            browseStatus: BrowseStatus.success,
+            moods: r.moods,
+            browseCarousels: [...r.videoSuggestions, ...r.playlistSuggestions],
+            continuationId: r.continuationId,
+          ),
         ),
       );
+    } catch (_) {
+      emit(state.copyWith(browseStatus: BrowseStatus.failure));
+    }
+  }
+
+  void loadMoodContents(
+    BrowseMoodEvent event,
+    Emitter<BrowseState> emit,
+  ) async {
+    try {
+      final result = await _videoHubUsecase(
+        Params(
+          params: event.params,
+          browse: Browse.moods,
+        ),
+      );
+
       result.fold(
         (l) => emit(state.copyWith(browseStatus: BrowseStatus.failure)),
         (r) => emit(

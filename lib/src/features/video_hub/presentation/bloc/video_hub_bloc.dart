@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 
-import '../../domain/usecase/continuation_usecase.dart';
 import '../../domain/usecase/usecase.dart';
 
 part 'video_hub_event.dart';
@@ -81,7 +80,7 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
     LoadContinuation event,
     Emitter<VideoHubState> emit,
   ) async {
-   // if (state is! VideoHubLoaded) return;
+    // if (state is! VideoHubLoaded) return;
     emit(const VideoHubLoading());
     try {
       final result = await _continuationUsecase(
