@@ -1,7 +1,8 @@
 class AppUrl {
   static const _comingSoonUrl = 'https://www.apirequest.in/movie/api';
   //String.fromEnvironment('api');
-  
+  //'AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30';
+  static const _key = 'AIzaSyBmvp4--dmdn0R40xMUbYs1u52MIdevyHQ';
   static const _apiVersion = 'v1';
   static const ytmusicUrl = 'https://music.youtube.com/youtubei/$_apiVersion';
 

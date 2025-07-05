@@ -2494,7 +2494,7 @@ class FluffyMusicPlayButtonRenderer extends Equatable {
   final int? loadingIndicatorColor;
   final Icon? playingIcon;
   final int? iconLoadingColor;
-  final double? activeScaleFactor;
+  final num? activeScaleFactor;
   final String? buttonSize;
   final String? rippleTarget;
   final Accessibility? accessibilityPlayData;

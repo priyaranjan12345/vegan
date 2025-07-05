@@ -63,12 +63,12 @@ abstract class YtApiBody {
         'hl': 'en',
         'gl': 'US',
         'clientName': 'WEB_REMIX',
-        'clientVersion': '1.20220708.01.00',
+        'clientVersion': '1.20220708.01.00', // TODO: use date and time
         'experimentIds': [],
         'experimentsToken': '',
         'browserName': 'Chrome',
         'browserVersion': '91.0.4472.124',
-        'osName': 'Android',
+        'osName': 'Android', // TODO: use platform
         'osVersion': '13.0',
         'platform': 'MOBILE',
         'visitorData': 'CgtYRldyczRsdm9XUSjPybTCBjIKCgJJThIEGgAgWw%3D%3D',

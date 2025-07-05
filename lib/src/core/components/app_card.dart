@@ -24,6 +24,8 @@ class AppCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: const RoundedRectangleBorder(),
+      color: Colors.transparent,
+      elevation: 0,
       child: SizedBox(
         height: height,
         width: width,
@@ -35,7 +37,7 @@ class AppCard extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1.1,
                 child: AppImage(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   imageUrl: imageUrl,
                 ),
               ),
@@ -48,13 +50,13 @@ class AppCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
                   height: 1,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(

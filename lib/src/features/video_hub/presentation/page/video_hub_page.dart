@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/app/injector.dart';
 
-import '../bloc/video_hub_bloc.dart';
+import '../bloc/browse_bloc/browse_bloc.dart';
 import 'video_hub_view.dart';
 
 @RoutePage()
@@ -14,8 +14,11 @@ class VideoHubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocProvider<VideoHubBloc>(
-          create: (_) => injector<VideoHubBloc>()..add(const GetVideoHubEvent()),
+        child: BlocProvider<BrowseBloc>(
+          create: (_) => injector<BrowseBloc>()
+            ..add(
+              const BrowseInitEvent(),
+            ),
           child: const VideoHubView(),
         ),
       ),

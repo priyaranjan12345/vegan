@@ -10,9 +10,3 @@ Future<void> main() async {
   await init();
   runApp(const VeganApp());
 }
-
-// search
-// download, play history, custom local playlist, favourite
-// settings
-
-// notification player(service)

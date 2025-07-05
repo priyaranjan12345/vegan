@@ -130,6 +130,7 @@ class IVideoHubRepository implements VideoHubRepository {
         final ytContinuationModel = YtContinuationModel.fromJson(body);
         return Right(ytContinuationModel);
       } catch (e) {
+        print(e);
         return Left(ServerException());
       }
     }

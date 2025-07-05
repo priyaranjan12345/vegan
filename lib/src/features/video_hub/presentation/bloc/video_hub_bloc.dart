@@ -41,7 +41,11 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
   ) async {
     emit(const VideoHubLoading());
     try {
-      final result = await _videoHubUsecase(const Params());
+      final result = await _videoHubUsecase(
+        const Params(
+          browse: Browse.initial,
+        ),
+      );
       result.fold(
         (l) => emit(const VideoHubError()),
         (r) => emit(VideoHubLoaded(homeEntity: r)),
@@ -57,7 +61,12 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
   ) async {
     emit(const VideoHubLoading());
     try {
-      final result = await _videoHubUsecase(Params(params: event.params));
+      final result = await _videoHubUsecase(
+        Params(
+          params: event.params,
+          browse: Browse.moods,
+        ),
+      );
       result.fold(
         (l) => emit(const VideoHubError()),
         (r) => emit(VideoHubLoaded(homeEntity: r)),
@@ -72,8 +81,8 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
     LoadContinuation event,
     Emitter<VideoHubState> emit,
   ) async {
-    if (state is! VideoHubLoaded) return;
-    // emit(const VideoHubLoading());
+   // if (state is! VideoHubLoaded) return;
+    emit(const VideoHubLoading());
     try {
       final result = await _continuationUsecase(
         ContinuationParams(continuationId: event.continuationId),
@@ -82,22 +91,12 @@ class VideoHubBloc extends Bloc<VideoHubEvent, VideoHubState> {
       result.fold(
         (l) => emit(const VideoHubError()),
         (r) {
-          var d = r.carousels;
-          emit(
-          
-          VideoHubLoaded(
-            homeEntity: HomeEntity(
-              moods: [],
-              videoSuggestions: [],
-              playlistSuggestions: [],
-            ),
-          ),
-        );
+          emit(VideoHubLoaded(homeEntity: r));
         },
       );
     } catch (e) {
       print(e);
-      // emit(const VideoHubError());
+      emit(const VideoHubError());
     }
   }
 }

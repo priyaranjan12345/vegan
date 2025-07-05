@@ -19,7 +19,7 @@ class SuggestionsPlaylist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = PageController(
-      viewportFraction: context.isPortrait ? 0.5 : 0.4,
+      viewportFraction: context.isPortrait ? 0.36 : 0.4,
     );
 
     return Column(

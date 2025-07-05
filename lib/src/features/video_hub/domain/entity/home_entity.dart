@@ -9,17 +9,21 @@ class HomeEntity extends Equatable {
     required this.moods,
     required this.videoSuggestions,
     required this.playlistSuggestions,
+    this.continuationId = '',
   });
 
   final List<MoodEntity> moods;
   final List<VideoSuggestionEntity> videoSuggestions;
   final List<PlaylistSuggestionEntity> playlistSuggestions;
+  final String continuationId;
+
 
   @override
   List<Object?> get props => [
     moods,
     videoSuggestions,
     playlistSuggestions,
+    continuationId,
   ];
 }
 

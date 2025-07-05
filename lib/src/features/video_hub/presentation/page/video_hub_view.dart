@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entity/entity.dart';
-import '../bloc/video_hub_bloc.dart';
+import '../bloc/browse_bloc/browse_bloc.dart';
 import '../widget/moods_chips.dart';
 import '../widget/suggestions.dart';
 import '../widget/suggestions_playlist.dart';
@@ -12,13 +12,17 @@ class VideoHubView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoHubBloc, VideoHubState>(
-      builder: (context, state) => switch (state) {
-        VideoHubInitial() || VideoHubLoading() => const Center(
+    return BlocBuilder<BrowseBloc, BrowseState>(
+      builder: (context, state) => switch (state.browseStatus) {
+        BrowseStatus.initial => const Center(
           child: CircularProgressIndicator.adaptive(),
         ),
-        VideoHubLoaded() => VideoHub(homeEntity: state.homeEntity),
-        VideoHubError() => const Center(
+        BrowseStatus.success => BrowseView(
+          moods: state.moods,
+          browseCarousels: state.browseCarousels,
+          continuationId: state.continuationId,
+        ),
+        BrowseStatus.failure => const Center(
           child: Text('Oops something went wrong...'),
         ),
       },
@@ -26,16 +30,23 @@ class VideoHubView extends StatelessWidget {
   }
 }
 
-class VideoHub extends StatefulWidget {
-  const VideoHub({super.key, required this.homeEntity});
+class BrowseView extends StatefulWidget {
+  const BrowseView({
+    super.key,
+    required this.moods,
+    required this.browseCarousels,
+    required this.continuationId,
+  });
 
-  final HomeEntity homeEntity;
+  final List<MoodEntity> moods;
+  final List<Object> browseCarousels;
+  final String continuationId;
 
   @override
-  State<VideoHub> createState() => _VideoHubState();
+  State<BrowseView> createState() => _BrowseViewState();
 }
 
-class _VideoHubState extends State<VideoHub> {
+class _BrowseViewState extends State<BrowseView> {
   final _scrollController = ScrollController();
 
   @override
@@ -46,47 +57,43 @@ class _VideoHubState extends State<VideoHub> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return SingleChildScrollView(
       controller: _scrollController,
       padding: const EdgeInsets.only(bottom: 116),
-      children: [
-        MoodsChips(
-          moods: widget.homeEntity.moods,
-          onSelectMoods: (params) {
-            context.read<VideoHubBloc>().add(
-              LoadMoodMusic(params: params),
-            );
-          },
-        ),
-        const SizedBox(height: 12),
-        ...widget.homeEntity.videoSuggestions.map(
-          (suggestion) {
-            return Suggestions(
-              key: ValueKey(suggestion.heading),
-              suggestions: suggestion.videos,
-              heading: suggestion.heading,
-            );
-          },
-        ),
-        const SizedBox(height: 12),
-        ...widget.homeEntity.playlistSuggestions.map(
-          (playlist) {
-            return SuggestionsPlaylist(
-              key: ValueKey(playlist.heading),
-              playlists: playlist.playlists,
-              heading: playlist.heading,
-            );
-          },
-        ),
+      child: Column(
+        children: [
+          MoodsChips(
+            moods: widget.moods,
+            onSelectMoods: (params) {
+              // context.read<VideoHubBloc>().add(
+              //   LoadMoodMusic(
+              //     params: params,
+              //   ),
+              // );
+            },
+          ),
+          const SizedBox(height: 12),
+          ...widget.browseCarousels.map(
+            (carousel) {
+              if (carousel is VideoSuggestionEntity) {
+                return Suggestions(
+                  suggestions: carousel.videos,
+                  heading: carousel.heading,
+                );
+              }
 
-        /// load more
-        // const SizedBox(height: 16),
-        // const Center(
-        //   child: RepaintBoundary(
-        //     child: CircularProgressIndicator(),
-        //   ),
-        // ),
-      ],
+              if (carousel is PlaylistSuggestionEntity) {
+                return SuggestionsPlaylist(
+                  playlists: carousel.playlists,
+                  heading: carousel.heading,
+                );
+              }
+
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -98,10 +105,9 @@ class _VideoHubState extends State<VideoHub> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<VideoHubBloc>().add(
-        const LoadContinuation(
-          continuationId:
-              '4qmFsgKhAhIMRkVtdXNpY19ob21lGpACQ0FaNnh3RkhTaTFwTVRWbE1taEpORVJYYjBWQ1EyNDRTMHBJYkRCWU0wSm9XakpXWm1NeU5XaGpTRTV2WWpOU1ptSllWbnBoVjA1bVkwZEdibHBXT1hsYVYyUndZakkxYUdKQ1NXWlJXR1F4Vm1wS1lVOUdUazVaVjA1WFVWVlNSR0pZV25oalZtaHFXVzVLU0ZwSFZUVmlSMVpUWVhodk1sUllWbnBoVjA1RllWaE9hbUl6V214amJteFJXVmRrYkZVeVZubGtiV3hxV2xNeFNGcFlVa2xpTWpGc1ZVZEdibHBSUVVKQlIxWjFRVUZHU2xSblFVSlRWVFJCUVZGRlJDMXdla2gyVVd0RFEwRmo%3D',
+      context.read<BrowseBloc>().add(
+        BrowseContinuationEvent(
+          continuationId: widget.continuationId,
         ),
       );
     }

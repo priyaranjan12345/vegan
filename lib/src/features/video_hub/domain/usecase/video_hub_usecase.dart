@@ -19,13 +19,14 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
 
   @override
   Future<Either<Failure, HomeEntity>> call(params) async {
-    final result = params.params == null
-        ? await videoHubRepository.fetchVideos(
-            browseId: params.browseId,
-          )
-        : await videoHubRepository.fetchMoodMusic(
-            params: params.params!,
-          );
+    final result = switch (params.browse) {
+      Browse.initial => await videoHubRepository.fetchVideos(
+        browseId: params.browseId,
+      ),
+      Browse.moods => await videoHubRepository.fetchMoodMusic(
+        params: params.params ?? '',
+      ),
+    };
 
     return result.fold(
       (ex) => Left(ServerFailure()),
@@ -58,6 +59,18 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
             ytBrowseModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
             [];
 
+        final continuation =
+            (tabs
+                        .first
+                        .tabRenderer
+                        ?.content
+                        ?.sectionListRenderer
+                        ?.continuations ??
+                    [])
+                .firstOrNull
+                ?.nextContinuationData
+                ?.continuation;
+
         if (tabs.isNotEmpty) {
           final contents =
               tabs.first.tabRenderer?.content?.sectionListRenderer?.contents ??
@@ -82,15 +95,6 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
             // final artistSuggestion = contents
             //     .elementAtOrNull(2)
             //     ?.musicTastebuilderShelfRenderer;
-            // final continuation = tabs
-            //     .first
-            //     .tabRenderer
-            //     ?.content
-            //     ?.sectionListRenderer
-            //     ?.continuations
-            //     .first
-            //     .nextContinuationData
-            //     ?.continuation;
 
             /// add moods
             moods.addAll(
@@ -254,6 +258,7 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
             moods: moods,
             videoSuggestions: videoSuggestions,
             playlistSuggestions: playlistSuggestions,
+            continuationId: continuation ?? '',
           ),
         );
       },
@@ -281,11 +286,20 @@ class Params extends Equatable {
   const Params({
     this.browseId,
     this.params,
+    this.continuationId,
+    this.browse = Browse.initial,
   });
 
+  final Browse browse;
   final String? browseId;
   final String? params;
+  final String? continuationId;
 
   @override
   List<Object?> get props => [browseId];
+}
+
+enum Browse {
+  initial,
+  moods,
 }
