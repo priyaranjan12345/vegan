@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:vegan/src/core/error/failure/failure.dart';
-import 'package:vegan/src/core/usecase/usecase.dart';
-import 'package:vegan/src/features/video_hub/data/model/video_model.dart';
-import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
-
+import '../../../../core/error/failure/failure.dart';
 import '../../../../core/function_mapper/function_mapper.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../data/model/video_model.dart';
+import '../entity/entity.dart';
 import '../entity/playlist_entity.dart';
 import '../repository/video_hub_repository.dart';
 
@@ -31,7 +30,6 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
     return result.fold(
       (ex) => Left(ServerFailure()),
       (ytBrowseModel) {
-        // list.elementAtOrNull(index);
         /**
          * MOODS
          * tabs.first.tabRenderer?.content?.sectionListRenderer?.header?.chipCloudRenderer; 
@@ -59,198 +57,181 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
             ytBrowseModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
             [];
 
-        final continuation =
-            (tabs
-                        .first
-                        .tabRenderer
-                        ?.content
-                        ?.sectionListRenderer
-                        ?.continuations ??
-                    [])
-                .firstOrNull
-                ?.nextContinuationData
-                ?.continuation;
+        final sectionListRenderer =
+            tabs.first.tabRenderer?.content?.sectionListRenderer;
 
-        if (tabs.isNotEmpty) {
-          final contents =
-              tabs.first.tabRenderer?.content?.sectionListRenderer?.contents ??
-              [];
+        final continuation = (sectionListRenderer?.continuations ?? [])
+            .firstOrNull
+            ?.nextContinuationData
+            ?.continuation;
 
-          if (contents.isNotEmpty) {
-            final moodChips = tabs
-                .first
-                .tabRenderer
-                ?.content
-                ?.sectionListRenderer
-                ?.header
-                ?.chipCloudRenderer
-                ?.chips;
+        /// add moods
+        final moodChips = sectionListRenderer?.header?.chipCloudRenderer?.chips;
+        moods.addAll(
+          moodChips?.map(
+                (e) => MoodEntity(
+                  label: e.chipCloudChipRenderer?.text?.runs.first.text ?? '',
+                  browseId:
+                      e
+                          .chipCloudChipRenderer
+                          ?.navigationEndpoint
+                          ?.browseEndpoint
+                          ?.browseId ??
+                      '',
+                  params:
+                      e
+                          .chipCloudChipRenderer
+                          ?.navigationEndpoint
+                          ?.browseEndpoint
+                          ?.params ??
+                      '',
+                ),
+              ) ??
+              [],
+        );
 
-            final videoSuggestionCarousel = contents
-                .elementAtOrNull(0)
-                ?.musicCarouselShelfRenderer;
-            final playlistSuggestionCarousel = contents
-                .elementAtOrNull(1)
-                ?.musicCarouselShelfRenderer;
-            // final artistSuggestion = contents
-            //     .elementAtOrNull(2)
-            //     ?.musicTastebuilderShelfRenderer;
+        /// outer contents
+        final contents = sectionListRenderer?.contents ?? [];
+        for (var content in contents) {
+          final musicCarouselShelfRenderer = content.musicCarouselShelfRenderer;
 
-            /// add moods
-            moods.addAll(
-              moodChips?.map(
-                    (e) => MoodEntity(
-                      label:
-                          e.chipCloudChipRenderer?.text?.runs.first.text ?? '',
-                      browseId:
-                          e
-                              .chipCloudChipRenderer
-                              ?.navigationEndpoint
-                              ?.browseEndpoint
-                              ?.browseId ??
-                          '',
-                      params:
-                          e
-                              .chipCloudChipRenderer
-                              ?.navigationEndpoint
-                              ?.browseEndpoint
-                              ?.params ??
-                          '',
-                    ),
-                  ) ??
-                  [],
-            );
+          /// extract carousel heading
+          final carouselTitle =
+              (musicCarouselShelfRenderer
+                          ?.header
+                          ?.musicCarouselShelfBasicHeaderRenderer
+                          ?.title
+                          ?.runs ??
+                      [])
+                  .firstOrNull
+                  ?.text ??
+              '';
 
-            /// add suggestions header and musics
-            final heading =
-                videoSuggestionCarousel
-                    ?.header
-                    ?.musicCarouselShelfBasicHeaderRenderer
-                    ?.title
-                    ?.runs
-                    .first
-                    .text ??
-                '';
-            videos.addAll(
-              videoSuggestionCarousel?.contents.map(
-                    (e) {
-                      final videoContent = e.musicResponsiveListItemRenderer;
-                      final musicRenderer = videoContent
-                          ?.flexColumns
-                          .first
-                          .musicResponsiveListItemFlexColumnRenderer;
-                      final thumbnail =
-                          videoContent
-                              ?.thumbnail
+          /// extract inner contents
+          final innerContents = musicCarouselShelfRenderer?.contents ?? [];
+          for (final innerContent in innerContents) {
+            final musicResponsiveListItemRenderer =
+                innerContent.musicResponsiveListItemRenderer;
+            final musicTwoRowItemRenderer =
+                innerContent.musicTwoRowItemRenderer;
+
+            /// music carousel items
+            if (musicResponsiveListItemRenderer != null) {
+              final thumbnail =
+                  (musicResponsiveListItemRenderer
+                              .thumbnail
                               ?.musicThumbnailRenderer
                               ?.thumbnail
-                              ?.thumbnails
-                              .first
-                              .url ??
-                          '';
-                      final flexColumnRuns = musicRenderer?.text?.runs.first;
-                      final title = flexColumnRuns?.text ?? '';
-                      final subTitle =
-                          videoContent
-                              ?.flexColumns
-                              .last
-                              .musicResponsiveListItemFlexColumnRenderer
+                              ?.thumbnails ??
+                          [])
+                      .firstOrNull
+                      ?.url ??
+                  '';
+              final flexColumnRenderer = musicResponsiveListItemRenderer
+                  .flexColumns
+                  .firstOrNull
+                  ?.musicResponsiveListItemFlexColumnRenderer;
+              final flexColumnRun =
+                  (flexColumnRenderer?.text?.runs ?? []).firstOrNull;
+
+              final title = flexColumnRun?.text ?? '';
+              final subTitle =
+                  (musicResponsiveListItemRenderer.flexColumns
+                              .elementAtOrNull(1)
+                              ?.musicResponsiveListItemFlexColumnRenderer
                               ?.text
-                              ?.runs
-                              .first
-                              .text ??
-                          '';
-                      final id =
-                          flexColumnRuns
-                              ?.navigationEndpoint
-                              ?.watchEndpoint
-                              ?.videoId ??
-                          '';
-                      final playlistId =
-                          flexColumnRuns
-                              ?.navigationEndpoint
-                              ?.watchEndpoint
-                              ?.playlistId ??
-                          '';
+                              ?.runs ??
+                          [])
+                      .map((e) => e.text)
+                      .join(' ');
+              final id =
+                  flexColumnRun?.navigationEndpoint?.watchEndpoint?.videoId ??
+                  '';
+              final playlistId =
+                  flexColumnRun
+                      ?.navigationEndpoint
+                      ?.watchEndpoint
+                      ?.playlistId ??
+                  '';
 
-                      return VideoEntity(
-                        id: id,
-                        title: title,
-                        description: subTitle,
-                        videoUrl: '',
-                        thubmnail: thumbnail,
-                        browseId: '',
-                        playlistId: playlistId,
-                      );
-                    },
-                  ) ??
-                  [],
-            );
+              /// create video entity model instance and keep inside video list
+              final videoEntity = VideoEntity(
+                id: id,
+                title: title,
+                description: subTitle,
+                videoUrl: '',
+                thubmnail: thumbnail,
+                browseId: '',
+                playlistId: playlistId,
+              );
 
-            /// playlist suggestions
-            final playlistHeading =
-                playlistSuggestionCarousel
-                    ?.header
-                    ?.musicCarouselShelfBasicHeaderRenderer
-                    ?.title
-                    ?.runs
-                    .first
-                    .text ??
-                '';
-            playlists.addAll(
-              playlistSuggestionCarousel?.contents.map((e) {
-                    final playlistContent = e.musicTwoRowItemRenderer;
-                    final thumbnails = playlistContent
-                        ?.thumbnailRenderer
-                        ?.musicThumbnailRenderer
-                        ?.thumbnail
-                        ?.thumbnails;
-                    final thumbnail = thumbnails?.first.url ?? '';
-                    final title = playlistContent?.title?.runs.first.text ?? '';
-                    final description =
-                        playlistContent?.subtitle?.runs.first.text ?? '';
-                    final browseId =
-                        playlistContent
-                            ?.navigationEndpoint
-                            ?.browseEndpoint
-                            ?.browseId ??
-                        '';
-                    final plalistItems =
-                        playlistContent?.menu?.menuRenderer?.items ?? [];
-                    final playlistIds = [
-                      ...plalistItems.map(
-                        (item) => item
-                            .menuNavigationItemRenderer
-                            ?.navigationEndpoint
-                            ?.watchPlaylistEndpoint
-                            ?.playlistId,
-                      ),
-                    ];
+              videos.add(videoEntity);
+            }
 
-                    return PlaylistEntity(
-                      id: playlistIds.first ?? '',
-                      browseId: browseId,
-                      title: title,
-                      description: description,
-                      thumbnail: thumbnail,
-                    );
-                  }) ??
-                  [],
-            );
+            /// playlist carousel items
+            if (musicTwoRowItemRenderer != null) {
+              final thumbnail =
+                  (musicTwoRowItemRenderer
+                              .thumbnailRenderer
+                              ?.musicThumbnailRenderer
+                              ?.thumbnail
+                              ?.thumbnails ??
+                          [])
+                      .firstOrNull
+                      ?.url ??
+                  '';
+              final title =
+                  (musicTwoRowItemRenderer.title?.runs ?? [])
+                      .firstOrNull
+                      ?.text ??
+                  '';
+              final subTitle =
+                  (musicTwoRowItemRenderer.subtitle?.runs ?? [])
+                      .firstOrNull
+                      ?.text ??
+                  '';
+              final browseId =
+                  musicTwoRowItemRenderer
+                      .navigationEndpoint
+                      ?.browseEndpoint
+                      ?.browseId ??
+                  '';
 
+              /// create Playlist model instance and keep it
+              /// inside playlist list
+              final playlistEntity = PlaylistEntity(
+                id: '',
+                browseId: browseId,
+                title: title,
+                description: subTitle,
+                thumbnail: thumbnail,
+              );
+
+              playlists.add(playlistEntity);
+            }
+          }
+
+          /// keep heading and carousel items
+          if (videos.isNotEmpty) {
             videoSuggestions.add(
               VideoSuggestionEntity(
-                heading: heading,
-                videos: videos,
-              ),
-            );
-            playlistSuggestions.add(
-              PlaylistSuggestionEntity(
-                heading: playlistHeading,
-                playlists: playlists,
+                heading: carouselTitle,
+                videos: [...videos],
               ),
             );
           }
+
+          if (playlists.isNotEmpty) {
+            playlistSuggestions.add(
+              PlaylistSuggestionEntity(
+                heading: carouselTitle,
+                playlists: [...playlists],
+              ),
+            );
+          }
+
+          videos.clear();
+          playlists.clear();
         }
 
         return Right(

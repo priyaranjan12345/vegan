@@ -1,12 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:dartz/dartz.dart';
-
-import 'package:vegan/src/core/error/failure/failure.dart';
-import 'package:vegan/src/core/usecase/usecase.dart';
-import 'package:vegan/src/features/video_hub/domain/entity/playlist_entity.dart';
-
+import '../../../../core/error/failure/failure.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../entity/entity.dart';
+import '../entity/playlist_entity.dart';
 import '../repository/video_hub_repository.dart';
 
 class ContinuationUsecase implements UseCase<HomeEntity, ContinuationParams> {
