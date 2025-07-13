@@ -153,6 +153,13 @@ class ContinuationUsecase implements UseCase<HomeEntity, ContinuationParams> {
                       ?.browseId ??
                   '';
 
+              final params =
+                  musicTwoRowItemRenderer
+                      .navigationEndpoint
+                      ?.browseEndpoint
+                      ?.params ??
+                  '';
+
               /// create Playlist model instance and keep it
               /// inside playlist list
               final playlistEntity = PlaylistEntity(
@@ -161,6 +168,7 @@ class ContinuationUsecase implements UseCase<HomeEntity, ContinuationParams> {
                 title: title,
                 description: subTitle,
                 thumbnail: thumbnail,
+                params: params,
               );
 
               playlists.add(playlistEntity);

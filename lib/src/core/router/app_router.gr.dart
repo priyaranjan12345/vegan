@@ -22,7 +22,7 @@ import 'package:vegan/src/features/dashboard/search_tab.dart' as _i12;
 import 'package:vegan/src/features/downloads/downloads_page.dart' as _i4;
 import 'package:vegan/src/features/more/more_page.dart' as _i8;
 import 'package:vegan/src/features/player/view/max_player.dart' as _i7;
-import 'package:vegan/src/features/search/search_page.dart' as _i11;
+import 'package:vegan/src/features/search/presentation/pages/search_page.dart' as _i11;
 import 'package:vegan/src/features/splash/splash_page.dart' as _i13;
 import 'package:vegan/src/features/video_hub/presentation/page/playlist_page.dart'
     as _i10;
@@ -179,10 +179,11 @@ class PlaylistRoute extends _i15.PageRouteInfo<PlaylistRouteArgs> {
   PlaylistRoute({
     _i16.Key? key,
     required String browseId,
+    String? params,
     List<_i15.PageRouteInfo>? children,
   }) : super(
          PlaylistRoute.name,
-         args: PlaylistRouteArgs(key: key, browseId: browseId),
+         args: PlaylistRouteArgs(key: key, browseId: browseId, params: params),
          initialChildren: children,
        );
 
@@ -192,21 +193,27 @@ class PlaylistRoute extends _i15.PageRouteInfo<PlaylistRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<PlaylistRouteArgs>();
-      return _i10.PlaylistPage(key: args.key, browseId: args.browseId);
+      return _i10.PlaylistPage(
+        key: args.key,
+        browseId: args.browseId,
+        params: args.params,
+      );
     },
   );
 }
 
 class PlaylistRouteArgs {
-  const PlaylistRouteArgs({this.key, required this.browseId});
+  const PlaylistRouteArgs({this.key, required this.browseId, this.params});
 
   final _i16.Key? key;
 
   final String browseId;
 
+  final String? params;
+
   @override
   String toString() {
-    return 'PlaylistRouteArgs{key: $key, browseId: $browseId}';
+    return 'PlaylistRouteArgs{key: $key, browseId: $browseId, params: $params}';
   }
 }
 

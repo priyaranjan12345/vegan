@@ -1,1 +1,1 @@
-export 'search_page.dart';
+export 'presentation/pages/search_page.dart';

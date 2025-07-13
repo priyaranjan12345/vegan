@@ -9,7 +9,10 @@ import '../../data/model/yt_model/yt_next_up_model.dart';
 abstract interface class VideoHubRepository {
   Future<Either<Exception, YtMoodsModel>> fetchMoods();
   Future<Either<Exception, YtBrowseModel>> fetchVideos({String? browseId});
-  Future<Either<Exception, YtPlaylistModel>> fetchPlaylist({String? browseId});
+  Future<Either<Exception, YtPlaylistModel>> fetchPlaylist({
+    String? browseId,
+    String? params,
+  });
   Future<Either<Exception, YtNextUpModel>> fetchNextUp({
     required String videoId,
     required String playlistId,

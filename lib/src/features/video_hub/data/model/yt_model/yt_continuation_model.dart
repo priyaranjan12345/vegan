@@ -993,16 +993,19 @@ class MenuNavigationItemRendererNavigationEndpoint extends Equatable {
 class FluffyBrowseEndpoint extends Equatable {
   const FluffyBrowseEndpoint({
     required this.browseId,
+    required this.params,
     required this.browseEndpointContextSupportedConfigs,
   });
 
   final String? browseId;
+  final String? params;
   final BrowseEndpointContextSupportedConfigs?
   browseEndpointContextSupportedConfigs;
 
   factory FluffyBrowseEndpoint.fromJson(Map<String, dynamic> json) {
     return FluffyBrowseEndpoint(
       browseId: json['browseId'],
+      params: json['params'],
       browseEndpointContextSupportedConfigs:
           json['browseEndpointContextSupportedConfigs'] == null
           ? null

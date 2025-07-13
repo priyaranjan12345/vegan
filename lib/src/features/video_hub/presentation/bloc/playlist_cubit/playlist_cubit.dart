@@ -10,15 +10,18 @@ part 'playlist_state.dart';
 class PlaylistCubit extends Cubit<PlaylistState> {
   PlaylistCubit({
     required PlaylistUsecase playlistUsecase,
-  })  : _playlistUsecase = playlistUsecase,
-        super(const PlaylistLoadingState());
+  }) : _playlistUsecase = playlistUsecase,
+       super(const PlaylistLoadingState());
 
   final PlaylistUsecase _playlistUsecase;
 
-  Future<void> loadPlaylist(String browseId) async {
+  Future<void> loadPlaylist(
+    String browseId, {
+    String? params,
+  }) async {
     try {
       final result = await _playlistUsecase(
-        PlaylistParams(browseId: browseId),
+        PlaylistParams(browseId: browseId, params: params),
       );
       result.fold(
         (l) => emit(

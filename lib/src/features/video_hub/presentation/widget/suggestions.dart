@@ -21,7 +21,7 @@ class Suggestions extends StatelessWidget {
   Widget build(BuildContext context) {
     final chunkedSuggestions = suggestions.chunk(4);
     final controller = PageController(
-      viewportFraction: context.isPortrait ? 0.8 : 0.4,
+      viewportFraction: context.isPortrait ? 0.84 : 0.4,
     );
 
     return suggestions.isEmpty
@@ -52,6 +52,9 @@ class Suggestions extends StatelessWidget {
                     parent: ClampingScrollPhysics(),
                   ),
                   slivers: [
+                    const SliverToBoxAdapter(
+                      child: SizedBox(width: 6),
+                    ),
                     ...chunkedSuggestions.map(
                       (suggestionList) => SliverLayoutBuilder(
                         builder: (context, constraints) {
@@ -89,6 +92,9 @@ class Suggestions extends StatelessWidget {
                           );
                         },
                       ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(width: 6),
                     ),
                   ],
                 ),

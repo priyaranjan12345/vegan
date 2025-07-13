@@ -1,5 +1,7 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import 'package:vegan/src/features/player/service/audio_handler_service.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../../app/app.dart';
@@ -33,6 +35,17 @@ class PlayerInjector {
 
     injector.registerLazySingleton<NextUpCubit>(
       () => NextUpCubit(nextUpUsecase: injector()),
+    );
+
+    // audio service handler
+    injector.registerSingletonAsync(
+      () async => await AudioService.init(
+        builder: () => AudioHandlerService(injector<Player>()),
+        config: const AudioServiceConfig(
+          androidNotificationChannelId: 'com.vegan.app.channel.audio',
+          androidNotificationChannelName: 'Vegan Music Player',
+        ),
+      ),
     );
   }
 }

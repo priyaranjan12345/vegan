@@ -8,9 +8,14 @@ import 'package:vegan/src/features/video_hub/presentation/bloc/playlist_cubit/pl
 
 @RoutePage()
 class PlaylistPage extends StatelessWidget {
-  const PlaylistPage({super.key, required this.browseId});
+  const PlaylistPage({
+    super.key,
+    required this.browseId,
+    this.params,
+  });
 
   final String browseId;
+  final String? params;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,11 @@ class PlaylistPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocProvider<PlaylistCubit>(
-          create: (_) => injector<PlaylistCubit>()..loadPlaylist(browseId),
+          create: (_) => injector<PlaylistCubit>()
+            ..loadPlaylist(
+              browseId,
+              params: params,
+            ),
           child: const PlaylistView(),
         ),
       ),

@@ -19,7 +19,7 @@ class SuggestionsPlaylist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = PageController(
-      viewportFraction: context.isPortrait ? 0.36 : 0.4,
+      viewportFraction: context.isPortrait ? 0.44 : 0.24,
     );
 
     return Column(
@@ -54,7 +54,10 @@ class SuggestionsPlaylist extends StatelessWidget {
                 ...playlists.map(
                   (playlist) => GestureDetector(
                     onTap: () => context.router.push(
-                      PlaylistRoute(browseId: playlist.browseId),
+                      PlaylistRoute(
+                        browseId: playlist.browseId,
+                        params: playlist.params,
+                      ),
                     ),
                     child: SizedBox(
                       width: context.deviceWidth * controller.viewportFraction,
@@ -72,7 +75,7 @@ class SuggestionsPlaylist extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

@@ -34,8 +34,12 @@ abstract class YtApiBody {
     ..._context,
   };
 
-  static Map<String, Object> playlistContent(String? browseId) => {
+  static Map<String, Object> playlistContent(
+    String? browseId, {
+    String? params,
+  }) => {
     if (browseId != null) 'browseId': browseId,
+    if (params != null && params.isNotEmpty) 'params': params,
     ..._context,
   };
 
@@ -53,6 +57,12 @@ abstract class YtApiBody {
   static Map<String, Object> continuationContent({String? continuationId}) => {
     'browseId': 'FEmusic_home',
     if (continuationId != null) 'continuation': continuationId,
+    ..._context,
+  };
+
+  /// search suggestions
+  static Map<String, Object> search({String? input}) => {
+    'input': input ?? '',
     ..._context,
   };
 

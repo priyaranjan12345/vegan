@@ -18,6 +18,7 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
   Future<Either<Failure, List<VideoEntity>>> call(params) async {
     final result = await videoHubRepository.fetchPlaylist(
       browseId: params.browseId,
+      params: params.params ?? '',
     );
     return result.fold(
       (ex) => Left(ServerFailure()),
@@ -95,9 +96,16 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
 
 class PlaylistParams extends Equatable {
   final String? browseId;
+  final String? params;
 
-  const PlaylistParams({this.browseId});
+  const PlaylistParams({
+    this.browseId,
+    this.params,
+  });
 
   @override
-  List<Object?> get props => [browseId];
+  List<Object?> get props => [
+    browseId,
+    params,
+  ];
 }

@@ -54,9 +54,11 @@ class IVideoHubRepository implements VideoHubRepository {
   @override
   Future<Either<Exception, YtPlaylistModel>> fetchPlaylist({
     String? browseId,
+    String? params,
   }) async {
     final response = await videoHubRemoteDatasource.getVideosResponse(
       browseId: browseId,
+      params: params,
     );
 
     if (response.statusCode == 200) {
