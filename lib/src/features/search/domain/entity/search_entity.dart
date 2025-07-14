@@ -38,7 +38,7 @@ class SearchSuggestionMusicItem extends Equatable {
     required this.title,
     required this.description,
     required this.videoUrl,
-    required this.thubmnail,
+    required this.thumbnail,
     this.browseId = '',
     this.playlistId = '',
     this.artist = '',
@@ -49,7 +49,7 @@ class SearchSuggestionMusicItem extends Equatable {
   final String description;
   final String artist;
   final String videoUrl;
-  final String thubmnail;
+  final String thumbnail;
   final String browseId;
   final String playlistId;
 
@@ -59,7 +59,7 @@ class SearchSuggestionMusicItem extends Equatable {
     title,
     description,
     videoUrl,
-    thubmnail,
+    thumbnail,
     browseId,
     playlistId,
     artist,

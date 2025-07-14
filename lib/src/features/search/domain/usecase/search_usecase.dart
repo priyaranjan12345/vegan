@@ -28,11 +28,104 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
         final contents = r.contents;
 
         for (final content in contents) {
-          final musicShelfRenderer = content.searchSuggestionsSectionRenderer;
-          
+          final innerContents =
+              content.searchSuggestionsSectionRenderer?.contents ?? [];
+
+          for (var innerContent in innerContents) {
+            final searchSuggestionRenderer =
+                innerContent.searchSuggestionRenderer;
+            final musicResponsiveListItemRenderer =
+                innerContent.musicResponsiveListItemRenderer;
+
+            if (searchSuggestionRenderer != null) {
+              // suggestions
+              final suggestion =
+                  searchSuggestionRenderer.suggestion?.runs.firstOrNull?.text ??
+                  '';
+              final query =
+                  searchSuggestionRenderer
+                      .navigationEndpoint
+                      ?.searchEndpoint
+                      ?.query ??
+                  '';
+
+              suggestions.add(
+                SearchSuggestion(
+                  suggestion: suggestion,
+                  query: query,
+                ),
+              );
+            }
+
+            if (musicResponsiveListItemRenderer != null) {
+              // music items
+              final thumbnail =
+                  (musicResponsiveListItemRenderer
+                              .thumbnail
+                              ?.musicThumbnailRenderer
+                              ?.thumbnail
+                              ?.thumbnails ??
+                          [])
+                      .firstOrNull
+                      ?.url ??
+                  '';
+              final flexColumnRenderer = musicResponsiveListItemRenderer
+                  .flexColumns
+                  .firstOrNull
+                  ?.musicResponsiveListItemFlexColumnRenderer;
+              final title =
+                  flexColumnRenderer?.text?.runs.firstOrNull?.text ?? '';
+              final subTitle =
+                  (musicResponsiveListItemRenderer.flexColumns
+                              .elementAtOrNull(1)
+                              ?.musicResponsiveListItemFlexColumnRenderer
+                              ?.text
+                              ?.runs ??
+                          [])
+                      .map((e) => e.text)
+                      .join(' ');
+              final videoId =
+                  (flexColumnRenderer?.text?.runs ?? [])
+                      .firstOrNull
+                      ?.navigationEndpoint
+                      ?.watchEndpoint
+                      ?.videoId ??
+                  '';
+              final browseId =
+                  musicResponsiveListItemRenderer.flexColumns
+                      .elementAtOrNull(1)
+                      ?.musicResponsiveListItemFlexColumnRenderer
+                      ?.text
+                      ?.runs
+                      .firstOrNull
+                      ?.navigationEndpoint
+                      ?.browseEndpoint
+                      ?.browseId ??
+                  '';
+
+              musicItems.add(
+                SearchSuggestionMusicItem(
+                  thumbnail: thumbnail,
+                  title: title,
+                  description: subTitle,
+                  id: videoId,
+                  browseId: browseId,
+                  playlistId: '',
+                  videoUrl: '',
+                ),
+              );
+            }
+          }
+
+          /// clear
         }
 
-        return Right(r);
+        return Right(
+          SearchEntity(
+            searchSuggestions: [...suggestions],
+            searchSuggestionMusicItems: [...musicItems],
+          ),
+        );
       },
     );
   }
