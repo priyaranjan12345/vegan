@@ -20,29 +20,40 @@ class SearchResultCard extends StatelessWidget {
     return Card(
       color: AppColors.darkGray,
       shape: const RoundedRectangleBorder(),
-      child: SizedBox(
-        height: 76.0,
+      child: GestureDetector(
+        onTap: onPressed,
         child: Row(
           children: [
             Flexible(
               flex: 4,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  imageUrl,
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Image.network(
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    imageUrl,
+                  ),
                 ),
               ),
             ),
             Flexible(
               flex: 6,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0,),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12.0,
+                  vertical: 4.0,
+                ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
                   spacing: 8.0,
                   children: [
-                    Text(title, maxLines: 1,),
+                    Text(
+                      title,
+                      maxLines: 1,
+                    ),
                     Text(
                       subtitle,
                       maxLines: 2,

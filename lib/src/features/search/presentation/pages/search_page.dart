@@ -21,10 +21,17 @@ class SearchPage extends StatelessWidget {
   }
 }
 
-class SearchPageWrapper extends StatelessWidget {
+class SearchPageWrapper extends StatefulWidget {
   const SearchPageWrapper({
     super.key,
   });
+
+  @override
+  State<SearchPageWrapper> createState() => _SearchPageWrapperState();
+}
+
+class _SearchPageWrapperState extends State<SearchPageWrapper> {
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +40,9 @@ class SearchPageWrapper extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.darkGray,
           title: TextFormField(
+            controller: textController,
             decoration: InputDecoration(
-              hintText: 'Search for music ...',
+              hintText: 'Search for music, artist, album, etc.',
               filled: false,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -83,7 +91,13 @@ class SearchPageWrapper extends StatelessWidget {
                       final suggestion =
                           state.searchEntity?.searchSuggestions[index];
                       return ListTile(
-                        title: Text(suggestion?.suggestion ?? ''),
+                        title: Text(suggestion?.query ?? ''),
+                        onTap: () {
+                          textController.text = suggestion?.query ?? '';
+                          context.read<SearchBloc>().add(
+                            SearchInput(input: suggestion?.query),
+                          );
+                        },
                       );
                     },
                     childCount: state.searchEntity?.searchSuggestions.length,
@@ -104,6 +118,7 @@ class SearchPageWrapper extends StatelessWidget {
                             injector<YtPlayerBloc>().add(
                               LoadMusic(
                                 musicItem?.id ?? '',
+                                playlistId: musicItem?.playlistId,
                               ),
                             );
                           }
@@ -112,6 +127,11 @@ class SearchPageWrapper extends StatelessWidget {
                     },
                     childCount:
                         state.searchEntity?.searchSuggestionMusicItems.length,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 96.0,
                   ),
                 ),
               ],

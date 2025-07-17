@@ -40,7 +40,7 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
             if (searchSuggestionRenderer != null) {
               // suggestions
               final suggestion =
-                  searchSuggestionRenderer.suggestion?.runs.firstOrNull?.text ??
+                  searchSuggestionRenderer.suggestion?.runs.lastOrNull?.text ??
                   '';
               final query =
                   searchSuggestionRenderer
@@ -66,7 +66,7 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
                               ?.thumbnail
                               ?.thumbnails ??
                           [])
-                      .firstOrNull
+                      .lastOrNull
                       ?.url ??
                   '';
               final flexColumnRenderer = musicResponsiveListItemRenderer
@@ -91,6 +91,15 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
                       ?.watchEndpoint
                       ?.videoId ??
                   '';
+              final playlistId =
+                  (musicResponsiveListItemRenderer.menu?.menuRenderer?.items ??
+                          [])
+                      .firstOrNull
+                      ?.menuNavigationItemRenderer
+                      ?.navigationEndpoint
+                      ?.watchEndpoint
+                      ?.playlistId ??
+                  '';
               final browseId =
                   musicResponsiveListItemRenderer.flexColumns
                       .elementAtOrNull(1)
@@ -110,7 +119,7 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
                   description: subTitle,
                   id: videoId,
                   browseId: browseId,
-                  playlistId: '',
+                  playlistId: playlistId,
                   videoUrl: '',
                 ),
               );
