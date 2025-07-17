@@ -10,6 +10,7 @@ import 'package:vegan/src/core/base/app_url.dart';
 import 'package:vegan/src/core/base/dio_config/dio_config.dart';
 import 'package:vegan/src/features/coming_soon/presentation/injector/coming_soon_injector.dart';
 import 'package:vegan/src/features/player/injector/player_injector.dart';
+import 'package:vegan/src/features/search/injector/search_injector.dart';
 import 'package:vegan/src/features/video_hub/injector/video_hub_injector.dart';
 
 import '../core/router/router.dart';
@@ -61,4 +62,5 @@ Future<void> init() async {
   CommingSoonInjector.inject();
   VideoHubInjector.inject();
   PlayerInjector.inject();
+  SearchInjector.inject();
 }

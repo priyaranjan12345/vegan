@@ -12,7 +12,7 @@ class AppUrl {
   static Uri get getUri => Uri.parse(ytmusicUrl);
   static Uri get getComingSoonUri => Uri.parse(_comingSoonUrl);
 
-  static const String search = '/search?key=$_key';
+  static const String search = '/music/get_search_suggestions';
   static const String browse = '/browse?key=$_key';
   static const String library = '/library?key=$_key';
   static const String music = '/music?key=$_key';

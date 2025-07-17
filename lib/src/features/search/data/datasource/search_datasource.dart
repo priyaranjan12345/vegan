@@ -17,7 +17,7 @@ class ISearchDatasource implements SearchDatasource {
   @override
   Future<Response> getSearchResponse({String? input}) async {
     return await dio.post(
-      AppUrl.browse,
+      AppUrl.search,
       data: YtApiBody.search(input: input),
     );
   }
