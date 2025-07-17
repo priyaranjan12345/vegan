@@ -22,7 +22,7 @@
         android:icon="@mipmap/launcher_icon"
         android:label="vegan">
         <activity
-            android:showWhenLocked="true"
+            android:showWhenLocked="false"
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
