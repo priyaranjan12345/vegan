@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/core/theme/app_colors.dart';
 
 import '../../../../app/app.dart';
+import '../../../../core/router/app_router.gr.dart';
 import '../../../player/bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../bloc/search_bloc.dart';
 import '../widgets/widgets.dart';
@@ -113,12 +114,29 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
                         subtitle: musicItem?.description ?? '',
                         imageUrl: musicItem?.thumbnail ?? '',
                         onPressed: () {
+                          // for music
                           if (musicItem?.id != null &&
                               (musicItem?.id.isNotEmpty ?? false)) {
                             injector<YtPlayerBloc>().add(
                               LoadMusic(
                                 musicItem?.id ?? '',
                                 playlistId: musicItem?.playlistId,
+                              ),
+                            );
+
+                            return;
+                          }
+                          // for album
+                          if (musicItem?.browseId != null &&
+                              (musicItem?.browseId.isNotEmpty ?? false)) {
+                            context.router.navigate(
+                              HomeTab(
+                                children: [
+                                  PlaylistRoute(
+                                    browseId: musicItem?.browseId ?? '',
+                                    // params: playlist.params,
+                                  ),
+                                ],
                               ),
                             );
                           }

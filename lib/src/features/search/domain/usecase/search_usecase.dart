@@ -101,13 +101,8 @@ class SearchUsecase implements UseCase<SearchEntity, SearchParams> {
                       ?.playlistId ??
                   '';
               final browseId =
-                  musicResponsiveListItemRenderer.flexColumns
-                      .elementAtOrNull(1)
-                      ?.musicResponsiveListItemFlexColumnRenderer
-                      ?.text
-                      ?.runs
-                      .firstOrNull
-                      ?.navigationEndpoint
+                  musicResponsiveListItemRenderer
+                      .navigationEndpoint
                       ?.browseEndpoint
                       ?.browseId ??
                   '';

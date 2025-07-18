@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:vegan/src/core/router/app_router.gr.dart';
-import 'package:vegan/src/core/theme/app_colors.dart';
-import 'package:vegan/src/features/internet_checker/presentation/pages/internet_checker_page.dart';
-import 'package:vegan/src/features/player/view/player_view.dart';
+
+import '../../core/router/app_router.gr.dart';
+import '../../core/theme/app_colors.dart';
+import '../internet_checker/presentation/pages/internet_checker_page.dart';
+import '../player/view/player_view.dart';
 
 @RoutePage()
 class DashboardPage extends StatelessWidget {
@@ -41,15 +42,15 @@ class DashboardPage extends StatelessWidget {
                 activeIcon: Icon(Icons.manage_search_rounded),
               ),
               BottomNavigationBarItem(
-                label: 'Coming Soon',
+                label: 'Explore',
                 icon: Icon(Icons.perm_media_sharp),
               ),
               BottomNavigationBarItem(
-                label: 'Downloads',
+                label: 'Library',
                 icon: Icon(Icons.download_rounded),
               ),
               BottomNavigationBarItem(
-                label: 'More',
+                label: 'Settings',
                 icon: Icon(Icons.menu),
               ),
             ],
