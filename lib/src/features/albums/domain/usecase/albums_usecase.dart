@@ -22,6 +22,8 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
     result.fold(
       (ex) => Left(ServerFailure()),
       (ytAlbumsModel) {
+        final musicItems = <MusicItemEntity>[];
+
         final header = ytAlbumsModel.header;
         final contents =
             (ytAlbumsModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
@@ -34,20 +36,56 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
             [];
 
         for (var content in contents) {
-          
           final musicShelfRenderer = content.musicShelfRenderer;
           final musicCarouselShelfRenderer = content.musicCarouselShelfRenderer;
 
-          if(musicShelfRenderer != null) {
-            final videoId;
-            final thumbnail;
-            final browseId;
-            final playlistId;
-            final params;
+          if (musicShelfRenderer != null) {
+            final innerContents = musicShelfRenderer.contents;
+
+            for (final innerContent in innerContents) {
+              final musicRenderer =
+                  innerContent.musicResponsiveListItemRenderer;
+              final flexColumns = musicRenderer?.flexColumns ?? [];
+              final videoId = musicRenderer?.playlistItemData?.videoId;
+              final thumbnail =
+                  (musicRenderer
+                              ?.thumbnail
+                              ?.musicThumbnailRenderer
+                              ?.thumbnail
+                              ?.thumbnails ??
+                          [])
+                      .lastOrNull
+                      ?.url ??
+                  '';
+              final watchEndpoint = musicRenderer
+                  ?.overlay
+                  ?.musicItemThumbnailOverlayRenderer
+                  ?.content
+                  ?.musicPlayButtonRenderer
+                  ?.playNavigationEndpoint
+                  ?.watchEndpoint;
+              final playlistId = watchEndpoint?.playlistId ?? '';
+              final params;
+
+              final title =
+                  flexColumns
+                      .firstOrNull
+                      ?.musicResponsiveListItemFlexColumnRenderer
+                      ?.text ??
+                  '';
+              final subtitle =
+                  (flexColumns
+                              .elementAtOrNull(1)
+                              ?.musicResponsiveListItemFlexColumnRenderer
+                              ?.text
+                              ?.runs ??
+                          [])
+                      .map((e) => e.text)
+                      .join(' ');
+            }
           }
 
-          if(musicCarouselShelfRenderer != null) {}
-
+          if (musicCarouselShelfRenderer != null) {}
         }
       },
     );
