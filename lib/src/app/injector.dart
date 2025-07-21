@@ -24,7 +24,7 @@ Future<void> init() async {
   /// register auto router instance
   injector.registerSingleton(AppRouter());
 
-  await Future.delayed(const Duration(seconds: 2));
+  // await Future.delayed(const Duration(seconds: 2));
 
   /// logger
   injector.registerSingleton(
@@ -59,8 +59,8 @@ Future<void> init() async {
   Bloc.observer = AppBlocObserver();
 
   /// feature wise injector
-  CommingSoonInjector.inject();
-  VideoHubInjector.inject();
-  PlayerInjector.inject();
-  SearchInjector.inject();
+  CommingSoonInjector(injector);
+  VideoHubInjector(injector);
+  PlayerInjector(injector);
+  SearchInjector(injector);
 }

@@ -1,17 +1,19 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
-import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
-import 'package:vegan/src/features/player/service/audio_handler_service.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-import '../../../app/app.dart';
+import '../bloc/yt_player_bloc/yt_player_bloc.dart';
+import '../service/audio_handler_service.dart';
 import '../domain/usecase/next_up_usecase.dart';
 import '../bloc/next_up_cubit/next_up_cubit.dart';
 
 class PlayerInjector {
-  PlayerInjector._();
+  const PlayerInjector(this.injector);
 
-  static void inject() {
+  final GetIt injector;
+
+ void call() {
     injector.registerFactory(
       () => Player(),
     );

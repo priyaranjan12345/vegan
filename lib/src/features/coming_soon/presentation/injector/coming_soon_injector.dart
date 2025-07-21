@@ -1,4 +1,4 @@
-import 'package:vegan/src/app/injector.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../data/datasource/coming_soon_datasource.dart';
 import '../../data/repository/coming_soon_repository.dart';
@@ -7,7 +7,11 @@ import '../../domain/usecase/coming_soon_usecase.dart';
 import '../bloc/coming_soon_bloc.dart';
 
 class CommingSoonInjector {
-  static void inject() {
+  const CommingSoonInjector(this.injector);
+
+  final GetIt injector;
+
+  void call() {
     injector.registerFactory<ComingSoonBloc>(
       () => ComingSoonBloc(comingSoonUsecase: injector()),
     );

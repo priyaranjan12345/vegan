@@ -1,4 +1,5 @@
-import '../../../app/app.dart';
+import 'package:get_it/get_it.dart';
+
 import '../data/datasource/video_hub_remote_datasource.dart';
 import '../data/repository/i_video_hub_repository.dart';
 import '../domain/repository/repository.dart';
@@ -9,7 +10,11 @@ import '../presentation/bloc/playlist_cubit/playlist_cubit.dart';
 import '../presentation/bloc/video_hub_bloc.dart';
 
 class VideoHubInjector {
-  static void inject() {
+  const VideoHubInjector(this.injector);
+
+  final GetIt injector;
+
+  void call() {
     /// resister video hub bloc
     injector.registerFactory(
       () => VideoHubBloc(
