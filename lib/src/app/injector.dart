@@ -5,15 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:talker/talker.dart';
-import 'package:vegan/src/app/bloc_observer.dart';
-import 'package:vegan/src/core/base/app_url.dart';
-import 'package:vegan/src/core/base/dio_config/dio_config.dart';
-import 'package:vegan/src/features/coming_soon/presentation/injector/coming_soon_injector.dart';
-import 'package:vegan/src/features/player/injector/player_injector.dart';
-import 'package:vegan/src/features/search/injector/search_injector.dart';
-import 'package:vegan/src/features/video_hub/injector/video_hub_injector.dart';
+import 'bloc_observer.dart';
 
+import '../core/base/app_url.dart';
+import '../core/base/dio_config/dio_config.dart';
 import '../core/router/router.dart';
+import '../features/coming_soon/presentation/injector/coming_soon_injector.dart';
+import '../features/player/injector/player_injector.dart';
+import '../features/search/injector/search_injector.dart';
+import '../features/video_hub/injector/video_hub_injector.dart';
 
 /// app injector for the get_it
 final injector = GetIt.instance;

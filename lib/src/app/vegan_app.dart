@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vegan/src/app/app.dart';
-import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
+import '../features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import 'app.dart';
 
 class VeganApp extends StatelessWidget {
   const VeganApp({super.key});
@@ -28,6 +28,8 @@ class VeganApp extends StatelessWidget {
         routerConfig: injector.get<AppRouter>().config(
               deepLinkBuilder: (deepLink) {
                 log(name: 'vagan-Deeplink:', deepLink.uri.toString());
+                /// navigate deeplink
+                /// injector.get<AppRouter>().root.navigate(path);
                 return deepLink;
               },
               navigatorObservers: () => [
