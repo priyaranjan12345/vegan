@@ -89,6 +89,20 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
         }
       },
     );
+
+    return const Right(
+      [
+        AlbumsEntity(
+          header: AlbumsHeaderEntity(
+            title: '',
+            subtitle: '',
+            thumbnail: '',
+          ),
+          carousel: [],
+          musicItems: [],
+        ),
+      ],
+    );
   }
 }
 
