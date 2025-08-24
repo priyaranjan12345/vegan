@@ -41,7 +41,7 @@ dependencies:
   http: ^1.2.2
   dartz: ^0.10.1
   video_player: ^2.9.3
-  get_it: ^8.0.0
+  get_it: ^8.2.0
   flex_color_scheme: ^8.1.1
   auto_route: ^10.0.0
   flutter_svg: ^2.0.17
