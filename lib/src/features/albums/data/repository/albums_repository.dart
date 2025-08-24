@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exception/custom_exception.dart';
@@ -19,6 +21,8 @@ class AlbumsRepository implements IAlbumsRepository {
     final response = await iAlbumsDatasource.getAlbumsResponse(
       browseId: browseId,
     );
+
+    log(response.data.toString());
 
     if (response.statusCode == 200) {
       try {

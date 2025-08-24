@@ -68,7 +68,7 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
         body: BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) => switch (state.status) {
             SearchStatus.initial => const Center(
-              child: CircularProgressIndicator(),
+              child: Text('Search for music, artist, album, etc.'),
             ),
             SearchStatus.loading => const Center(
               child: CircularProgressIndicator(),

@@ -74,6 +74,9 @@ class _BrowseViewState extends State<BrowseView> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _onScroll(isInitial: true),
+    );
   }
 
   @override
@@ -127,8 +130,8 @@ class _BrowseViewState extends State<BrowseView> {
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_isBottom) {
+  void _onScroll({bool isInitial = false}) {
+    if (_isBottom || isInitial) {
       context.read<BrowseBloc>().add(
         BrowseContinuationEvent(
           continuationId: widget.continuationId,
@@ -141,6 +144,6 @@ class _BrowseViewState extends State<BrowseView> {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >= (maxScroll - 124);
   }
 }

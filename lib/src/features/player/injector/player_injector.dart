@@ -13,7 +13,7 @@ class PlayerInjector {
 
   final GetIt injector;
 
- void call() {
+  void call() {
     injector.registerFactory(
       () => Player(),
     );

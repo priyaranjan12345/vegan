@@ -20,11 +20,10 @@ final injector = GetIt.instance;
 
 /// Global [init] injector
 Future<void> init() async {
-  /// Global
-  /// register auto router instance
-  injector.registerSingleton(AppRouter());
+  await Future.delayed(const Duration(seconds: 2));
 
-  // await Future.delayed(const Duration(seconds: 2));
+  // register auto router instance
+  injector.registerSingleton(AppRouter());
 
   /// logger
   injector.registerSingleton(
@@ -55,12 +54,12 @@ Future<void> init() async {
     () => http.Client(),
   );
 
+  /// feature wise injector
+  PlayerInjector(injector).call();
+  CommingSoonInjector(injector).call();
+  VideoHubInjector(injector).call();
+  SearchInjector(injector).call();
+
   // bloc oberver
   Bloc.observer = AppBlocObserver();
-
-  /// feature wise injector
-  CommingSoonInjector(injector);
-  VideoHubInjector(injector);
-  PlayerInjector(injector);
-  SearchInjector(injector);
 }
