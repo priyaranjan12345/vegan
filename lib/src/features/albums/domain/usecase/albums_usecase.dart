@@ -19,7 +19,7 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
       browseId: params.browseId,
     );
 
-    result.fold(
+    return result.fold(
       (ex) => Left(ServerFailure()),
       (ytAlbumsModel) {
         final musicItems = <MusicItemEntity>[];
@@ -87,21 +87,25 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
 
           if (musicCarouselShelfRenderer != null) {}
         }
-      },
-    );
 
-    return const Right(
-      [
-        AlbumsEntity(
-          header: AlbumsHeaderEntity(
-            title: '',
-            subtitle: '',
-            thumbnail: '',
-          ),
-          carousel: [],
-          musicItems: [],
-        ),
-      ],
+        return Right(
+          [
+            AlbumsEntity(
+              header: AlbumsHeaderEntity(
+                title:
+                    (header?.musicImmersiveHeaderRenderer?.title?.runs ?? [])
+                        .firstOrNull
+                        ?.text ??
+                    '',
+                subtitle: '',
+                thumbnail: '',
+              ),
+              carousel: const [],
+              musicItems: musicItems,
+            ),
+          ],
+        );
+      },
     );
   }
 }

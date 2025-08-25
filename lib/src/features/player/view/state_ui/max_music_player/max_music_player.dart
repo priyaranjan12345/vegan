@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/components/app_text.dart';
@@ -7,6 +8,7 @@ import 'package:vegan/src/features/player/widgets/play_button.dart';
 import 'package:vegan/src/features/player/widgets/progress_bar.dart';
 
 import '../../../../../core/components/components.dart';
+import '../../../bloc/yt_player_bloc/yt_player_bloc.dart';
 
 class MusicPlayer extends StatelessWidget {
   const MusicPlayer({
@@ -44,11 +46,11 @@ class MusicPlayer extends StatelessWidget {
     required this.author,
     required this.thumbnail,
   }) : child = MaxMusicPlayer(
-          thumbnail: thumbnail,
-          title: title,
-          artist: author,
-          player: Player(),
-        );
+         thumbnail: thumbnail,
+         title: title,
+         artist: author,
+         player: Player(),
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +116,16 @@ class MaxMusicPlayer extends StatelessWidget {
                         icon: const Icon(Icons.favorite_border),
                       ),
                       AppIconButton(
-                        onPressed: () {},
+                        onPressed: () => context.read<YtPlayerBloc>().add(
+                          const NextMusic(),
+                        ),
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
                       PlayButton.success(player: player),
                       AppIconButton(
-                        onPressed: () {},
+                        onPressed: () => context.read<YtPlayerBloc>().add(
+                          const PrevMusic(),
+                        ),
                         icon: const Icon(Icons.skip_next_rounded),
                       ),
                       AppIconButton(

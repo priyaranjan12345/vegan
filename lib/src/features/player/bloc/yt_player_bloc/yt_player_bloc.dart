@@ -20,6 +20,8 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
        _nextUpUsecase = nextUpUsecase,
        super(const MusicPlayerState()) {
     on<LoadMusic>(loadMusic);
+    on<NextMusic>(onNext);
+    on<PrevMusic>(onPrevious);
   }
 
   final Player _player;
@@ -128,13 +130,47 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
   void getDetails() {}
 
-  void onNext() {
-    if (state.playlist.isNotEmpty) {
-      
+  void onNext(
+    NextMusic event,
+    Emitter<MusicPlayerState> emit,
+  ) {
+    final playlist = state.playlist;
+    if (playlist.isNotEmpty) {
+      // trigger event
+      final currentVideoID = state.video?.id ?? '';
+      final currentIndex = playlist.indexWhere(
+        (video) => video.id == currentVideoID,
+      );
+
+      if (currentIndex < playlist.length) {
+        final nextVideo = playlist[currentIndex + 1];
+        add(LoadMusic(nextVideo.id));
+      }
+
+      // else continuation
     }
   }
 
-  void onPrevious() {}
+  void onPrevious(
+    PrevMusic event,
+    Emitter<MusicPlayerState> emit,
+  ) {
+    final playlist = state.playlist;
+    if (playlist.isNotEmpty) {
+      // trigger event
+      final currentVideoID = state.video?.id ?? '';
+      final currentIndex = playlist.indexWhere(
+        (video) => video.id == currentVideoID,
+      );
+
+      if (currentIndex > 0) {
+        final nextVideo = playlist[currentIndex - 1];
+        add(LoadMusic(nextVideo.id));
+      }
+
+      // else on action
+    }
+  }
 
   void onPlayPause() {}
 

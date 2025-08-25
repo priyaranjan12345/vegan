@@ -45,7 +45,9 @@ class PlaylistView extends StatelessWidget {
     return BlocBuilder<PlaylistCubit, PlaylistState>(
       builder: (context, state) => switch (state) {
         PlaylistLoadingState() => const Center(
-          child: CircularProgressIndicator.adaptive(),
+          child: RepaintBoundary(
+            child: CircularProgressIndicator.adaptive(),
+          ),
         ),
         PlaylistLoadedState() => ListView.builder(
           padding: const EdgeInsets.only(bottom: 94),
