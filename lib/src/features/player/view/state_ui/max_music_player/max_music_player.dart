@@ -117,14 +117,14 @@ class MaxMusicPlayer extends StatelessWidget {
                       ),
                       AppIconButton(
                         onPressed: () => context.read<YtPlayerBloc>().add(
-                          const NextMusic(),
+                          const PrevMusic(),
                         ),
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
                       PlayButton.success(player: player),
                       AppIconButton(
                         onPressed: () => context.read<YtPlayerBloc>().add(
-                          const PrevMusic(),
+                          const NextMusic(),
                         ),
                         icon: const Icon(Icons.skip_next_rounded),
                       ),

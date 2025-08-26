@@ -21,7 +21,7 @@ class MaxPlayerPage extends StatelessWidget {
         title: const Text('Music Player'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: context.isPortrait
             ? Column(
                 children: [
@@ -106,6 +106,8 @@ class NextUp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+
+          const SizedBox(height: 8.0),
 
           Expanded(
             child: ListView.builder(
