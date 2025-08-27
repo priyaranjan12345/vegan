@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:vegan/src/core/error/exception/custom_exception.dart';
 import 'package:vegan/src/features/video_hub/data/model/yt_model/yt_continuation_model.dart';
@@ -63,8 +60,6 @@ class IVideoHubRepository implements VideoHubRepository {
       browseId: browseId,
       params: params,
     );
-
-    log(jsonEncode(response.data).toString());
 
     if (response.statusCode == 200) {
       try {

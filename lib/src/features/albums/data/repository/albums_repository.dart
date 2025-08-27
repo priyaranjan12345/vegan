@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -22,7 +23,7 @@ class AlbumsRepository implements IAlbumsRepository {
       browseId: browseId,
     );
 
-    log(response.data.toString());
+    // log(jsonEncode(response.data).toString());
 
     if (response.statusCode == 200) {
       try {
@@ -30,6 +31,7 @@ class AlbumsRepository implements IAlbumsRepository {
         final ytModel = YtAlbumsModel.fromJson(body);
         return Right(ytModel);
       } catch (e) {
+        print(e);
         return Left(ServerException());
       }
     }

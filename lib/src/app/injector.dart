@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:talker/talker.dart';
+import '../features/albums/injector/injector.dart';
 import 'bloc_observer.dart';
 
 import '../core/base/app_url.dart';
@@ -59,6 +60,7 @@ Future<void> init() async {
   CommingSoonInjector(injector).call();
   VideoHubInjector(injector).call();
   SearchInjector(injector).call();
+  AlbumsInjector(injector).call();
 
   // bloc oberver
   Bloc.observer = AppBlocObserver();

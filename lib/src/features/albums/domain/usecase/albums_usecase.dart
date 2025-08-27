@@ -6,7 +6,7 @@ import '../../../../core/error/failure/failure.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../entity/albums_entity.dart';
 
-class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
+class AlbumsUsecase implements UseCase<AlbumsEntity, AlbumsParams> {
   const AlbumsUsecase({
     required this.iAlbumsRepository,
   });
@@ -14,7 +14,7 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
   final IAlbumsRepository iAlbumsRepository;
 
   @override
-  Future<Either<Failure, List<AlbumsEntity>>> call(AlbumsParams params) async {
+  Future<Either<Failure, AlbumsEntity>> call(AlbumsParams params) async {
     final result = await iAlbumsRepository.fetchAlbums(
       browseId: params.browseId,
     );
@@ -25,9 +25,9 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
         final musicItems = <MusicItemEntity>[];
 
         // album header content
-        final header =
-            (ytAlbumsModel.contents?.twoColumnBrowseResultsRenderer?.tabs ?? [])
-                .firstOrNull;
+        // final header =
+        //     (ytAlbumsModel.contents?.twoColumnBrowseResultsRenderer?.tabs ?? [])
+        //         .firstOrNull;
 
         // albums contents
         final contents =
@@ -62,21 +62,25 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
               //         .lastOrNull
               //         ?.url ??
               //     '';
-              final watchEndpoint = musicRenderer
-                  ?.overlay
-                  ?.musicItemThumbnailOverlayRenderer
-                  ?.content
-                  ?.musicPlayButtonRenderer
-                  ?.playNavigationEndpoint
-                  ?.watchEndpoint;
-              final playlistId = watchEndpoint?.playlistId ?? '';
-              final params;
+              // final watchEndpoint = musicRenderer
+              //     ?.overlay
+              //     ?.musicItemThumbnailOverlayRenderer
+              //     ?.content
+              //     ?.musicPlayButtonRenderer
+              //     ?.playNavigationEndpoint
+              //     ?.watchEndpoint;
+              // final playlistId = watchEndpoint?.playlistId ?? '';
+              // final params;
 
               final title =
                   (flexColumns
+                              .firstOrNull
+                              ?.musicResponsiveListItemFlexColumnRenderer
+                              ?.text
+                              ?.runs ??
+                          [])
                       .firstOrNull
-                      ?.musicResponsiveListItemFlexColumnRenderer
-                      ?.text?.runs ??[]).firstOrNull?.text ??
+                      ?.text ??
                   '';
               final subtitle =
                   (flexColumns
@@ -87,14 +91,15 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
                           [])
                       .map((e) => e.text)
                       .join(' ');
-              
+
+              print("adding...");
+
               musicItems.add(
                 MusicItemEntity(
                   videoId: videoId,
                   thumbnail: '',
                   title: title,
                   subtitle: subtitle,
-
                 ),
               );
             }
@@ -105,17 +110,15 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
         }
 
         return Right(
-          [
-            AlbumsEntity(
-              header: const AlbumsHeaderEntity(
-                title: '',
-                subtitle: '',
-                thumbnail: '',
-              ),
-              carousel: const [],
-              musicItems: musicItems,
+          AlbumsEntity(
+            header: const AlbumsHeaderEntity(
+              title: '',
+              subtitle: '',
+              thumbnail: '',
             ),
-          ],
+            carousel: const [],
+            musicItems: musicItems,
+          ),
         );
       },
     );

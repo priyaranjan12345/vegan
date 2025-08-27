@@ -101,8 +101,8 @@ class ThumbnailElement extends Equatable {
     });
 
     final String? url;
-    final int? width;
-    final int? height;
+    final num? width;
+    final num? height;
 
     factory ThumbnailElement.fromJson(Map<String, dynamic> json){ 
         return ThumbnailElement(
@@ -1403,13 +1403,13 @@ class ButtonMusicPlayButtonRenderer extends Equatable {
     final String? trackingParams;
     final Icon? playIcon;
     final Icon? pauseIcon;
-    final int? iconColor;
-    final int? backgroundColor;
-    final int? activeBackgroundColor;
-    final int? loadingIndicatorColor;
+    final num? iconColor;
+    final num? backgroundColor;
+    final num? activeBackgroundColor;
+    final num? loadingIndicatorColor;
     final Icon? playingIcon;
-    final int? iconLoadingColor;
-    final double? activeScaleFactor;
+    final num? iconLoadingColor;
+    final num? activeScaleFactor;
     final String? buttonSize;
     final String? rippleTarget;
     final AccessibilityData? accessibilityPlayData;
@@ -2183,13 +2183,13 @@ class PurpleMusicPlayButtonRenderer extends Equatable {
     final String? trackingParams;
     final Icon? playIcon;
     final Icon? pauseIcon;
-    final int? iconColor;
-    final int? backgroundColor;
-    final int? activeBackgroundColor;
-    final int? loadingIndicatorColor;
+    final num? iconColor;
+    final num? backgroundColor;
+    final num? activeBackgroundColor;
+    final num? loadingIndicatorColor;
     final Icon? playingIcon;
-    final int? iconLoadingColor;
-    final int? activeScaleFactor;
+    final num? iconLoadingColor;
+    final num? activeScaleFactor;
     final String? buttonSize;
     final String? rippleTarget;
     final AccessibilityData? accessibilityPlayData;
@@ -2254,7 +2254,7 @@ class PlayNavigationEndpointWatchEndpoint extends Equatable {
 
     final String? videoId;
     final String? playlistId;
-    final int? index;
+    final num? index;
     final String? playerParams;
     final String? playlistSetVideoId;
     final LoggingContext? loggingContext;
