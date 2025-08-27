@@ -28,6 +28,30 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   final YoutubeExplode _youtubeExplode;
   final NextUpUsecase _nextUpUsecase;
 
+  void listenPlayer() {
+    _player.stream.completed.listen(
+      (event) {
+        if (event) {
+          final playlist = state.playlist;
+          if (playlist.isNotEmpty) {
+            // trigger event
+            final currentVideoID = state.video?.id ?? '';
+            final currentIndex = playlist.indexWhere(
+              (video) => video.id == currentVideoID,
+            );
+
+            if (currentIndex < playlist.length) {
+              final nextVideo = playlist[currentIndex + 1];
+              add(LoadMusic(nextVideo.id));
+            }
+
+            // else continuation
+          }
+        }
+      },
+    );
+  }
+
   Future<void> loadMusic(
     LoadMusic event,
     Emitter<MusicPlayerState> emit,
@@ -53,6 +77,8 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
       await _player.open(Media(url));
       await _player.play();
+
+      listenPlayer();
 
       emit(
         state.copyWith(
