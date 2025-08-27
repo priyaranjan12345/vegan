@@ -62,14 +62,14 @@ class AlbumsUsecase implements UseCase<AlbumsEntity, AlbumsParams> {
               //         .lastOrNull
               //         ?.url ??
               //     '';
-              // final watchEndpoint = musicRenderer
-              //     ?.overlay
-              //     ?.musicItemThumbnailOverlayRenderer
-              //     ?.content
-              //     ?.musicPlayButtonRenderer
-              //     ?.playNavigationEndpoint
-              //     ?.watchEndpoint;
-              // final playlistId = watchEndpoint?.playlistId ?? '';
+              final watchEndpoint = musicRenderer
+                  ?.overlay
+                  ?.musicItemThumbnailOverlayRenderer
+                  ?.content
+                  ?.musicPlayButtonRenderer
+                  ?.playNavigationEndpoint
+                  ?.watchEndpoint;
+              final playlistId = watchEndpoint?.playlistId ?? '';
               // final params;
 
               final title =
@@ -100,6 +100,7 @@ class AlbumsUsecase implements UseCase<AlbumsEntity, AlbumsParams> {
                   thumbnail: '',
                   title: title,
                   subtitle: subtitle,
+                  playlistId: playlistId,
                 ),
               );
             }

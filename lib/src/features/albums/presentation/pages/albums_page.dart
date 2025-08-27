@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/app/app.dart';
+import 'package:vegan/src/features/video_hub/domain/entity/video_entity.dart';
 
+import '../../../player/bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../../domain/entity/albums_entity.dart';
 import '../cubit/albums_cubit.dart';
 
@@ -177,7 +179,22 @@ class AlbumsMusicItems extends StatelessWidget {
             Icons.more_vert,
             color: Colors.white54,
           ),
-          onTap: () {},
+          onTap: () {
+            injector<YtPlayerBloc>().add(
+              LoadMusic(
+                music.videoId,
+                playlist: musics.map(
+                  (e) => VideoEntity(
+                    id: e.videoId,
+                    title: e.title,
+                    description: e.subtitle,
+                    videoUrl: '',
+                    thubmnail: e.thumbnail,
+                  ),
+                ).toList(),
+              ),
+            );
+          },
         );
       },
     );

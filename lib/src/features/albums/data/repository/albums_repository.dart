@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
+import 'package:vegan/src/shared/extension/extensions.dart';
 
 import '../../../../core/error/exception/custom_exception.dart';
 import '../../domain/datasource/i_albums_datasource.dart';
@@ -23,12 +21,13 @@ class AlbumsRepository implements IAlbumsRepository {
       browseId: browseId,
     );
 
-    // log(jsonEncode(response.data).toString());
-
     if (response.statusCode == 200) {
       try {
         final body = response.data;
-        final ytModel = YtAlbumsModel.fromJson(body);
+        final ytModel = await (body as Map<String, dynamic>)
+            .parseToModel<YtAlbumsModel>(YtAlbumsModel.fromJson);
+
+        // YtAlbumsModel.fromJson(body);
         return Right(ytModel);
       } catch (e) {
         print(e);
