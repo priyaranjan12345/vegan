@@ -126,7 +126,27 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
 
                             return;
                           }
-                          // for album
+
+                          // for albums
+                          if ((musicItem?.description ?? '').contains(
+                            'Album',
+                          )) {
+                            context.router.navigate(
+                              HomeTab(
+                                children: [
+                                  AlbumsRoute(
+                                    browseId: musicItem?.browseId ?? '',
+                                    subtitle: musicItem?.description ?? '',
+                                    thumbnail: musicItem?.thumbnail ?? '',
+                                    title: musicItem?.title ?? '',
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
+
+                          // for playlist
                           if (musicItem?.browseId != null &&
                               (musicItem?.browseId.isNotEmpty ?? false)) {
                             context.router.navigate(

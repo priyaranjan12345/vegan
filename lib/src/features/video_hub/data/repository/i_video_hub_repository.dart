@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -63,7 +64,7 @@ class IVideoHubRepository implements VideoHubRepository {
       params: params,
     );
 
-    log(response.data.toString());
+    log(jsonEncode(response.data).toString());
 
     if (response.statusCode == 200) {
       try {

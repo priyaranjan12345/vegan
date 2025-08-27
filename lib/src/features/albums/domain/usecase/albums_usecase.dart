@@ -24,13 +24,17 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
       (ytAlbumsModel) {
         final musicItems = <MusicItemEntity>[];
 
-        final header = ytAlbumsModel.header;
+        // album header content
+        final header =
+            (ytAlbumsModel.contents?.twoColumnBrowseResultsRenderer?.tabs ?? [])
+                .firstOrNull;
+
+        // albums contents
         final contents =
-            (ytAlbumsModel.contents?.singleColumnBrowseResultsRenderer?.tabs ??
-                    [])
-                .firstOrNull
-                ?.tabRenderer
-                ?.content
+            ytAlbumsModel
+                .contents
+                ?.twoColumnBrowseResultsRenderer
+                ?.secondaryContents
                 ?.sectionListRenderer
                 ?.contents ??
             [];
@@ -39,6 +43,7 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
           final musicShelfRenderer = content.musicShelfRenderer;
           final musicCarouselShelfRenderer = content.musicCarouselShelfRenderer;
 
+          // musics
           if (musicShelfRenderer != null) {
             final innerContents = musicShelfRenderer.contents;
 
@@ -46,17 +51,17 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
               final musicRenderer =
                   innerContent.musicResponsiveListItemRenderer;
               final flexColumns = musicRenderer?.flexColumns ?? [];
-              final videoId = musicRenderer?.playlistItemData?.videoId;
-              final thumbnail =
-                  (musicRenderer
-                              ?.thumbnail
-                              ?.musicThumbnailRenderer
-                              ?.thumbnail
-                              ?.thumbnails ??
-                          [])
-                      .lastOrNull
-                      ?.url ??
-                  '';
+              final videoId = musicRenderer?.playlistItemData?.videoId ?? '';
+              // final thumbnail =
+              //     (musicRenderer
+              //                 ?.thumbnail
+              //                 ?.musicThumbnailRenderer
+              //                 ?.thumbnail
+              //                 ?.thumbnails ??
+              //             [])
+              //         .lastOrNull
+              //         ?.url ??
+              //     '';
               final watchEndpoint = musicRenderer
                   ?.overlay
                   ?.musicItemThumbnailOverlayRenderer
@@ -68,10 +73,10 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
               final params;
 
               final title =
-                  flexColumns
+                  (flexColumns
                       .firstOrNull
                       ?.musicResponsiveListItemFlexColumnRenderer
-                      ?.text ??
+                      ?.text?.runs ??[]).firstOrNull?.text ??
                   '';
               final subtitle =
                   (flexColumns
@@ -82,21 +87,28 @@ class AlbumsUsecase implements UseCase<List<AlbumsEntity>, AlbumsParams> {
                           [])
                       .map((e) => e.text)
                       .join(' ');
+              
+              musicItems.add(
+                MusicItemEntity(
+                  videoId: videoId,
+                  thumbnail: '',
+                  title: title,
+                  subtitle: subtitle,
+
+                ),
+              );
             }
           }
 
+          // album carousel
           if (musicCarouselShelfRenderer != null) {}
         }
 
         return Right(
           [
             AlbumsEntity(
-              header: AlbumsHeaderEntity(
-                title:
-                    (header?.musicImmersiveHeaderRenderer?.title?.runs ?? [])
-                        .firstOrNull
-                        ?.text ??
-                    '',
+              header: const AlbumsHeaderEntity(
+                title: '',
                 subtitle: '',
                 thumbnail: '',
               ),

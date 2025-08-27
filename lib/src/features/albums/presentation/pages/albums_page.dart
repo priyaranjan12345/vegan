@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entity/albums_entity.dart';
+
 @RoutePage()
 class AlbumsPage extends StatelessWidget {
   const AlbumsPage({
@@ -18,23 +20,13 @@ class AlbumsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> songs = List.generate(
-      10,
-      (index) => {
-        'title': 'Song Title ${index + 1}',
-        'artist': 'Artist Name',
-        'thumbnail':
-            'https://lh3.googleusercontent.com/d1iLYZoIsHYay5gj49JQPCcPenWHthcrADwPa8g_dz98V05_jU5pRBrrkP_7F16qnyYjKCty7JS8RrNY=w544-h544-l90-rj',
-      },
-    );
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: const BackButton(color: Colors.white),
-        title: const Text('Playlist', style: TextStyle(color: Colors.white)),
+        title: const Text('Albums', style: TextStyle(color: Colors.white)),
         actions: const [Icon(Icons.more_vert, color: Colors.white)],
       ),
       body: Column(
@@ -47,29 +39,29 @@ class AlbumsPage extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    'https://lh3.googleusercontent.com/d1iLYZoIsHYay5gj49JQPCcPenWHthcrADwPa8g_dz98V05_jU5pRBrrkP_7F16qnyYjKCty7JS8RrNY=w544-h544-l90-rj',
+                    thumbnail,
                     height: 100,
                     width: 100,
                     fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 16),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Chill Vibes',
-                        style: TextStyle(
+                        title,
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        '20 songs • 1 hr 30 min',
-                        style: TextStyle(color: Colors.grey),
+                        subtitle,
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     ],
                   ),
@@ -106,37 +98,48 @@ class AlbumsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           // Song List
-          Expanded(
-            child: ListView.separated(
-              itemCount: songs.length,
-              separatorBuilder: (_, __) => const Divider(color: Colors.white10),
-              itemBuilder: (context, index) {
-                final song = songs[index];
-                return ListTile(
-                  leading: Image.network(
-                    song['thumbnail']!,
-                    width: 50,
-                    height: 50,
-                  ),
-                  title: Text(
-                    song['title']!,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(
-                    song['artist']!,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  trailing: const Icon(
-                    Icons.more_vert,
-                    color: Colors.white54,
-                  ),
-                  onTap: () {},
-                );
-              },
-            ),
+          const Expanded(
+            child: AlbumsMusicItems(musics: []),
           ),
         ],
       ),
+    );
+  }
+}
+
+class AlbumsMusicItems extends StatelessWidget {
+  const AlbumsMusicItems({super.key, required this.musics});
+
+  final List<MusicItemEntity> musics;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: musics.length,
+      separatorBuilder: (_, __) => const Divider(color: Colors.white10),
+      itemBuilder: (context, index) {
+        final music = musics[index];
+        return ListTile(
+          leading: Image.network(
+            music.thumbnail,
+            width: 50,
+            height: 50,
+          ),
+          title: Text(
+            music.title,
+            style: const TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(
+            music.subtitle,
+            style: const TextStyle(color: Colors.grey),
+          ),
+          trailing: const Icon(
+            Icons.more_vert,
+            color: Colors.white54,
+          ),
+          onTap: () {},
+        );
+      },
     );
   }
 }
