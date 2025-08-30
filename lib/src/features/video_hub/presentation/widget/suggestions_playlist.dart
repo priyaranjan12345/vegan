@@ -53,12 +53,38 @@ class SuggestionsPlaylist extends StatelessWidget {
               children: [
                 ...playlists.map(
                   (playlist) => GestureDetector(
-                    onTap: () => context.router.push(
-                      PlaylistRoute(
-                        browseId: playlist.browseId,
-                        params: playlist.params,
-                      ),
-                    ),
+                    onTap: () {
+                      // for albums
+                      if ((playlist.description).contains(
+                        'Album',
+                      )) {
+                        context.router.navigate(
+                          HomeTab(
+                            children: [
+                              AlbumsRoute(
+                                browseId: playlist.browseId,
+                                subtitle: playlist.description,
+                                thumbnail: playlist.thumbnail,
+                                title: playlist.title,
+                              ),
+                            ],
+                          ),
+                        );
+                        return;
+                      }
+
+                      // for single
+
+                      // for EP
+
+                      // for playlist
+                      context.router.push(
+                        PlaylistRoute(
+                          browseId: playlist.browseId,
+                          params: playlist.params,
+                        ),
+                      );
+                    },
                     child: SizedBox(
                       width: context.deviceWidth * controller.viewportFraction,
                       child: Padding(
