@@ -22,6 +22,8 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     on<LoadMusic>(loadMusic);
     on<NextMusic>(onNext);
     on<PrevMusic>(onPrevious);
+
+    listenPlayer();
   }
 
   final Player _player;
@@ -77,8 +79,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
       await _player.open(Media(url));
       await _player.play();
-
-      listenPlayer();
 
       emit(
         state.copyWith(
