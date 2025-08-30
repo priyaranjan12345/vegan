@@ -92,7 +92,7 @@ class AlbumsUsecase implements UseCase<AlbumsEntity, AlbumsParams> {
                       .map((e) => e.text)
                       .join(' ');
 
-              print("adding...");
+              print('adding...');
 
               musicItems.add(
                 MusicItemEntity(

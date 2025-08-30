@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import '../../shared/utils/utils.dart';
+
 abstract class YtApiBody {
   static const _context = {
     'context': {
@@ -66,19 +70,19 @@ abstract class YtApiBody {
     ..._context,
   };
 
-  static const global = {
+  static final global = {
     'browseId': 'FEmusic_home',
     'context': {
       'client': {
         'hl': 'en',
         'gl': 'US',
         'clientName': 'WEB_REMIX',
-        'clientVersion': '1.20220708.01.00', // TODO: use date and time
+        'clientVersion': '1.${DateTimeUtils().getDate()}.01.00',
         'experimentIds': [],
         'experimentsToken': '',
         'browserName': 'Chrome',
         'browserVersion': '91.0.4472.124',
-        'osName': 'Android', // TODO: use platform
+        'osName': Platform.isAndroid ? 'Android' : 'iOS',
         'osVersion': '13.0',
         'platform': 'MOBILE',
         'visitorData': 'CgtYRldyczRsdm9XUSjPybTCBjIKCgJJThIEGgAgWw%3D%3D',

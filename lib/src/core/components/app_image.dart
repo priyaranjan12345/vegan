@@ -24,14 +24,14 @@ class AppImage extends StatelessWidget {
       width: width,
       imageUrl: imageUrl,
       fit: fit,
-      placeholder: (_, __) => AppShimmer(
+      placeholder: (_, _) => AppShimmer(
         child: Container(
           color: AppColors.grey,
           height: double.infinity,
           width: double.infinity,
         ),
       ),
-      errorWidget: (_, __, ___) => const Icon(Icons.error),
+      errorWidget: (_, _, _) => const Icon(Icons.error),
     );
   }
 }

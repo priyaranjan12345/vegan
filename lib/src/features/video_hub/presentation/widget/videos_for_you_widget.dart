@@ -112,7 +112,7 @@ class VideosForYouWidget extends StatelessWidget {
                                           height: 120,
                                           width: double.infinity,
                                           imageUrl: video.thubmnail,
-                                          placeholder: (_, __) => const Center(
+                                          placeholder: (_, _) => const Center(
                                             child: CircularProgressIndicator(),
                                           ),
                                           errorWidget:

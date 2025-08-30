@@ -156,7 +156,7 @@ class AlbumsMusicItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: musics.length,
-      separatorBuilder: (_, __) => const Divider(color: Colors.white10),
+      separatorBuilder: (_, _) => const Divider(color: Colors.white10),
       itemBuilder: (context, index) {
         final music = musics[index];
         return ListTile(
