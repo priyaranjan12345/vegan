@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../video_hub/domain/entity/entity.dart';
-import '../../domain/usecase/next_up_usecase.dart';
+import '../../../../video_hub/domain/entity/entity.dart';
+import '../../../domain/usecase/next_up_usecase.dart';
 
 part 'next_up_state.dart';
 

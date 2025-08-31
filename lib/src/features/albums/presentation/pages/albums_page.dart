@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vegan/src/app/app.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/video_entity.dart';
 
-import '../../../player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import '../../../player/presentation/bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../../domain/entity/albums_entity.dart';
 import '../cubit/albums_cubit.dart';
 

@@ -74,3 +74,8 @@ enum NextUpStatus {
   LOADED,
   ERROR,
 }
+
+class PlayerState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}

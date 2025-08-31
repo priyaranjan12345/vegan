@@ -4,10 +4,10 @@ import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/components/app_text.dart';
 
-import 'package:vegan/src/features/player/widgets/play_button.dart';
-import 'package:vegan/src/features/player/widgets/progress_bar.dart';
+import 'package:vegan/src/features/player/presentation/widgets/play_button.dart';
+import 'package:vegan/src/features/player/presentation/widgets/progress_bar.dart';
 
-import '../../../../../core/components/components.dart';
+import '../../../../../../core/components/components.dart';
 import '../../../bloc/yt_player_bloc/yt_player_bloc.dart';
 
 class MusicPlayer extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/components/components.dart';
 import 'package:vegan/src/core/theme/app_colors.dart';
 
-import '../../../core/components/app_text.dart';
+import '../../../../core/components/app_text.dart';
 
 class MiniPlayerDeatils extends StatelessWidget {
   const MiniPlayerDeatils({

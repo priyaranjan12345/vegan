@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
-import '../features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import '../features/player/presentation/bloc/yt_player_bloc/yt_player_bloc.dart';
 import 'app.dart';
 
 class VeganApp extends StatelessWidget {

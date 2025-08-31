@@ -4,7 +4,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-import '../../domain/usecase/next_up_usecase.dart';
+import '../../../domain/usecase/next_up_usecase.dart';
 
 part 'yt_player_event.dart';
 part 'yt_player_state.dart';

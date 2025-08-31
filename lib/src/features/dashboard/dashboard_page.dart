@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:vegan/src/features/player/presentation/widgets/max_header_player.dart';
+import 'package:vegan/src/features/player/presentation/widgets/v2_player.dart';
 
 import '../../core/router/app_router.gr.dart';
 import '../../core/theme/app_colors.dart';
 import '../internet_checker/presentation/pages/internet_checker_page.dart';
-import '../player/view/player_view.dart';
+import '../player/presentation/view/player_view.dart';
 
 @RoutePage()
 class DashboardPage extends StatelessWidget {
@@ -74,6 +76,17 @@ class DashboardPage extends StatelessWidget {
             );
           },
           bottomSheet: const PlayerView(),
+          // for debug use.
+          // open an bottom sheet and add test nav buttons.
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => YTMusicPlayerPage(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

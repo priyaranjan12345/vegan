@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:talker/talker.dart';
 import '../features/albums/injector/injector.dart';
+import '../features/player/service/audio_handler_service.dart';
 import 'bloc_observer.dart';
 
 import '../core/base/app_url.dart';
@@ -21,7 +24,8 @@ final injector = GetIt.instance;
 
 /// Global [init] injector
 Future<void> init() async {
-  await Future.delayed(const Duration(seconds: 2));
+  // await Future.delayed(const Duration(seconds: 2));
+  WidgetsFlutterBinding.ensureInitialized();
 
   // register auto router instance
   injector.registerSingleton(AppRouter());

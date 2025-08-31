@@ -5,7 +5,7 @@ import 'package:vegan/src/core/theme/app_colors.dart';
 
 import '../../../../app/app.dart';
 import '../../../../core/router/app_router.gr.dart';
-import '../../../player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import '../../../player/presentation/bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../bloc/search_bloc.dart';
 import '../widgets/widgets.dart';
 

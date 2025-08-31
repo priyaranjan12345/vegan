@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vegan/src/features/player/bloc/video_player_bloc/video_player_bloc.dart';
+import 'package:vegan/src/features/player/presentation/bloc/video_player_bloc/video_player_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class FullScreenPlayer extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vegan/src/app/app.dart';
 import 'package:vegan/src/core/components/app_tile.dart';
-import 'package:vegan/src/features/player/bloc/yt_player_bloc/yt_player_bloc.dart';
+import 'package:vegan/src/features/player/presentation/bloc/yt_player_bloc/yt_player_bloc.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:vegan/src/shared/extension/extensions.dart';
 
