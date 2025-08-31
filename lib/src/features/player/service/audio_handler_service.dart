@@ -3,41 +3,20 @@ import 'package:media_kit/media_kit.dart';
 
 class AudioHandlerService extends BaseAudioHandler
     with QueueHandler, SeekHandler {
-  AudioHandlerService(this.player);
+  AudioHandlerService(this.player) {
+    // add listen.
+    playerListener();
+  }
 
   final Player player;
 
-  @override
-  Future<void> play() => player.play();
-
-  @override
-  Future<void> pause() => player.pause();
-
-  @override
-  Future<void> stop() => player.stop();
-
-  @override
-  Future<void> seek(Duration position) => player.seek(position);
-
-  @override
-  Future<void> skipToQueueItem(int index) async {
-    await player.jump(index);
-    play();
-  }
-
-  @override
-  Future<void> skipToNext() => player.next();
-
-  @override
-  Future<void> skipToPrevious() => player.previous();
-
   // audio-serivce config along with Player
-  void songHandler() {
+  void playerListener() {
     // Listen for playback changes
-    player.stream.position.listen((pos) {
+    player.stream.position.listen((position) {
       playbackState.add(
         playbackState.value.copyWith(
-          updatePosition: pos,
+          updatePosition: position,
         ),
       );
     });
@@ -79,15 +58,39 @@ class AudioHandlerService extends BaseAudioHandler
     final medias = songs.map((item) => Media(item.id)).toList();
 
     // Open the playlist
-    await player.open(
-      Playlist(medias),
-      play: false,
-    );
+    await player.open(Playlist(medias), play: false);
 
     // Listen for current index changes
     player.stream.playlist.listen((playlist) {
-      if (queue.value.isEmpty) return;
+      if (queue.value.isEmpty) {
+        return;
+      }
+
       mediaItem.add(queue.value[playlist.index]);
     });
   }
+
+  @override
+  Future<void> play() => player.play();
+
+  @override
+  Future<void> pause() => player.pause();
+
+  @override
+  Future<void> stop() => player.stop();
+
+  @override
+  Future<void> seek(Duration position) => player.seek(position);
+
+  @override
+  Future<void> skipToQueueItem(int index) async {
+    await player.jump(index);
+    play();
+  }
+
+  @override
+  Future<void> skipToNext() => player.next();
+
+  @override
+  Future<void> skipToPrevious() => player.previous();
 }
