@@ -22,9 +22,6 @@ final injector = GetIt.instance;
 
 /// Global [init] injector
 Future<void> init() async {
-  // await Future.delayed(const Duration(seconds: 2));
-  WidgetsFlutterBinding.ensureInitialized();
-
   // register auto router instance
   injector.registerSingleton(AppRouter());
 
