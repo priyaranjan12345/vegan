@@ -70,6 +70,12 @@ abstract class YtApiBody {
     ..._context,
   };
 
+  /// explore
+  static const explore = {
+    'browseId': 'FEmusic_explore',
+    ..._context,
+  };
+
   static final global = {
     'browseId': 'FEmusic_home',
     'context': {
