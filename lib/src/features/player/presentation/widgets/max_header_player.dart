@@ -206,7 +206,7 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
           Positioned.fill(
             bottom: MediaQuery.of(context).size.height * 0.3,
             child: Image.network(
-              "https://www.ionos.com/digitalguide/fileadmin/DigitalGuide/Screenshots_2023/google-my-maps.png",
+              'https://www.ionos.com/digitalguide/fileadmin/DigitalGuide/Screenshots_2023/google-my-maps.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -243,9 +243,9 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          const Text("Are you ready to start your journey"),
+                          const Text('Are you ready to start your journey'),
                           const Text(
-                            "Where are you going?",
+                            'Where are you going?',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
@@ -258,7 +258,7 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                                 Icons.search,
                                 size: 25,
                               ),
-                              hintText: "Search your destination",
+                              hintText: 'Search your destination',
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -275,14 +275,14 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                                     size: 30,
                                   ),
                                   title: Text(
-                                    "Address : $index",
+                                    'Address : $index',
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                     ),
                                   ),
-                                  subtitle: Text("City $index"),
+                                  subtitle: Text('City $index'),
                                 );
                               },
                             ),
@@ -311,7 +311,7 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                         height: 40,
                       ),
                       const Text(
-                        "Choose Your Destination",
+                        'Choose Your Destination',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -322,7 +322,7 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                         decoration: InputDecoration(
                           fillColor: Colors.grey[100],
                           filled: true,
-                          hintText: "What your name",
+                          hintText: 'What your name',
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -330,7 +330,7 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                         decoration: InputDecoration(
                           fillColor: Colors.grey[100],
                           filled: true,
-                          hintText: "Where are you going",
+                          hintText: 'Where are you going',
                         ),
                       ),
                       const SizedBox(height: 10),
