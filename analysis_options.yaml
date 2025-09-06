@@ -33,4 +33,4 @@ linter:
     prefer_single_quotes: true 
     prefer_final_fields: true  
     void_checks: true  
-    constant_identifier_names: false
+    constant_identifier_names: true
