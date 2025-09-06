@@ -16,11 +16,17 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   }) : _videoHubUsecase = videoHubUsecase,
        _continuationUsecase = continuationUsecase,
        super(const BrowseState()) {
-    on<BrowseInitEvent>(loadInitialContent);
-    on<BrowseMoodEvent>(loadMoodContents);
+    on<BrowseInitEvent>(
+      loadInitialContent,
+      transformer: throttleDroppable(const Duration(milliseconds: 600)),
+    );
+    on<BrowseMoodEvent>(
+      loadMoodContents,
+      transformer: throttleDroppable(const Duration(milliseconds: 600)),
+    );
     on<BrowseContinuationEvent>(
       loadContinuationContent,
-      transformer: throttleDroppable(const Duration(milliseconds: 800)),
+      transformer: throttleDroppable(const Duration(milliseconds: 600)),
     );
   }
 

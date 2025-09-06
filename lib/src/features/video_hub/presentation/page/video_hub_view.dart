@@ -69,11 +69,17 @@ class BrowseView extends StatefulWidget {
 
 class _BrowseViewState extends State<BrowseView> {
   final _scrollController = ScrollController();
+  String? _selectedMoodParams;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    // Set the first mood as selected initially if the list is not empty.
+    if (widget.moods.isNotEmpty) {
+      _selectedMoodParams = widget.moods.first.params;
+    }
+
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => _onScroll(isInitial: true),
     );
@@ -81,46 +87,67 @@ class _BrowseViewState extends State<BrowseView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: _scrollController,
-      padding: const EdgeInsets.only(bottom: 116),
-      children: [
-        MoodsChips(
-          moods: widget.moods,
-          onSelectMoods: (params) {
-            context.read<BrowseBloc>().add(
-              BrowseMoodEvent(params: params),
-            );
-          },
-        ),
-        const SizedBox(height: 12),
-        ...widget.browseCarousels.map(
-          (carousel) {
-            if (carousel is VideoSuggestionEntity) {
-              return Suggestions(
-                suggestions: carousel.videos,
-                heading: carousel.heading,
-              );
-            }
-
-            if (carousel is PlaylistSuggestionEntity) {
-              return SuggestionsPlaylist(
-                playlists: carousel.playlists,
-                heading: carousel.heading,
-              );
-            }
-
-            return const SizedBox.shrink();
-          },
-        ),
-        const SizedBox(height: 12),
-        if (!widget.hasReachedMax)
-          const Center(
-            child: RepaintBoundary(
-              child: CircularProgressIndicator(),
+    return SafeArea(
+      top: false,
+      child: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          SliverToBoxAdapter(
+            child: MoodsChips(
+              moods: widget.moods,
+              selectedParam: _selectedMoodParams,
+              onSelectMoods: (params) {
+                // Update the state to show selection immediately
+                setState(() {
+                  _selectedMoodParams = params;
+                });
+                // Trigger event to load content for the new mood
+                context.read<BrowseBloc>().add(
+                  BrowseMoodEvent(params: params),
+                );
+              },
             ),
           ),
-      ],
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 12),
+          ),
+          ...widget.browseCarousels.map(
+            (carousel) {
+              switch (carousel) {
+                case VideoSuggestionEntity():
+                  return SliverToBoxAdapter(
+                    child: Suggestions(
+                      suggestions: carousel.videos,
+                      heading: carousel.heading,
+                    ),
+                  );
+              }
+
+              if (carousel is PlaylistSuggestionEntity) {
+                return SliverToBoxAdapter(
+                  child: SuggestionsPlaylist(
+                    playlists: carousel.playlists,
+                    heading: carousel.heading,
+                  ),
+                );
+              }
+
+              return SliverToBoxAdapter(child: const SizedBox.shrink());
+            },
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 12),
+          ),
+          if (!widget.hasReachedMax)
+            SliverToBoxAdapter(
+              child: const Center(
+                child: RepaintBoundary(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
