@@ -68,8 +68,9 @@ class BrowseView extends StatefulWidget {
 }
 
 class _BrowseViewState extends State<BrowseView> {
+  final _selectedMoodParams = ValueNotifier<String?>(null);
   final _scrollController = ScrollController();
-  String? _selectedMoodParams;
+  // String? _selectedMoodParams;
 
   @override
   void initState() {
@@ -77,7 +78,7 @@ class _BrowseViewState extends State<BrowseView> {
     _scrollController.addListener(_onScroll);
     // Set the first mood as selected initially if the list is not empty.
     if (widget.moods.isNotEmpty) {
-      _selectedMoodParams = widget.moods.first.params;
+      _selectedMoodParams.value = widget.moods.first.params;
     }
 
     WidgetsBinding.instance.addPostFrameCallback(
@@ -93,17 +94,21 @@ class _BrowseViewState extends State<BrowseView> {
         controller: _scrollController,
         slivers: [
           SliverToBoxAdapter(
-            child: MoodsChips(
-              moods: widget.moods,
-              selectedParam: _selectedMoodParams,
-              onSelectMoods: (params) {
-                // Update the state to show selection immediately
-                setState(() {
-                  _selectedMoodParams = params;
-                });
-                // Trigger event to load content for the new mood
-                context.read<BrowseBloc>().add(
-                  BrowseMoodEvent(params: params),
+            child: ValueListenableBuilder(
+              valueListenable: _selectedMoodParams,
+              builder: (context, value, child) {
+                return MoodsChips(
+                  moods: widget.moods,
+                  selectedParam: value,
+                  onSelectMoods: (params) {
+                    // Update the state to show selection immediately
+                    _selectedMoodParams.value = params;
+
+                    // Trigger event to load content for the new mood
+                    context.read<BrowseBloc>().add(
+                      BrowseMoodEvent(params: params),
+                    );
+                  },
                 );
               },
             ),
