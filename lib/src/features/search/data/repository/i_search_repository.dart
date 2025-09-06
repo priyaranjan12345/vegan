@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:vegan/src/shared/extension/map_x.dart';
 
 import '../../domain/repository/search_repository.dart';
 import '../datasource/search_datasource.dart';
@@ -17,7 +18,11 @@ class ISearchRepository implements SearchRepository {
       final response = await searchDatasource.getSearchResponse(input: input);
 
       if (response.statusCode == 200) {
-        return Right(YtSearchModel.fromJson(response.data));
+        final body = response.data;
+        final ytSearchModel = await (body as Map<String, dynamic>)
+            .parseToModel<YtSearchModel>(YtSearchModel.fromJson);
+        return Right(ytSearchModel);
+        // return Right(YtSearchModel.fromJson(response.data));
       } else {
         return Left(
           Exception('Failed to fetch search result: ${response.statusCode}'),
