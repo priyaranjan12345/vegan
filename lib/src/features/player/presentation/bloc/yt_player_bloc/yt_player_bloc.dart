@@ -1,10 +1,12 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:media_kit/media_kit.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../../domain/usecase/next_up_usecase.dart';
+import '../../../service/audio_handler_service.dart';
 
 part 'yt_player_event.dart';
 part 'yt_player_state.dart';
@@ -12,46 +14,35 @@ part 'music_player_state.dart';
 
 class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   YtPlayerBloc({
-    required Player player,
     required YoutubeExplode youtubeExplode,
     required NextUpUsecase nextUpUsecase,
-  }) : _player = player,
-       _youtubeExplode = youtubeExplode,
+    required AudioHandlerService audioHandlerService,
+  }) : _youtubeExplode = youtubeExplode,
        _nextUpUsecase = nextUpUsecase,
+       _audioHandlerService = audioHandlerService,
        super(const MusicPlayerState()) {
     on<LoadMusic>(loadMusic);
     on<NextMusic>(onNext);
     on<PrevMusic>(onPrevious);
-
-    listenPlayer();
+    on<UpdateAudioPlayerStatus>(updateAudioPlayerStatus);
+    listenAudioPlayer();
   }
 
-  final Player _player;
+  // final Player _player;
   final YoutubeExplode _youtubeExplode;
   final NextUpUsecase _nextUpUsecase;
+  final AudioHandlerService _audioHandlerService;
 
-  void listenPlayer() {
-    _player.stream.completed.listen(
-      (event) {
-        if (event) {
-          final playlist = state.playlist;
-          if (playlist.isNotEmpty) {
-            // trigger event
-            final currentVideoID = state.video?.id ?? '';
-            final currentIndex = playlist.indexWhere(
-              (video) => video.id == currentVideoID,
-            );
+  AudioPlayer get audioPlayer => _audioHandlerService.audioPlayer;
 
-            if (currentIndex < playlist.length) {
-              final nextVideo = playlist[currentIndex + 1];
-              add(LoadMusic(nextVideo.id));
-            }
+  // listen the audio player status and
+  // also update initial status as well.
+  void listenAudioPlayer() {
+    // audioPlayer.playbackEventStream.listen((event) {});
 
-            // else continuation
-          }
-        }
-      },
-    );
+    audioPlayer.playerEventStream.listen((event) {
+      add(UpdateAudioPlayerStatus(isPlaying: audioPlayer.playing));
+    });
   }
 
   Future<void> loadMusic(
@@ -72,18 +63,27 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
       final streamManifest = await streamsClient.getManifest(
         videoId,
         requireWatchPage: true,
-        ytClients: [YoutubeApiClient.androidVr],
+        ytClients: [YoutubeApiClient.androidVr, YoutubeApiClient.ios],
       );
       final audioStream = streamManifest.audio.withHighestBitrate();
       final url = audioStream.url.toString();
 
-      await _player.open(Media(url));
-      await _player.play();
+      // experimental.
+      _audioHandlerService.initSongs(
+        songs: [
+          MediaItem(
+            id: url,
+            title: video.title,
+            artUri: Uri.parse(video.thumbnails.mediumResUrl),
+          ),
+        ],
+      );
+
+      _audioHandlerService.play();
 
       emit(
         state.copyWith(
           playerState: PlayerStatus.LOADED,
-          player: _player,
           video: VideoEntity(
             id: videoId,
             title: video.title,
@@ -198,13 +198,29 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     }
   }
 
-  void onPlayPause() {}
+  void onPlayPause() {
+    final isPlaying = audioPlayer.playing;
+
+    if (isPlaying) {
+      _audioHandlerService.pause();
+    } else {
+      _audioHandlerService.play();
+    }
+
+    // TODO: emit the state.
+  }
 
   void onVolumeChange() {}
 
+  void updateAudioPlayerStatus(
+    UpdateAudioPlayerStatus event,
+    Emitter<MusicPlayerState> emit,
+  ) {
+    emit(state.copyWith(currentPosition: event.currentPosition));
+  }
+
   @override
   Future<void> close() {
-    _player.dispose();
     _youtubeExplode.close();
 
     return super.close();

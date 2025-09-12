@@ -5,10 +5,10 @@
 /// }
 /// ```
 /// hence model will be the type of ReturnModel
-abstract interface class UniFunctionMapper<T, U> {
-  T call(U u);
+abstract interface class UniFunctionMapper<O, I> {
+  O call(I i);
 }
 
-abstract interface class BiFunctionMapper<S, T, U> {
-  S call(T t, U u);
+abstract interface class BiFunctionMapper<O, I1, I2> {
+  O call(I1 i1, I2 i2);
 }

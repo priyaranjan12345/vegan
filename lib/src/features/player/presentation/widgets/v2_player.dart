@@ -25,12 +25,12 @@ class TransitionAppBar extends StatelessWidget {
 
 class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   final _avatarTween = SizeTween(
-    begin: Size(150.0, 150.0),
-    end: Size(50.0, 50.0),
+    begin: const Size(150.0, 150.0),
+    end: const Size(50.0, 50.0),
   );
   final _avatarMarginTween = EdgeInsetsTween(
     begin: EdgeInsets.zero,
-    end: EdgeInsets.only(left: 10.0),
+    end: const EdgeInsets.only(left: 10.0),
   );
   final _avatarAlignTween = AlignmentTween(
     begin: Alignment.topCenter,
@@ -38,8 +38,8 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   );
 
   final _titleMarginTween = EdgeInsetsTween(
-    begin: EdgeInsets.only(top: 150.0 + 5.0),
-    end: EdgeInsets.only(left: 10.0 + 50.0 + 5.0),
+    begin: const EdgeInsets.only(top: 150.0 + 5.0),
+    end: const EdgeInsets.only(left: 10.0 + 50.0 + 5.0),
   );
   final _titleAlignTween = AlignmentTween(
     begin: Alignment.center,
@@ -116,12 +116,12 @@ class V2Player extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
-            TransitionAppBar(
+            const TransitionAppBar(
               avatar: Material(
                 color: Colors.blue,
                 elevation: 3.0,
               ),
-              title: const Text(
+              title: Text(
                 'Hello World  /AidlConversion(23331): aidl2legacy_AudioChannelLayout_audio_channel_mask_t: no legacy output audio_channel_mask_t found for AudioChannelLayout{layoutMask: 16}',
               ),
             ),

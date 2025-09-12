@@ -1,6 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:media_kit/media_kit.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../presentation/bloc/yt_player_bloc/yt_player_bloc.dart';
@@ -14,15 +14,26 @@ class PlayerInjector {
   final GetIt injector;
 
   Future<void> call() async {
-    injector.registerFactory(() => Player());
+    injector.registerFactory(() => AudioPlayer());
+
+    final audioService = await AudioService.init(
+      builder: () => AudioHandlerService(injector<AudioPlayer>()),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.vegan.app.channel.audio',
+        androidNotificationChannelName: 'Vegan Music Player',
+        androidNotificationOngoing: true,
+        androidShowNotificationBadge: true,
+      ),
+    );
+
     injector.registerFactory(() => YoutubeExplode());
 
     // player
     injector.registerLazySingleton(
       () => YtPlayerBloc(
-        player: injector<Player>(),
         youtubeExplode: injector<YoutubeExplode>(),
         nextUpUsecase: injector<NextUpUsecase>(),
+        audioHandlerService: injector<AudioHandlerService>(),
       ),
     );
 
@@ -36,16 +47,6 @@ class PlayerInjector {
     );
 
     // audio service handler --> injector to the player-bloc
-    injector.registerSingletonAsync(
-      () async => await AudioService.init(
-        builder: () => AudioHandlerService(injector<Player>()),
-        config: const AudioServiceConfig(
-          androidNotificationChannelId: 'com.vegan.app.channel.audio',
-          androidNotificationChannelName: 'Vegan Music Player',
-          androidNotificationOngoing: true,
-          androidShowNotificationBadge: true,
-        ),
-      ),
-    );
+    injector.registerFactory(() => audioService);
   }
 }

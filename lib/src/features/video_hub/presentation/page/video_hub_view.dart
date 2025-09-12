@@ -137,15 +137,17 @@ class _BrowseViewState extends State<BrowseView> {
                 );
               }
 
-              return SliverToBoxAdapter(child: const SizedBox.shrink());
+              return const SliverToBoxAdapter(
+                child: SizedBox.shrink(),
+              );
             },
           ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 12),
           ),
           if (!widget.hasReachedMax)
-            SliverToBoxAdapter(
-              child: const Center(
+            const SliverToBoxAdapter(
+              child: Center(
                 child: RepaintBoundary(
                   child: CircularProgressIndicator(),
                 ),

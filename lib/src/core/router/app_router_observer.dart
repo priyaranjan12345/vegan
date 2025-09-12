@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:talker/talker.dart';
 
 class AppRouterObserver extends AutoRouterObserver {
-  final talker = Talker();
+  AppRouterObserver({
+    required this.talker,
+  });
+
+  final Talker talker;
 
   @override
   void didPush(Route route, Route? previousRoute) {

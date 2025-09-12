@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talker/talker.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
@@ -26,16 +25,18 @@ class VeganApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         debugShowCheckedModeBanner: false,
         routerConfig: injector.get<AppRouter>().config(
-              deepLinkBuilder: (deepLink) {
-                log(name: 'vagan-Deeplink:', deepLink.uri.toString());
-                /// navigate deeplink
-                /// injector.get<AppRouter>().root.navigate(path);
-                return deepLink;
-              },
-              navigatorObservers: () => [
-                AppRouterObserver(),
-              ],
+          deepLinkBuilder: (deepLink) {
+            //log(name: 'vagan-Deeplink:', deepLink.uri.toString());
+            /// navigate deeplink
+            /// injector.get<AppRouter>().root.navigate(path);
+            return deepLink;
+          },
+          navigatorObservers: () => [
+            AppRouterObserver(
+              talker: injector<Talker>(),
             ),
+          ],
+        ),
       ),
     );
   }

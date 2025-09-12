@@ -6,16 +6,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
-import '../../../app/app.dart';
 import 'dio_interceptor.dart';
 
 class DioConfig {
-  const DioConfig();
+  const DioConfig(
+    this.dio, {
+    required this.talker,
+  });
 
-  static Dio client({required String baseUrl}) {
-    final talker = injector.get<Talker>();
-    final Dio dio = Dio();
+  final Talker talker;
+  final Dio dio;
 
+  Dio client({required String baseUrl}) {
     dio.options.baseUrl = baseUrl;
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
@@ -53,7 +55,7 @@ class DioConfig {
             }
           },
         ),
-        DioInterceptor(dio: dio)
+        DioInterceptor(dio: dio),
       ],
     );
 

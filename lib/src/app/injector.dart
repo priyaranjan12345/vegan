@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -43,9 +44,10 @@ Future<void> init() async {
 
   /// dio
   injector.registerLazySingleton(
-    () => DioConfig.client(
-      baseUrl: AppUrl.ytmusicUrl,
-    ),
+    () => DioConfig(
+      Dio(),
+      talker: injector<Talker>(),
+    ).client(baseUrl: AppUrl.ytmusicUrl),
   );
 
   /// register external
@@ -54,12 +56,16 @@ Future<void> init() async {
   );
 
   /// feature wise injector
-  PlayerInjector(injector).call();
+  await PlayerInjector(injector).call();
   CommingSoonInjector(injector).call();
   VideoHubInjector(injector).call();
   SearchInjector(injector).call();
   AlbumsInjector(injector).call();
 
   // bloc oberver
-  Bloc.observer = AppBlocObserver();
+  Bloc.observer = AppBlocObserver(
+    taker: injector<Talker>(),
+  );
 }
+
+void globalInjector() {}

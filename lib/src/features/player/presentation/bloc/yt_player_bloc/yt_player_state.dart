@@ -14,7 +14,6 @@ class PlayerLoadingState extends YtPlayerState {
 
 class PlayerLoadedState extends YtPlayerState {
   const PlayerLoadedState({
-    required this.player,
     required this.videoId,
     required this.title,
     required this.description,
@@ -24,7 +23,6 @@ class PlayerLoadedState extends YtPlayerState {
     required this.playlistIndex
   });
 
-  final Player player;
   final String videoId;
   final String title;
   final String description;

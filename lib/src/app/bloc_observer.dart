@@ -1,9 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talker/talker.dart';
-import 'package:vegan/src/app/injector.dart';
 
 class AppBlocObserver extends BlocObserver {
-  final taker = injector.get<Talker>();
+  AppBlocObserver({
+    required this.taker,
+  });
+
+  final Talker taker;
+
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);

@@ -24,7 +24,6 @@ class LoadPlaylist extends YtPlayerEvent {
   const LoadPlaylist();
 }
 
-
 class NextMusic extends YtPlayerEvent {
   const NextMusic();
 }
@@ -35,4 +34,16 @@ class PrevMusic extends YtPlayerEvent {
 
 class LoadPlaylistMusic extends YtPlayerEvent {
   const LoadPlaylistMusic();
+}
+
+class UpdateAudioPlayerStatus extends YtPlayerEvent {
+  const UpdateAudioPlayerStatus({
+    this.isPlaying,
+    this.currentPosition,
+    this.buffer,
+  });
+
+  final bool? isPlaying;
+  final Duration? currentPosition;
+  final Duration? buffer;
 }

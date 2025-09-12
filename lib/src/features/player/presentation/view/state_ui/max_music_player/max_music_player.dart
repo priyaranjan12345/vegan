@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/components/app_text.dart';
 
-import 'package:vegan/src/features/player/presentation/widgets/play_button.dart';
-import 'package:vegan/src/features/player/presentation/widgets/progress_bar.dart';
-
 import '../../../../../../core/components/components.dart';
 import '../../../bloc/yt_player_bloc/yt_player_bloc.dart';
+import '../../../widgets/audio_progress.dart';
+import '../../../widgets/play_button.dart';
 
 class MusicPlayer extends StatelessWidget {
   const MusicPlayer({
@@ -49,7 +47,6 @@ class MusicPlayer extends StatelessWidget {
          thumbnail: thumbnail,
          title: title,
          artist: author,
-         player: Player(),
        );
 
   @override
@@ -64,13 +61,11 @@ class MaxMusicPlayer extends StatelessWidget {
     required this.thumbnail,
     required this.title,
     required this.artist,
-    required this.player,
   });
 
   final String thumbnail;
   final String title;
   final String artist;
-  final Player player;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +116,7 @@ class MaxMusicPlayer extends StatelessWidget {
                         ),
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
-                      PlayButton.success(player: player),
+                      const PlayButton.error(),
                       AppIconButton(
                         onPressed: () => context.read<YtPlayerBloc>().add(
                           const NextMusic(),
@@ -140,16 +135,16 @@ class MaxMusicPlayer extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: SizedBox(
             height: 6,
             width: double.infinity,
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-              child: PlayerProgressIndicator(
-                player,
-                allowScrubbing: true,
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              child: AudioProgress(
+                // Use SongProgress widget to display progress bar
+                totalDuration: Duration(seconds: 10),
               ),
             ),
           ),

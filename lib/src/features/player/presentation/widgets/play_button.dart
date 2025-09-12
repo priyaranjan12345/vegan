@@ -1,121 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:media_kit/media_kit.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
 class PlayButton extends StatelessWidget {
   const PlayButton({
     super.key,
+    required this.playButtonState,
+    this.onPressed,
   });
 
-  factory PlayButton.loading() {
-    return const LoadingPlayButton();
-  }
+  final PlayButtonState playButtonState;
+  final VoidCallback? onPressed;
 
-  factory PlayButton.success({
-    required Player player,
-  }) {
-    return LoadedPlayButton(
-      player: player,
-    );
-  }
+  const PlayButton.loading({
+    super.key,
+  }) : playButtonState = PlayButtonState.loading,
+       onPressed = null;
 
-  factory PlayButton.error() {
-    return const ErrorPlayButton();
-  }
+  const PlayButton.success({
+    super.key,
+    required this.playButtonState,
+    this.onPressed,
+  });
 
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-}
-
-class LoadingPlayButton extends PlayButton {
-  const LoadingPlayButton({super.key});
+  const PlayButton.error({
+    super.key,
+  }) : playButtonState = PlayButtonState.error,
+       onPressed = null;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 32,
-      width: 32,
-      child: Material(
-        color: AppColors.darkGray,
-        surfaceTintColor: AppColors.darkGray,
-        shape: CircleBorder(),
-        child: Padding(
-          padding: EdgeInsets.all(4.0),
-          child: CircularProgressIndicator(),
+    Widget child = const SizedBox.shrink();
+
+    if (playButtonState == PlayButtonState.loading) {
+      child = const Padding(
+        padding: EdgeInsets.all(4.0),
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (playButtonState == PlayButtonState.error) {
+      child = const Icon(Icons.info_outline_rounded);
+    }
+
+    if (playButtonState == PlayButtonState.play) {
+      child = const Icon(
+        Icons.pause_rounded,
+        size: 32,
+      );
+    }
+
+    if (playButtonState == PlayButtonState.pause) {
+      child = const Icon(
+        Icons.play_arrow_rounded,
+        size: 32,
+      );
+    }
+
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        height: 48,
+        width: 48,
+        child: Material(
+          borderRadius: BorderRadius.circular(16.0),
+          color: AppColors.darkGray,
+          surfaceTintColor: AppColors.darkGray,
+          child: child,
         ),
       ),
     );
   }
 }
 
-class LoadedPlayButton extends PlayButton {
-  const LoadedPlayButton({
-    super.key,
-    required this.player,
-  });
-
-  final Player player;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 36,
-      width: 36,
-      child: Material(
-        color: AppColors.darkGray,
-        surfaceTintColor: AppColors.darkGray,
-        shape: const CircleBorder(),
-        child: StreamBuilder(
-            stream: player.stream.playing,
-            initialData: player.state.playing,
-            builder: (context, data) {
-              final isPlaying = data.data ?? false;
-              final icon = isPlaying
-                  ? const Icon(
-                      Icons.pause_rounded,
-                      size: 28,
-                    )
-                  : const Icon(
-                      Icons.play_arrow_rounded,
-                      size: 28,
-                    );
-
-              return InkWell(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(32),
-                ),
-                onTap: () {
-                  if (isPlaying) {
-                    player.pause();
-                  } else {
-                    player.play();
-                  }
-                },
-                child: icon,
-              );
-            }),
-      ),
-    );
-  }
-}
-
-class ErrorPlayButton extends PlayButton {
-  const ErrorPlayButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 32,
-      width: 32,
-      child: Material(
-        color: AppColors.darkGray,
-        surfaceTintColor: AppColors.darkGray,
-        shape: CircleBorder(),
-        child: Icon(Icons.info_outline_rounded),
-      ),
-    );
-  }
+enum PlayButtonState {
+  loading,
+  error,
+  play,
+  pause,
 }

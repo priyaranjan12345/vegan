@@ -34,3 +34,8 @@ linter:
     prefer_final_fields: true  
     void_checks: true  
     constant_identifier_names: true
+    prefer_const_constructors: true
+    # avoid_double_and_int_checks: true
+    # avoid_dynamic_calls: true
+    # camel_case_extensions: true
+    # null_check_on_nullable_type_parameter: true

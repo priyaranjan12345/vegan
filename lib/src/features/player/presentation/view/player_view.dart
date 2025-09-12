@@ -56,7 +56,6 @@ class PlayerViewWrapper extends StatelessWidget {
                     thumbnail: state.video!.thubmnail,
                     title: state.video!.title,
                     artist: state.video!.description,
-                    player: state.player!,
                   ),
                   PlayerStatus.ERROR => const MaxMusicPlayerError(),
                 },
@@ -70,7 +69,6 @@ class PlayerViewWrapper extends StatelessWidget {
                   PlayerStatus.INIT => const SizedBox.shrink(),
                   PlayerStatus.LOADING => const MiniMusicPlayerLoading(),
                   PlayerStatus.LOADED => MiniMusicPlayer(
-                    state.player!,
                     title: state.video!.title,
                     author: state.video!.description,
                     thumbnail: state.video!.thubmnail,

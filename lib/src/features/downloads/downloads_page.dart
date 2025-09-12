@@ -38,7 +38,14 @@ class LibraryOptions extends StatelessWidget {
             ),
             LibraryItem(
               icon: Icons.download,
-              title: 'Downloaded',
+              title: 'Downloads',
+              onTap: () {
+                // Handle tap
+              },
+            ),
+            LibraryItem(
+              icon: Icons.folder_copy_rounded,
+              title: 'Local Musics',
               onTap: () {
                 // Handle tap
               },

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vegan/src/features/player/presentation/widgets/max_header_player.dart';
 
@@ -77,15 +78,17 @@ class DashboardPage extends StatelessWidget {
           bottomSheet: const PlayerView(),
           // for debug use.
           // open an bottom sheet and add test nav buttons.
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => YTMusicPlayerPage(),
-                ),
-              );
-            },
-          ),
+          floatingActionButton: !kReleaseMode
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const YTMusicPlayerPage(),
+                      ),
+                    );
+                  },
+                )
+              : null,
         ),
       ),
     );

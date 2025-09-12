@@ -89,9 +89,9 @@ class YTMusicPlayerPage extends StatelessWidget {
                   inactiveColor: Colors.grey.shade700,
                   onChanged: (value) {},
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text('1:20', style: TextStyle(color: Colors.white70)),
                     Text('3:50', style: TextStyle(color: Colors.white70)),
                   ],
@@ -157,7 +157,7 @@ class YTMusicPlayerPage extends StatelessWidget {
                 builder: (context, scrollController) {
                   return Material(
                     color: AppColors.darcular,
-                    borderRadius: BorderRadius.vertical(
+                    borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(16.0),
                     ),
                     child: Column(

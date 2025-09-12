@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/router/app_router.gr.dart';
 
@@ -8,8 +7,7 @@ import '../../../../../../core/components/app_text.dart';
 import '../../../widgets/play_button.dart';
 
 class MiniMusicPlayer extends StatelessWidget {
-  const MiniMusicPlayer(
-    this.player, {
+  const MiniMusicPlayer({
     super.key,
     required this.title,
     required this.description,
@@ -17,7 +15,6 @@ class MiniMusicPlayer extends StatelessWidget {
     required this.thumbnail,
   });
 
-  final Player player;
   final String title;
   final String description;
   final String author;
@@ -66,7 +63,8 @@ class MiniMusicPlayer extends StatelessWidget {
             ),
           ),
           PlayButton.success(
-            player: player,
+            playButtonState: PlayButtonState.play,
+            onPressed: () {},
           ),
         ],
       ),
