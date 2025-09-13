@@ -47,3 +47,13 @@ class UpdateAudioPlayerStatus extends YtPlayerEvent {
   final Duration? currentPosition;
   final Duration? buffer;
 }
+
+class PlayPauseEvent extends YtPlayerEvent {
+  const PlayPauseEvent();
+}
+
+class SeekPositionEvent extends YtPlayerEvent {
+  const SeekPositionEvent(this.position);
+
+  final Duration position;
+}

@@ -50,14 +50,14 @@ class PlayerViewWrapper extends StatelessWidget {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 child: switch (state.playerState) {
-                  PlayerStatus.INIT ||
-                  PlayerStatus.LOADING => const MaxMusicPlayerLoading(),
-                  PlayerStatus.LOADED => MaxMusicPlayer(
+                  PlayerStatus.init ||
+                  PlayerStatus.loading => const MaxMusicPlayerLoading(),
+                  PlayerStatus.loaded => MaxMusicPlayer(
                     thumbnail: state.video!.thubmnail,
                     title: state.video!.title,
                     artist: state.video!.description,
                   ),
-                  PlayerStatus.ERROR => const MaxMusicPlayerError(),
+                  PlayerStatus.error => const MaxMusicPlayerError(),
                 },
               ),
             )
@@ -66,15 +66,15 @@ class PlayerViewWrapper extends StatelessWidget {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 child: switch (state.playerState) {
-                  PlayerStatus.INIT => const SizedBox.shrink(),
-                  PlayerStatus.LOADING => const MiniMusicPlayerLoading(),
-                  PlayerStatus.LOADED => MiniMusicPlayer(
+                  PlayerStatus.init => const SizedBox.shrink(),
+                  PlayerStatus.loading => const MiniMusicPlayerLoading(),
+                  PlayerStatus.loaded => MiniMusicPlayer(
                     title: state.video!.title,
                     author: state.video!.description,
                     thumbnail: state.video!.thubmnail,
                     description: state.video!.description,
                   ),
-                  PlayerStatus.ERROR => const MiniMusicPlayerError(),
+                  PlayerStatus.error => const MiniMusicPlayerError(),
                 },
               ),
             ),

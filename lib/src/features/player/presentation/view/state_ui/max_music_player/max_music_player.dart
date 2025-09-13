@@ -116,7 +116,17 @@ class MaxMusicPlayer extends StatelessWidget {
                         ),
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
-                      const PlayButton.error(),
+                      BlocSelector<YtPlayerBloc, MusicPlayerState, bool>(
+                        selector: (state) => state.isPlaying,
+                        builder: (context, isPlaying) => PlayButton.success(
+                          playButtonState: isPlaying
+                              ? PlayButtonState.play
+                              : PlayButtonState.pause,
+                          onPressed: () => context.read<YtPlayerBloc>().add(
+                            const PlayPauseEvent(),
+                          ),
+                        ),
+                      ),
                       AppIconButton(
                         onPressed: () => context.read<YtPlayerBloc>().add(
                           const NextMusic(),
@@ -134,17 +144,22 @@ class MaxMusicPlayer extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 4),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: SizedBox(
             height: 6,
             width: double.infinity,
             child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              child: AudioProgress(
-                // Use SongProgress widget to display progress bar
-                totalDuration: Duration(seconds: 10),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
+              child: BlocSelector<YtPlayerBloc, MusicPlayerState, Duration>(
+                selector: (state) => state.totalDuration,
+                builder: (context, totalDuration) => AudioProgress(
+                  totalDuration: totalDuration,
+                  onseek: (position) => context.read<YtPlayerBloc>().add(
+                    SeekPositionEvent(position),
+                  ),
+                ),
               ),
             ),
           ),

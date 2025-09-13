@@ -32,9 +32,9 @@ class AudioHandlerService extends BaseAudioHandler
   Future<void> skipToPrevious() => audioPlayer.seekToPrevious();
 
   // Function to create an audio source from a MediaItem
-  UriAudioSource _createAudioSource(MediaItem item) {
-    return ProgressiveAudioSource(Uri.parse(item.id));
-  }
+  // UriAudioSource _createAudioSource(MediaItem item) {
+  //   return ProgressiveAudioSource(Uri.parse(item.id));
+  // }
 
   // Listen for changes in the current song index and update the media item
   void _listenForCurrentSongIndexChanges() {
@@ -81,11 +81,12 @@ class AudioHandlerService extends BaseAudioHandler
     audioPlayer.playbackEventStream.listen(_broadcastState);
 
     // Create a list of audio sources from the provided songs
-    final audioSource = songs.map(_createAudioSource).toList();
+    // final audioSource = songs.map(_createAudioSource).toList();
 
     // Set the audio source of the audio player to the concatenation of the audio sources
     await audioPlayer.setAudioSource(
-      ConcatenatingAudioSource(children: audioSource),
+      AudioSource.uri(Uri.parse(songs.first.id)),
+      //ConcatenatingAudioSource(children: audioSource),
     );
 
     // Add the songs to the queue
@@ -100,5 +101,10 @@ class AudioHandlerService extends BaseAudioHandler
     audioPlayer.processingStateStream.listen((state) {
       if (state == ProcessingState.completed) skipToNext();
     });
+  }
+
+  void dispose() {
+    audioPlayer.dispose();
+    queue.value.clear();
   }
 }

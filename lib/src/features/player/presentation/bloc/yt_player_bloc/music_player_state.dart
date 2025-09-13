@@ -9,11 +9,11 @@ class MusicPlayerState extends Equatable {
 
     /// use buildwhen
     this.nextUpState = NextUpStatus.INIT,
-    this.playerState = PlayerStatus.INIT,
+    this.playerState = PlayerStatus.init,
 
     this.currentVideoId,
 
-    this.currentPosition = const Duration(seconds: 0),
+    this.totalDuration = const Duration(seconds: 0),
     this.isPlaying = false,
   });
 
@@ -27,7 +27,7 @@ class MusicPlayerState extends Equatable {
 
   final String? currentVideoId;
 
-  final Duration currentPosition;
+  final Duration totalDuration;
   final bool isPlaying;
 
   @override
@@ -39,7 +39,7 @@ class MusicPlayerState extends Equatable {
     playlist,
     playlistIndex,
     currentVideoId,
-    currentPosition,
+    totalDuration,
     isPlaying,
   ];
 
@@ -51,7 +51,7 @@ class MusicPlayerState extends Equatable {
     List<VideoEntity>? playlist,
     int? playlistIndex,
     String? currentVideoId,
-    Duration? currentPosition,
+    Duration? totalDuration,
     bool? isPlaying,
   }) {
     return MusicPlayerState(
@@ -62,17 +62,17 @@ class MusicPlayerState extends Equatable {
       playlist: playlist ?? this.playlist,
       playlistIndex: playlistIndex ?? this.playlistIndex,
       currentVideoId: currentVideoId ?? this.currentVideoId,
-      currentPosition: currentPosition ?? this.currentPosition,
+      totalDuration: totalDuration ?? this.totalDuration,
       isPlaying: isPlaying ?? this.isPlaying,
     );
   }
 }
 
 enum PlayerStatus {
-  INIT,
-  LOADING,
-  LOADED,
-  ERROR,
+  init,
+  loading,
+  loaded,
+  error,
 }
 
 enum NextUpStatus {
@@ -81,6 +81,8 @@ enum NextUpStatus {
   LOADED,
   ERROR,
 }
+
+
 
 class PlayerState extends Equatable {
   @override

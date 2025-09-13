@@ -24,6 +24,8 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     on<LoadMusic>(loadMusic);
     on<NextMusic>(onNext);
     on<PrevMusic>(onPrevious);
+    on<PlayPauseEvent>(onPlayPause);
+    on<SeekPositionEvent>(onSeekPosition);
     on<UpdateAudioPlayerStatus>(updateAudioPlayerStatus);
     listenAudioPlayer();
   }
@@ -41,8 +43,12 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     // audioPlayer.playbackEventStream.listen((event) {});
 
     audioPlayer.playerEventStream.listen((event) {
-      add(UpdateAudioPlayerStatus(isPlaying: audioPlayer.playing));
+      if (state.isPlaying != event.playing) {
+        add(UpdateAudioPlayerStatus(isPlaying: event.playing));
+      }
     });
+
+    // _audioHandlerService.playbackState.distinct().listen((event) {});
   }
 
   Future<void> loadMusic(
@@ -50,7 +56,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     Emitter<MusicPlayerState> emit,
   ) async {
     final loadingState = state.copyWith(
-      playerState: PlayerStatus.LOADING,
+      playerState: PlayerStatus.loading,
     );
     emit(loadingState);
 
@@ -83,7 +89,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
       emit(
         state.copyWith(
-          playerState: PlayerStatus.LOADED,
+          playerState: PlayerStatus.loaded,
           video: VideoEntity(
             id: videoId,
             title: video.title,
@@ -92,6 +98,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
             thubmnail: video.thumbnails.mediumResUrl,
           ),
           currentVideoId: videoId,
+          totalDuration: video.duration,
         ),
       );
 
@@ -114,7 +121,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
         );
       }
     } catch (e) {
-      emit(state.copyWith(playerState: PlayerStatus.ERROR));
+      emit(state.copyWith(playerState: PlayerStatus.error));
     }
   }
 
@@ -198,7 +205,10 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     }
   }
 
-  void onPlayPause() {
+  void onPlayPause(
+    PlayPauseEvent event,
+    Emitter<MusicPlayerState> emit,
+  ) {
     final isPlaying = audioPlayer.playing;
 
     if (isPlaying) {
@@ -206,8 +216,13 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     } else {
       _audioHandlerService.play();
     }
+  }
 
-    // TODO: emit the state.
+  void onSeekPosition(
+    SeekPositionEvent event,
+    Emitter<MusicPlayerState> emit,
+  ) {
+    _audioHandlerService.seek(event.position);
   }
 
   void onVolumeChange() {}
@@ -216,7 +231,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     UpdateAudioPlayerStatus event,
     Emitter<MusicPlayerState> emit,
   ) {
-    emit(state.copyWith(currentPosition: event.currentPosition));
+    emit(state.copyWith(isPlaying: event.isPlaying));
   }
 
   @override
