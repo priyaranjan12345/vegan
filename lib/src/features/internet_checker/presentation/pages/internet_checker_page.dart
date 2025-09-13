@@ -19,12 +19,12 @@ class InternetCheckerPage extends StatelessWidget {
       children: [
         child,
         Align(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.bottomCenter,
           child: BlocProvider(
             create: (_) => InternetCheckerCubit(
               internetConnection: InternetConnection(),
             )..connectivityListener(),
-            child: const InternetCheckerView(),
+            child: const SafeArea(child: InternetCheckerView()),
           ),
         ),
       ],

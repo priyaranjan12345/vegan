@@ -21,7 +21,8 @@ class InternetCheckerView extends StatelessWidget {
             Future.delayed(const Duration(seconds: 4), () {
               /// before set to ideal it will check if the internet is still connected
               if (context.mounted) {
-                final isConnected = context
+                final isConnected =
+                    context
                         .read<InternetCheckerCubit>()
                         .state
                         .connectivityStatus ==
@@ -37,18 +38,22 @@ class InternetCheckerView extends StatelessWidget {
         builder: (context, state) {
           return switch (state.connectivityStatus) {
             ConnectivityStatus.connected => FloatingSnackbar.success(
-                message: 'Internet is available',
-              ),
+              message: 'Internet is available',
+              onCancel: () =>
+                  context.read<InternetCheckerCubit>().emitIdealState(),
+            ),
             ConnectivityStatus.disconnected => FloatingSnackbar.error(
-                message:
-                    'Internet is not available!',
-              ),
+              message: 'Internet is not available!',
+              onCancel: () =>
+                  context.read<InternetCheckerCubit>().emitIdealState(),
+            ),
             ConnectivityStatus.unknown => FloatingSnackbar.warning(
-                message: 'Unknow error',
-              ),
+              message: 'Unknow error',
+              onCancel: () =>
+                  context.read<InternetCheckerCubit>().emitIdealState(),
+            ),
             ConnectivityStatus.initial ||
-            ConnectivityStatus.ideal =>
-              const SizedBox.shrink(),
+            ConnectivityStatus.ideal => const SizedBox.shrink(),
           };
         },
       ),
