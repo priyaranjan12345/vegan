@@ -68,4 +68,7 @@ Future<void> init() async {
   );
 }
 
-void globalInjector() {}
+void globalInjector() {
+  // hive storage
+  // getIt.registerSingleton<StorageManager>(HiveStorageManager('userPrefs'));
+}
