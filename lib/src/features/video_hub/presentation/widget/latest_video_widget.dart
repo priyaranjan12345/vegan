@@ -67,7 +67,7 @@ class LatestVideosWidget extends StatelessWidget {
                         ),
                         child: Image.network(
                           fit: BoxFit.fitHeight,
-                          video.thubmnail,
+                          video.thumbnail,
                           loadingBuilder: (context, child, loadingProgress) =>
                               loadingProgress != null
                                   ? const Center(

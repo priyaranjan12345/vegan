@@ -82,7 +82,7 @@ class PlaylistUsecase implements UseCase<List<VideoEntity>, PlaylistParams> {
             title: title,
             description: desc,
             videoUrl: '',
-            thubmnail: thubmnail,
+            thumbnail: thubmnail,
           );
 
           videos.add(videoEntity);

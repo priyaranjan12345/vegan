@@ -56,7 +56,7 @@ class PlaylistView extends StatelessWidget {
             final item = state.videoEntities[index];
 
             return AppTile(
-              imageUrl: item.thubmnail,
+              imageUrl: item.thumbnail,
               title: item.title,
               subTitle: item.description,
               onTap: () {

@@ -116,7 +116,7 @@ class ContinuationUsecase implements UseCase<HomeEntity, ContinuationParams> {
                 title: title,
                 description: subTitle,
                 videoUrl: '',
-                thubmnail: thumbnail,
+                thumbnail: thumbnail,
                 browseId: '',
                 playlistId: playlistId,
               );

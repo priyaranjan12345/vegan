@@ -6,7 +6,7 @@ class VideoEntity extends Equatable {
     required this.title,
     required this.description,
     required this.videoUrl,
-    required this.thubmnail,
+    required this.thumbnail,
     this.browseId = '',
     this.playlistId = '',
   });
@@ -15,7 +15,7 @@ class VideoEntity extends Equatable {
   final String title;
   final String description;
   final String videoUrl;
-  final String thubmnail;
+  final String thumbnail;
   final String browseId;
   final String playlistId;
 
@@ -25,7 +25,7 @@ class VideoEntity extends Equatable {
     title,
     description,
     videoUrl,
-    thubmnail,
+    thumbnail,
     browseId,
     playlistId,
   ];

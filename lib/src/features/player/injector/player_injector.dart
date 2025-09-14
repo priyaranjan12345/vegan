@@ -20,9 +20,11 @@ class PlayerInjector {
       builder: () => AudioHandlerService(injector<AudioPlayer>()),
       config: const AudioServiceConfig(
         androidNotificationChannelId: 'com.vegan.app.channel.audio',
-        androidNotificationChannelName: 'Vegan Music Player',
+        androidNotificationChannelName: 'Vegan',
+        androidNotificationChannelDescription: 'Vegan Music Player',
         androidNotificationOngoing: true,
         androidShowNotificationBadge: true,
+        androidNotificationIcon: 'mipmap/launcher_icon',
       ),
     );
 

@@ -69,7 +69,7 @@ class Suggestions extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   final suggestion = suggestionList[index];
-                                  final imageUrl = suggestion.thubmnail;
+                                  final imageUrl = suggestion.thumbnail;
                                   final title = suggestion.title;
                                   final subTitle = suggestion.description;
 

@@ -40,7 +40,9 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   // listen the audio player status and
   // also update initial status as well.
   void listenAudioPlayer() {
-    // audioPlayer.playbackEventStream.listen((event) {});
+    // audioPlayer.playbackEventStream.listen((event) {
+    //   event.
+    // });
 
     audioPlayer.playerEventStream.listen((event) {
       if (state.isPlaying != event.playing) {
@@ -48,7 +50,9 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
       }
     });
 
-    // _audioHandlerService.playbackState.distinct().listen((event) {});
+    // _audioHandlerService.playbackState.distinct().listen((event) {
+    //   event.position
+    // });
   }
 
   Future<void> loadMusic(
@@ -61,26 +65,31 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     emit(loadingState);
 
     try {
+      print('object-o');
       final videoId = event.videoId;
       final ytUrl = 'https://youtube.com/watch?v=$videoId';
       var video = await _youtubeExplode.videos.get(ytUrl);
 
-      final streamsClient = _youtubeExplode.videos.streamsClient;
-      final streamManifest = await streamsClient.getManifest(
-        videoId,
-        requireWatchPage: true,
-        ytClients: [YoutubeApiClient.androidVr, YoutubeApiClient.ios],
-      );
-      final audioStream = streamManifest.audio.withHighestBitrate();
-      final url = audioStream.url.toString();
+      print('object-1');
+
+      final title = video.title;
+      final description = video.description;
+      final author = video.author;
+      final thumbnail = video.thumbnails.standardResUrl;
+      final duration = video.duration;
+
+      final url = await getAudioUrl(videoId);
+      print('object-2');
 
       // experimental.
       _audioHandlerService.initSongs(
         songs: [
           MediaItem(
             id: url,
-            title: video.title,
-            artUri: Uri.parse(video.thumbnails.mediumResUrl),
+            title: title,
+            artUri: Uri.parse(thumbnail),
+            duration: duration,
+            artist: author,
           ),
         ],
       );
@@ -92,13 +101,13 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
           playerState: PlayerStatus.loaded,
           video: VideoEntity(
             id: videoId,
-            title: video.title,
-            description: video.description,
+            title: title,
+            description: description,
             videoUrl: ytUrl,
-            thubmnail: video.thumbnails.mediumResUrl,
+            thumbnail: thumbnail,
           ),
           currentVideoId: videoId,
-          totalDuration: video.duration,
+          totalDuration: duration,
         ),
       );
 
@@ -123,6 +132,21 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     } catch (e) {
       emit(state.copyWith(playerState: PlayerStatus.error));
     }
+  }
+
+  void emitVideoDetails() {}
+
+  Future<String> getAudioUrl(String videoId) async {
+    final streamsClient = _youtubeExplode.videos.streamsClient;
+    final streamManifest = await streamsClient.getManifest(
+      videoId,
+      requireWatchPage: true,
+      ytClients: [YoutubeApiClient.androidVr, YoutubeApiClient.ios],
+    );
+    final audioStream = streamManifest.audio.withHighestBitrate();
+    final url = audioStream.url.toString();
+
+    return url;
   }
 
   Future<void> loadPlaylist(
@@ -160,8 +184,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
       emit(state.copyWith(nextUpState: NextUpStatus.ERROR));
     }
   }
-
-  void getDetails() {}
 
   void onNext(
     NextMusic event,
@@ -225,14 +247,15 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     _audioHandlerService.seek(event.position);
   }
 
-  void onVolumeChange() {}
-
   void updateAudioPlayerStatus(
     UpdateAudioPlayerStatus event,
     Emitter<MusicPlayerState> emit,
   ) {
     emit(state.copyWith(isPlaying: event.isPlaying));
   }
+
+  // volume
+  // repeat
 
   @override
   Future<void> close() {

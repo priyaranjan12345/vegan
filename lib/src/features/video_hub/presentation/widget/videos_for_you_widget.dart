@@ -85,7 +85,7 @@ class VideosForYouWidget extends StatelessWidget {
             ),
             slivers: [
               ...videos.map(
-                (video) => video.thubmnail.isNotEmpty
+                (video) => video.thumbnail.isNotEmpty
                     ? SliverLayoutBuilder(
                         builder: (context, constraints) {
                           return SliverToBoxAdapter(
@@ -111,7 +111,7 @@ class VideosForYouWidget extends StatelessWidget {
                                           fit: BoxFit.fitWidth,
                                           height: 120,
                                           width: double.infinity,
-                                          imageUrl: video.thubmnail,
+                                          imageUrl: video.thumbnail,
                                           placeholder: (_, _) => const Center(
                                             child: CircularProgressIndicator(),
                                           ),

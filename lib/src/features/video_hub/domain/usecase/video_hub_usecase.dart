@@ -160,7 +160,7 @@ class VideoHubUsecase implements UseCase<HomeEntity, Params> {
                 title: title,
                 description: subTitle,
                 videoUrl: '',
-                thubmnail: thumbnail,
+                thumbnail: thumbnail,
                 browseId: '',
                 playlistId: playlistId,
               );
@@ -257,7 +257,7 @@ class VideoEntityMapper implements UniFunctionMapper<VideoEntity, VideoModel> {
       title: t.title,
       description: t.description,
       videoUrl: t.videoUrl,
-      thubmnail: t.thumbnailUrl,
+      thumbnail: t.thumbnailUrl,
       browseId: t.uploadTime,
     );
   }

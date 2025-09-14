@@ -189,7 +189,7 @@ class AlbumsMusicItems extends StatelessWidget {
                     title: e.title,
                     description: e.subtitle,
                     videoUrl: '',
-                    thubmnail: e.thumbnail,
+                    thumbnail: e.thumbnail,
                   ),
                 ).toList(),
               ),

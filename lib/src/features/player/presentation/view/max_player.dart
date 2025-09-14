@@ -120,12 +120,14 @@ class NextUp extends StatelessWidget {
                 final e = playlist[index];
                 return AppTile(
                   isSelected: currentVideoId == e.id,
-                  imageUrl: e.thubmnail,
+                  imageUrl: e.thumbnail,
                   title: e.title,
                   subTitle: e.description,
                   onTap: () {
                     injector<YtPlayerBloc>().add(
-                      LoadMusic(e.id),
+                      LoadMusic(
+                        e.id,
+                      ),
                     );
                   },
                 );
