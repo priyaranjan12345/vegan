@@ -70,7 +70,7 @@ dependencies:
   hive_flutter: ^1.1.0
   talker_flutter: ^4.9.3
   talker_bloc_logger: ^4.9.3
-  
+
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +92,7 @@ dev_dependencies:
   flutter_native_splash: ^2.4.5
   change_app_package_name: ^1.4.0
   flutter_launcher_icons: ^0.14.3
+  inno_bundle: ^0.11.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -145,3 +146,14 @@ flutter_launcher_icons:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+inno_bundle:
+  id: dasdasdasdsadasd
+  description: Youtube Video Player
+  version: 0.0.1
+  name: Vegan Player
+  publisher: SoftDev
+  installer_icon: assets/images/icon.ico
+  languages:
+    - english
+  admin: true
+  skipBuild: true
