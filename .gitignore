@@ -48,3 +48,4 @@ app.*.map.json
 
 .gemini/
 gha-creds-*.json
+pubspec.lock
