@@ -70,6 +70,9 @@ dependencies:
   hive_flutter: ^1.1.0
   talker_flutter: ^4.9.3
   talker_bloc_logger: ^4.9.3
+  path_provider: ^2.1.5
+  flutter_displaymode: ^0.6.0
+  sliding_up_panel: ^2.0.0+1
   
 
 dev_dependencies:
