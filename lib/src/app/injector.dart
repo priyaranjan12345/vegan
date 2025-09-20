@@ -4,8 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:talker/talker.dart';
+import 'package:vegan/src/core/modules/local_storage/i_local_storage.dart';
+import 'package:vegan/src/core/modules/local_storage/local_storage.dart';
 import '../features/albums/injector/injector.dart';
 import 'bloc_observer.dart';
 
@@ -22,6 +26,8 @@ final injector = GetIt.instance;
 
 /// Global [init] injector
 Future<void> init() async {
+  await initHive();
+
   // register auto router instance
   injector.registerSingleton(AppRouter());
 
@@ -68,7 +74,21 @@ Future<void> init() async {
   );
 }
 
-void globalInjector() {
-  // hive storage
-  // getIt.registerSingleton<StorageManager>(HiveStorageManager('userPrefs'));
+Future<void> initHive() async {
+  // initialize hive storage
+  final directory = await getApplicationCacheDirectory();
+  await Hive.initFlutter(directory.path);
+
+  final historyBox = await Hive.openBox('historyBox');
+  final favsBox = await Hive.openBox('favsBox');
+
+  injector.registerSingleton<ILocalStorage>(
+    instanceName: 'historyBox',
+    LocalStorage(box: historyBox),
+  );
+
+  injector.registerSingleton<ILocalStorage>(
+    instanceName: 'favsBox',
+    LocalStorage(box: favsBox),
+  );
 }

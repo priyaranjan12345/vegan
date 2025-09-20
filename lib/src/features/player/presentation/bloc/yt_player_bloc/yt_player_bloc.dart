@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:vegan/src/features/video_hub/domain/entity/entity.dart';
+import 'package:vegan/src/global/entities/entities.dart';
+import 'package:vegan/src/global/usecases/songs_history_local_storage.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../../domain/usecase/next_up_usecase.dart';
@@ -17,9 +19,11 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     required YoutubeExplode youtubeExplode,
     required NextUpUsecase nextUpUsecase,
     required AudioHandlerService audioHandlerService,
+    required SongsHistoryLocalStorage songsHistoryLocalStorage,
   }) : _youtubeExplode = youtubeExplode,
        _nextUpUsecase = nextUpUsecase,
        _audioHandlerService = audioHandlerService,
+       _songsHistoryLocalStorage = songsHistoryLocalStorage,
        super(const MusicPlayerState()) {
     on<LoadMusic>(loadMusic);
     on<NextMusic>(onNext);
@@ -34,6 +38,7 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   final YoutubeExplode _youtubeExplode;
   final NextUpUsecase _nextUpUsecase;
   final AudioHandlerService _audioHandlerService;
+  final SongsHistoryLocalStorage _songsHistoryLocalStorage;
 
   AudioPlayer get audioPlayer => _audioHandlerService.audioPlayer;
 
@@ -65,12 +70,9 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     emit(loadingState);
 
     try {
-      print('object-o');
       final videoId = event.videoId;
       final ytUrl = 'https://youtube.com/watch?v=$videoId';
       var video = await _youtubeExplode.videos.get(ytUrl);
-
-      print('object-1');
 
       final title = video.title;
       final description = video.description;
@@ -79,7 +81,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
       final duration = video.duration;
 
       final url = await getAudioUrl(videoId);
-      print('object-2');
 
       // experimental.
       _audioHandlerService.initSongs(
@@ -95,6 +96,13 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
       );
 
       _audioHandlerService.play();
+
+      // add to history
+      // _songsHistoryLocalStorage(
+      //   SongsHistoryParams(
+      //     songEntity: SongEntity(),
+      //   ),
+      // );
 
       emit(
         state.copyWith(

@@ -36,6 +36,7 @@ class PlayerInjector {
         youtubeExplode: injector<YoutubeExplode>(),
         nextUpUsecase: injector<NextUpUsecase>(),
         audioHandlerService: injector<AudioHandlerService>(),
+        songsHistoryLocalStorage: injector(),
       ),
     );
 
