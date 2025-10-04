@@ -6,7 +6,7 @@ import 'package:vegan/src/core/components/app_text.dart';
 import '../../../../../../core/components/components.dart';
 import '../../../bloc/yt_player_bloc/yt_player_bloc.dart';
 import '../../../widgets/audio_progress.dart';
-import '../../../widgets/play_button.dart';
+import '../play_button_wrapper.dart';
 
 class MusicPlayer extends StatelessWidget {
   const MusicPlayer({
@@ -116,17 +116,7 @@ class MaxMusicPlayer extends StatelessWidget {
                         ),
                         icon: const Icon(Icons.skip_previous_rounded),
                       ),
-                      BlocSelector<YtPlayerBloc, MusicPlayerState, bool>(
-                        selector: (state) => state.isPlaying,
-                        builder: (context, isPlaying) => PlayButton.success(
-                          playButtonState: isPlaying
-                              ? PlayButtonState.play
-                              : PlayButtonState.pause,
-                          onPressed: () => context.read<YtPlayerBloc>().add(
-                            const PlayPauseEvent(),
-                          ),
-                        ),
-                      ),
+                      const PlayButtonWrapper(),
                       AppIconButton(
                         onPressed: () => context.read<YtPlayerBloc>().add(
                           const NextMusic(),

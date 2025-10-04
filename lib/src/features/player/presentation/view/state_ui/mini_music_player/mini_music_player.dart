@@ -4,7 +4,7 @@ import 'package:vegan/src/core/components/app_image.dart';
 import 'package:vegan/src/core/router/app_router.gr.dart';
 
 import '../../../../../../core/components/app_text.dart';
-import '../../../widgets/play_button.dart';
+import '../play_button_wrapper.dart';
 
 class MiniMusicPlayer extends StatelessWidget {
   const MiniMusicPlayer({
@@ -62,10 +62,7 @@ class MiniMusicPlayer extends StatelessWidget {
               ),
             ),
           ),
-          PlayButton.success(
-            playButtonState: PlayButtonState.play,
-            onPressed: () {},
-          ),
+          const PlayButtonWrapper(),
         ],
       ),
     );

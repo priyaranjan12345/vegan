@@ -21,7 +21,7 @@ import 'package:vegan/src/features/dashboard/downloads_tab.dart' as _i6;
 import 'package:vegan/src/features/dashboard/home_tab.dart' as _i7;
 import 'package:vegan/src/features/dashboard/more_tab.dart' as _i10;
 import 'package:vegan/src/features/dashboard/search_tab.dart' as _i13;
-import 'package:vegan/src/features/downloads/downloads_page.dart' as _i5;
+import 'package:vegan/src/features/downloads/presentation/pages/downloads_page.dart' as _i5;
 import 'package:vegan/src/features/more/more_page.dart' as _i9;
 import 'package:vegan/src/features/player/presentation/view/max_player.dart' as _i8;
 import 'package:vegan/src/features/search/presentation/pages/search_page.dart'

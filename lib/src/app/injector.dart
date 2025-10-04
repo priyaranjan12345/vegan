@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:talker/talker.dart';
 import 'package:vegan/src/core/modules/local_storage/i_local_storage.dart';
 import 'package:vegan/src/core/modules/local_storage/local_storage.dart';
+import 'package:vegan/src/global/usecases/songs_history_local_storage.dart';
 import '../features/albums/injector/injector.dart';
 import 'bloc_observer.dart';
 
@@ -90,5 +91,11 @@ Future<void> initHive() async {
   injector.registerSingleton<ILocalStorage>(
     instanceName: 'favsBox',
     LocalStorage(box: favsBox),
+  );
+
+  injector.registerFactory(
+    () => SongsHistoryLocalStorage(
+      iLocalStorage: injector(instanceName: 'historyBox'),
+    ),
   );
 }

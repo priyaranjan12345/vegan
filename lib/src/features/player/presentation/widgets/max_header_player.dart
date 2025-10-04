@@ -1,9 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
-class YTMusicPlayerPage extends StatelessWidget {
+class YTMusicPlayerPage extends StatefulWidget {
   const YTMusicPlayerPage({super.key});
+
+  @override
+  State<YTMusicPlayerPage> createState() => _YTMusicPlayerPageState();
+}
+
+class _YTMusicPlayerPageState extends State<YTMusicPlayerPage> {
+  final panelController = SlidingUpPanelController();
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController.addListener(() {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange) {
+        panelController.expand();
+      } else if (scrollController.offset <=
+              scrollController.position.minScrollExtent &&
+          !scrollController.position.outOfRange) {
+        panelController.anchor();
+      } else {}
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    panelController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +65,14 @@ class YTMusicPlayerPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Stack(
-          children: [
-            Column(
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
               children: [
+                const SizedBox(height: 16),
+
                 /// Album Art
                 ConstrainedBox(
                   constraints: BoxConstraints(
@@ -146,42 +182,96 @@ class YTMusicPlayerPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
+                Material(
+                  color: AppColors.darkGray,
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.favorite,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.download,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.share,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.volume_up_sharp,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-            // bottom sheet
-            Positioned(
-              child: DraggableScrollableSheet(
-                maxChildSize: 1,
-                minChildSize: 0.2,
-                builder: (context, scrollController) {
-                  return Material(
-                    color: AppColors.darcular,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(16.0),
-                    ),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
+          ),
 
-                            controller: scrollController,
-                            itemCount: 20,
-                            itemBuilder: (context, index) => ListTile(
-                              title: Text('data - $index'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+          // bottom sheet
+          // Positioned(
+          //   child: DraggableScrollableSheet(
+          //     maxChildSize: 1,
+          //     minChildSize: 0.2,
+          //     builder: (context, scrollController) {
+          //       return Material(
+          //         color: AppColors.darcular,
+          //         borderRadius: const BorderRadius.vertical(
+          //           top: Radius.circular(16.0),
+          //         ),
+          //         child: Column(
+          //           children: [
+          //             Expanded(
+          //               child: ListView.builder(
+          //                 shrinkWrap: true,
+          //                 padding: EdgeInsets.zero,
+
+          //                 controller: scrollController,
+          //                 itemCount: 20,
+          //                 itemBuilder: (context, index) => ListTile(
+          //                   title: Text('data - $index'),
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+          SlidingUpPanelWidget(
+            controlHeight: 60.0,
+            enableOnTap: true,
+            upperBound: 1.0,
+            panelController: panelController,
+            onTap: () {
+              if (SlidingUpPanelStatus.expanded == panelController.status) {
+                panelController.collapse();
+              } else {
+                panelController.expand();
+              }
+            },
+            child: PanelChild(
+              scrollController: scrollController,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -337,6 +427,86 @@ class _DraggableScrollableState extends State<DraggableScrollable> {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// panel child
+class PanelChild extends StatelessWidget {
+  const PanelChild({super.key, required this.scrollController});
+
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: const EdgeInsets.symmetric(horizontal: 15.0),
+      decoration: const ShapeDecoration(
+        color: AppColors.black,
+        shadows: [
+          BoxShadow(
+            blurRadius: 5.0,
+            spreadRadius: 2.0,
+            color: Color(0x11000000),
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            height: 60.0,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.queue_play_next_rounded,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 8.0,
+                  ),
+                ),
+                Text(
+                  'Next Up',
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            height: 0.5,
+            color: Colors.grey[300],
+          ),
+          Flexible(
+            child: Container(
+              color: AppColors.darcular,
+              child: ListView.separated(
+                controller: scrollController,
+                physics: const ClampingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('list item $index'),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    height: 0.5,
+                  );
+                },
+                shrinkWrap: true,
+                itemCount: 20,
               ),
             ),
           ),
