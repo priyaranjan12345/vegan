@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 
+import '../../../core/modules/local_storage/i_local_storage.dart';
+import '../../../core/modules/local_storage/local_storage.dart';
 import '../data/datasource/search_datasource.dart';
 import '../data/repository/repository.dart';
 import '../domain/repository/repository.dart';
@@ -11,10 +14,21 @@ class SearchInjector {
 
   final GetIt injector;
 
-  void call() {
+  Future<void> call() async {
+    /// register local storage
+    const boxName = 'searchHistoryBox';
+    final searchHistoryBox = await Hive.openBox(boxName);
+    injector.registerSingleton<ILocalStorage>(
+      instanceName: boxName,
+      LocalStorage(box: searchHistoryBox),
+    );
+
     /// register datasource
     injector.registerLazySingleton<SearchDatasource>(
-      () => ISearchDatasource(dio: injector()),
+      () => ISearchDatasource(
+        dio: injector(),
+        // pass local storage
+      ),
     );
 
     /// register repository

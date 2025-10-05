@@ -25,8 +25,9 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
       transformer: throttleDroppable(const Duration(milliseconds: 600)),
     );
     on<BrowseContinuationEvent>(
-      loadContinuationContent,
-      transformer: throttleDroppable(const Duration(milliseconds: 600)),
+      (event, emit) async => await loadContinuationContent(event, emit),
+      // drop unnecessary events during scrolling.
+      transformer: droppable(),
     );
   }
 
@@ -40,7 +41,7 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
     };
   }
 
-  void loadInitialContent(
+  Future<void> loadInitialContent(
     BrowseInitEvent event,
     Emitter<BrowseState> emit,
   ) async {
@@ -65,7 +66,7 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
     }
   }
 
-  void loadMoodContents(
+  Future<void> loadMoodContents(
     BrowseMoodEvent event,
     Emitter<BrowseState> emit,
   ) async {
@@ -93,7 +94,7 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
     }
   }
 
-  void loadContinuationContent(
+  Future<void> loadContinuationContent(
     BrowseContinuationEvent event,
     Emitter<BrowseState> emit,
   ) async {

@@ -45,19 +45,52 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
   // listen the audio player status and
   // also update initial status as well.
   void listenAudioPlayer() {
-    // audioPlayer.playbackEventStream.listen((event) {
-    //   event.
-    // });
-
     audioPlayer.playerEventStream.listen((event) {
+      /// update play button state
       if (state.isPlaying != event.playing) {
         add(UpdateAudioPlayerStatus(isPlaying: event.playing));
       }
+
+      /// on complete
+      final currentPosition = event.playbackEvent.updatePosition;
+      final totalDuration = event.playbackEvent.duration;
+
+      if (currentPosition == totalDuration) {
+        add(const NextMusic());
+      }
+
+      ///
     });
 
     // _audioHandlerService.playbackState.distinct().listen((event) {
     //   event.position
     // });
+  }
+
+  Future<Video> getVideoDetails(
+    String videoId, {
+    required VideoClient videoClient,
+  }) async {
+    final ytUrl = 'https://youtube.com/watch?v=$videoId';
+    final video = await videoClient.get(ytUrl);
+
+    return video;
+  }
+
+  Future<String> getAudioUrl(
+    String videoId, {
+    required VideoClient videoClient,
+  }) async {
+    final streamsClient = videoClient.streamsClient;
+    final streamManifest = await streamsClient.getManifest(
+      videoId,
+      requireWatchPage: true,
+      ytClients: [YoutubeApiClient.androidVr], // , YoutubeApiClient.ios
+    );
+    final audioStream = streamManifest.audioOnly.withHighestBitrate();
+    final url = audioStream.url.toString();
+
+    return url;
   }
 
   Future<void> loadMusic(
@@ -71,16 +104,21 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
 
     try {
       final videoId = event.videoId;
-      final ytUrl = 'https://youtube.com/watch?v=$videoId';
-      var video = await _youtubeExplode.videos.get(ytUrl);
+      final videoClient = _youtubeExplode.videos;
 
-      final title = video.title;
-      final description = video.description;
-      final author = video.author;
-      final thumbnail = video.thumbnails.standardResUrl;
-      final duration = video.duration;
+      var videoDetails = await getVideoDetails(
+        videoId,
+        videoClient: videoClient,
+      );
 
-      final url = await getAudioUrl(videoId);
+      final title = videoDetails.title;
+      final description = videoDetails.description;
+      final author = videoDetails.author;
+      final thumbnail = videoDetails.thumbnails.standardResUrl;
+      final duration = videoDetails.duration;
+      final ytUrl = videoDetails.url;
+
+      final url = await getAudioUrl(videoId, videoClient: videoClient);
 
       // experimental.
       _audioHandlerService.initSongs(
@@ -140,21 +178,6 @@ class YtPlayerBloc extends Bloc<YtPlayerEvent, MusicPlayerState> {
     } catch (e) {
       emit(state.copyWith(playerState: PlayerStatus.error));
     }
-  }
-
-  void emitVideoDetails() {}
-
-  Future<String> getAudioUrl(String videoId) async {
-    final streamsClient = _youtubeExplode.videos.streamsClient;
-    final streamManifest = await streamsClient.getManifest(
-      videoId,
-      requireWatchPage: true,
-      ytClients: [YoutubeApiClient.androidVr, YoutubeApiClient.ios],
-    );
-    final audioStream = streamManifest.audio.withHighestBitrate();
-    final url = audioStream.url.toString();
-
-    return url;
   }
 
   Future<void> loadPlaylist(

@@ -66,7 +66,7 @@ Future<void> init() async {
   await PlayerInjector(injector).call();
   CommingSoonInjector(injector).call();
   VideoHubInjector(injector).call();
-  SearchInjector(injector).call();
+  await SearchInjector(injector).call();
   AlbumsInjector(injector).call();
 
   // bloc oberver
@@ -80,12 +80,16 @@ Future<void> initHive() async {
   final directory = await getApplicationCacheDirectory();
   await Hive.initFlutter(directory.path);
 
+  /// global local storage box.
+  /// inject that object
+
   final historyBox = await Hive.openBox('historyBox');
   final favsBox = await Hive.openBox('favsBox');
 
   injector.registerSingleton<ILocalStorage>(
     instanceName: 'historyBox',
     LocalStorage(box: historyBox),
+    dispose: (instance) => instance.close(),
   );
 
   injector.registerSingleton<ILocalStorage>(
@@ -98,4 +102,6 @@ Future<void> initHive() async {
       iLocalStorage: injector(instanceName: 'historyBox'),
     ),
   );
+
+  // search histry
 }
