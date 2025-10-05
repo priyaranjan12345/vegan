@@ -32,9 +32,9 @@ class AudioHandlerService extends BaseAudioHandler
   Future<void> skipToPrevious() => audioPlayer.seekToPrevious();
 
   // Function to create an audio source from a MediaItem
-  // UriAudioSource _createAudioSource(MediaItem item) {
-  //   return ProgressiveAudioSource(Uri.parse(item.id));
-  // }
+  UriAudioSource _createAudioSource(MediaItem item) {
+    return ProgressiveAudioSource(Uri.parse(item.id));
+  }
 
   // Listen for changes in the current song index and update the media item
   void _listenForCurrentSongIndexChanges() {
@@ -80,9 +80,6 @@ class AudioHandlerService extends BaseAudioHandler
     // Listen for playback events and broadcast the state
     audioPlayer.playbackEventStream.listen(_broadcastState);
 
-    // Create a list of audio sources from the provided songs
-    // final audioSource = songs.map(_createAudioSource).toList();
-
     // Set the audio source of the audio player to the concatenation of the audio sources
     await audioPlayer.setAudioSource(
       AudioSource.uri(Uri.parse(songs.first.id)),
@@ -90,9 +87,10 @@ class AudioHandlerService extends BaseAudioHandler
     );
 
     // Add the songs to the queue
-    queue.value.clear();
-    queue.value.addAll(songs);
-    queue.add(queue.value);
+    // queue.value.clear();
+    // queue.value.addAll(songs);
+    // queue.add(queue.value);
+    await addToQueue(songs);
 
     // Listen for changes in the current song index
     _listenForCurrentSongIndexChanges();
@@ -101,6 +99,22 @@ class AudioHandlerService extends BaseAudioHandler
     audioPlayer.processingStateStream.listen((state) {
       if (state == ProcessingState.completed) skipToNext();
     });
+  }
+
+  Future<void> addToQueue(List<MediaItem> songs) async {
+    final queueList = queue.value;
+    final songsList = [
+      ...{...queueList, ...songs},
+    ];
+
+    // add to audio service queue
+    queue.value.addAll(songsList);
+    queue.add(queue.value);
+
+    // also add to audio player queue
+    await audioPlayer.addAudioSources(
+      songsList.map(_createAudioSource).toList(),
+    );
   }
 
   void dispose() {
