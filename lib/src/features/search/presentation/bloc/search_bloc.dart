@@ -17,16 +17,23 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
        super(const SearchState()) {
     on<SearchInput>(
       search,
-      transformer: throttleDroppable(const Duration(milliseconds: 600)),
+      transformer: debounceDroppable(const Duration(milliseconds: 1000)),
     );
   }
 
   final SearchUsecase _searchUsecase;
 
-  /// debounce.
+  /// throttle.
   EventTransformer<E> throttleDroppable<E>(Duration duration) {
     return (events, mapper) {
       return droppable<E>().call(events.throttle(duration), mapper);
+    };
+  }
+
+  /// debounce.
+  EventTransformer<E> debounceDroppable<E>(Duration duration) {
+    return (events, mapper) {
+      return droppable<E>().call(events.debounce(duration), mapper);
     };
   }
 
